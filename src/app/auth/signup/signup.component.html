@@ -1,0 +1,114 @@
+<!-- Page content -->
+<div class="page-content">
+
+  <!-- Main content -->
+  <div class="content-wrapper">
+
+    <!-- Inner content -->
+    <div class="content-inner">
+
+      <!-- Content area -->
+      <div class="content d-flex justify-content-center align-items-center">
+
+        <!-- Registration form -->
+        <form class="login-form" (ngSubmit)="createUser()" autocomplete="off" [formGroup]="signupForm">
+          <div class="card mb-0">
+            <div class="card-body">
+              <div class="text-center mb-3">
+                <div class="d-inline-flex align-items-center justify-content-center mb-4 mt-2">
+                  <img src="../../../assets/images/logo_icon.svg" class="h-48px" alt="">
+                </div>
+                <h5 class="mb-0">Crear cuenta</h5>
+                <span class="d-block text-muted">Todos los campos son requeridos</span>
+              </div>
+
+              <div class="text-center text-muted content-divider mb-3">
+                <span class="px-2">Credenciales</span>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Usuario</label>
+                <div class="form-control-feedback form-control-feedback-start">
+                  <input type="text" class="form-control" placeholder="Usuario" formControlName="nombre">
+                  <div class="form-control-feedback-icon">
+                    <i class="ph-user-circle text-muted"></i>
+                  </div>
+                </div>
+                <div *ngIf="campoNoValido('nombre')" class="form-text text-danger"><i class="ph-x-circle me-1"></i> El usuario es obligatorio</div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Email</label>
+                <div class="form-control-feedback form-control-feedback-start">
+                  <input type="text" class="form-control" placeholder="email@email.com" formControlName="email">
+                  <div class="form-control-feedback-icon">
+                    <i class="ph-at text-muted"></i>
+                  </div>
+                </div>
+                <div *ngIf="campoNoValido('email')" class="form-text text-danger"><i class="ph-x-circle me-1"></i> El email tiene que ser válido</div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Contraseña</label>
+                <div class="form-control-feedback form-control-feedback-start">
+                  <input type="password" class="form-control" placeholder="•••••••••••" formControlName="password">
+                  <div class="form-control-feedback-icon">
+                    <i class="ph-lock text-muted"></i>
+                  </div>
+                </div>
+                <div *ngIf="campoNoValido('password')" class="form-text text-danger"><i class="ph-x-circle me-1"></i> La longitud mínima es de 4 carácteres</div>
+                <div *ngIf="passwordNotEquals()" class="form-text text-danger"><i class="ph-x-circle me-1"></i> Las contraseñas deben ser iguales</div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Repite Contraseña</label>
+                <div class="form-control-feedback form-control-feedback-start">
+                  <input type="password" class="form-control" placeholder="•••••••••••" formControlName="password2">
+                  <div class="form-control-feedback-icon">
+                    <i class="ph-lock text-muted"></i>
+                  </div>
+                </div>
+                <!-- <div *ngIf="campoNoValido('password2')" class="form-text text-danger"><i class="ph-x-circle me-1"></i> La repetición contraseña es obligatoria</div> -->
+                <div *ngIf="passwordNotEquals()" class="form-text text-danger"><i class="ph-x-circle me-1"></i> Las contraseñas deben ser iguales</div>
+              </div>
+
+              <div class="text-center text-muted content-divider mb-3">
+                <span class="px-2">Additions</span>
+              </div>
+
+              <div class="mb-3">
+                <!-- <label class="form-check mb-2">
+                  <input type="checkbox" name="remember" class="form-check-input" checked>
+                  <span class="form-check-label">Send me <a href="#">&nbsp;test account settings</a></span>
+                </label>
+
+                <label class="form-check mb-2">
+                  <input type="checkbox" name="remember" class="form-check-input" checked>
+                  <span class="form-check-label">Subscribe to monthly newsletter</span>
+                </label> -->
+
+                <label class="form-check">
+                  <input type="checkbox" name="remember" class="form-check-input" formControlName="terms">
+                  <span class="form-check-label">Aceptar <a href="#">&nbsp;los términos de uso</a></span>
+                </label>
+                <div *ngIf="campoNoValido('terms')" class="form-text text-danger"><i class="ph-x-circle me-1"></i> Tienes que aceptar los términos de uso</div>
+              </div>
+
+              <button type="submit" class="btn btn-teal w-100">Registro</button>
+            </div>
+          </div>
+        </form>
+        <!-- /registration form -->
+
+      </div>
+      <!-- /content area -->
+
+
+    </div>
+    <!-- /inner content -->
+
+  </div>
+  <!-- /main content -->
+
+</div>
+<!-- /page content -->
