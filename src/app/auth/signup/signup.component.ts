@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { fnPasswordsIguales } from './fnPasswordsIguales';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -41,6 +41,7 @@ export class SignupComponent {
           text: 'Registro completado',
           icon: 'success'
         });
+        this.router.navigateByUrl('/');
       }, // completeHandler
       error: (err) => {
         console.log(err);

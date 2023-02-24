@@ -1,1 +1,152 @@
-<p>user works!</p>
+<!-- Content area -->
+<div class="content">
+
+  <!-- Inner container -->
+  <div class="d-lg-flex align-items-lg-start">
+
+    <!-- Left sidebar component -->
+    <div class="sidebar sidebar-component sidebar-expand-lg bg-transparent shadow-none me-lg-3">
+
+      <!-- Sidebar content -->
+      <div class="sidebar-content">
+
+        <!-- Navigation -->
+        <div class="card">
+          <div class="sidebar-section-body text-center">
+            <div class="card-img-actions d-inline-block mb-3">
+              <img class="img-fluid rounded-circle" [src]="user.imageUrl" width="150" height="150" alt="">
+              <div class="card-img-actions-overlay card-img rounded-circle">
+                <a href="#" class="btn btn-outline-white btn-icon rounded-pill">
+                  <i class="ph-pencil"></i>
+                </a>
+              </div>
+            </div>
+
+              <h6 class="mb-0">{{ user.nombre }}</h6>
+              <span class="text-muted">{{ user.email }}</span>
+            </div>
+
+          <ul class="nav nav-sidebar">
+            <li class="nav-item">
+              <a href="#profile" class="nav-link active" data-bs-toggle="tab">
+                <i class="ph-user me-2"></i>
+                 My profile
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#schedule" class="nav-link" data-bs-toggle="tab">
+                <i class="ph-calendar me-2"></i>
+                Schedule
+                <span class="fs-sm fw-normal text-muted ms-auto">02:56pm</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#inbox" class="nav-link" data-bs-toggle="tab">
+                <i class="ph-envelope me-2"></i>
+                Inbox
+                <span class="badge bg-secondary rounded-pill ms-auto">29</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#orders" class="nav-link" data-bs-toggle="tab">
+                <i class="ph-shopping-cart me-2"></i>
+                Orders
+                <span class="badge bg-secondary rounded-pill ms-auto">16</span>
+              </a>
+            </li>
+            <li class="nav-item-divider"></li>
+            <li class="nav-item">
+              <a href="login_advanced.html" class="nav-link" data-bs-toggle="tab">
+                <i class="ph-sign-out me-2"></i>
+                Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+        <!-- /navigation -->
+
+      </div>
+      <!-- /sidebar content -->
+
+    </div>
+    <!-- /left sidebar component -->
+
+
+    <!-- Right content -->
+    <div class="tab-content flex-fill">
+      <div class="tab-pane fade active show" id="profile">
+
+        <!-- Profile info -->
+        <div class="card">
+          <div class="card-header">
+            <h5 class="mb-0">Profile information</h5>
+          </div>
+
+          <div class="card-body">
+            <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input type="text" value="Vicky" formControlName="nombre" class="form-control">
+                  </div>
+                </div>
+
+                <!-- <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Current password</label>
+                    <input type="password" value="password" readonly class="form-control">
+                  </div>
+                </div> -->
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="text" formControlName="email" value="victoria@smith.com" class="form-control">
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="row">
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">New password</label>
+                    <input type="password" placeholder="Enter new password" class="form-control">
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Repeat password</label>
+                    <input type="password" placeholder="Repeat new password" class="form-control">
+                  </div>
+                </div>
+              </div> -->
+
+               <div class="row">
+                  <div class="col-lg-6">
+                  <div class="mb-3">
+                    <label class="form-label">Upload profile image</label>
+                    <input type="file" class="form-control">
+                                      <div class="form-text text-muted">Accepted formats: gif, png, jpg. Max file size 2Mb</div>
+                                  </div>
+                          </div>
+                          </div>
+
+                          <div class="text-end">
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                          </div>
+            </form>
+          </div>
+        </div>
+        <!-- /profile info -->
+
+        </div>
+
+    </div>
+    <!-- /right content -->
+
+  </div>
+  <!-- /inner container -->
+
+</div>
+<!-- /content area -->

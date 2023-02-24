@@ -14,8 +14,7 @@ import { AuthModule } from './auth/auth.module';
 @NgModule({
   declarations: [
     AppComponent,
-    NopagefoundComponent,
-    PagesComponent
+    NopagefoundComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +22,6 @@ import { AuthModule } from './auth/auth.module';
     MaterialModule,
     AppRoutingModule,
     PagesModule,
-    SharedModule,
     AuthModule
   ],
   bootstrap: [AppComponent]

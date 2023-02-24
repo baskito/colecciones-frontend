@@ -3,27 +3,30 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PagesComponent } from './pages.component';
 
 
 
 @NgModule({
   declarations: [
+    PagesComponent,
     HomeComponent,
-    DashboardComponent,
-    UserComponent,
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    RouterModule
+    UserComponent
   ],
   exports: [
     HomeComponent,
-    DashboardComponent,
     UserComponent,
+    PagesComponent
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SharedModule,
+    RouterModule
   ]
 })
 export class PagesModule { }

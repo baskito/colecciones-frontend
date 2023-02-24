@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'clitest';
-  value= 0;
+  constructor() {}
 }

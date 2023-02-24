@@ -26,7 +26,7 @@ export class LoginComponent implements AfterViewInit{
   constructor(private router: Router, private userService: UserService) { }
 
   ngAfterViewInit(): void {
-    this.googleInit();
+    //this.googleInit();
   }
 
   googleInit() {
@@ -47,7 +47,7 @@ export class LoginComponent implements AfterViewInit{
     this.userService.loginGoogle(response.credential).subscribe({
       complete: () => {
         console.log('Login google correcto');
-
+        this.router.navigateByUrl('/');
       }, // completeHandler
       error: (err) => {
         console.log(err);
@@ -73,7 +73,7 @@ export class LoginComponent implements AfterViewInit{
     this.userService.loginUsuario(this.loginForm.value).subscribe({
       complete: () => {
         console.log('Login correcto');
-
+        this.router.navigateByUrl('/');
       }, // completeHandler
       error: (err) => {
         console.log(err);
