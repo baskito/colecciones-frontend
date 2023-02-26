@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { SignupForm } from '../interfaces/signup-form.interface';
 import { LoginForm } from '../interfaces/login-form.interface';
@@ -7,6 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../models/user.model';
+import Swal from 'sweetalert2';
 
 const base_url = environment.base_url;
 declare const google: any;
@@ -25,7 +26,7 @@ export class UserService {
     imageUrl: ''
   };
 
-  constructor( private http: HttpClient, private router: Router ) { }
+  constructor( private http: HttpClient, private router: Router, private ngZone: NgZone ) { }
 
   get token(): string {
     return localStorage.getItem('token') || '';
@@ -80,19 +81,47 @@ export class UserService {
   }
 
   googleInit() {
-
-
+    google.accounts.id.initialize({
+      client_id: '718625281186-9jc3tim3pqqrntu8450uka9inci47fgc.apps.googleusercontent.com',
+      callback: (response: any) => this.handleCredentialResponse(response)
+    });
 
   }
 
-  logout() {
+  handleCredentialResponse( response: any ) {
+    this.loginGoogle(response.credential).subscribe({
+      complete: () => {
+        this.ngZone.run(() => {
+          this.router.navigateByUrl('/');
+        });
+      }, // completeHandler
+      error: (err) => {
+        console.log(err);
+        Swal.fire({
+          title: 'Error',
+          text: err.error.msg,
+          icon: 'error'
+        });
+      },    // errorHandler
+      next: (res) => {
+        console.log({login: res});
+      }
+    });
+  }
 
+  logout() {
+    console.log(this.user.email);
+    
     localStorage.removeItem('token');
 
-    this.router.navigateByUrl('/login');
-    // google.accounts.id.revoke('correo', () => {
-
-    // });
+    google.accounts.id.revoke(this.user.email, () => {
+      this.ngZone.run(() => {
+        this.router.navigateByUrl('/login');
+      });
+    }, (err:any) => {
+      console.log(err);
+      
+    });
 
 
   }
