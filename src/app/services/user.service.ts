@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { SignupForm } from '../interfaces/signup-form.interface';
 import { LoginForm } from '../interfaces/login-form.interface';
 import { User } from '../models/user.model';
+import { LoadUsers } from '../interfaces/load-users.interface';
 
 const base_url = environment.base_url;
 declare const google: any;
@@ -28,7 +29,7 @@ export class UserService {
   };
 
   constructor( private http: HttpClient, private router: Router, private ngZone: NgZone ) {
-    // this.googleInit();
+    this.googleInit();
   }
 
   get token(): string {
@@ -37,6 +38,14 @@ export class UserService {
 
   get uid(): string {
     return this.user.uid || '';
+  }
+
+  get headers() {
+    return {
+      headers: {
+        'x-token': this.token
+      }
+    }
   }
 
   crearUsuario( formData: SignupForm) {
@@ -68,11 +77,7 @@ export class UserService {
 
   validarToken(): Observable<boolean> {
 
-    return this.http.get(`${ base_url }/login/renew`, {
-      headers: {
-        'x-token': this.token
-      }
-    }).pipe(
+    return this.http.get(`${ base_url }/login/renew`, this.headers).pipe(
       map( (resp: any) => {
         const { email, google, nombre, role, img='', uid, estado } = resp.usuario;
         this.user = new User(nombre, email, role, google, estado, img, uid);
@@ -128,25 +133,19 @@ export class UserService {
     } else {
       this.router.navigateByUrl('/login');
     }
-
-
-
-
-
   }
-
-
 
   updateProfile( data: { email: string, nombre: string, role: string }) {
     data = {
       ...data,
       role: this.user.role
     };
-    return this.http.put(`${ base_url }/usuarios/${ this.uid }`, data, {
-      headers: {
-        'x-token': this.token
-      }
-    });
+    return this.http.put(`${ base_url }/usuarios/${ this.uid }`, data, this.headers);
+  }
+
+  loadUsers( desde: number = 0 ) {
+    const url = `${ base_url }/usuarios?desde=${ desde }`;
+    return this.http.get<LoadUsers>(url, this.headers);
   }
 
 }
