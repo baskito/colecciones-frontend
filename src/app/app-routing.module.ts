@@ -14,8 +14,8 @@ const routes: Routes = [
 
   // path: '/home' PagesRouting
   // path: '/dashboard' PagesRouting
-  // path: '/user' PagesRouting
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  // path: '/profile' PagesRouting
+  { path: '', redirectTo: '/dashboard/home', pathMatch: 'full' },
   { path: '**', component: NopagefoundComponent },
 
 ];

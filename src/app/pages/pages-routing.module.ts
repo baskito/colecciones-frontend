@@ -2,8 +2,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { HomeComponent } from './home/home.component';
 import { PagesComponent } from './pages.component';
-import { UserComponent } from './user/user.component';
+import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from '../guards/auth.guard';
+import { UsersComponent } from './maintenance/users/users.component';
 
 
 const routes: Routes = [
@@ -12,8 +13,17 @@ const routes: Routes = [
     component: PagesComponent,
     canActivate: [ AuthGuard ],
     children: [
-      { path: '', component: HomeComponent },
-      { path: 'user', component: UserComponent },
+      { path: 'home', component: HomeComponent },
+      { path: 'profile', component: ProfileComponent },
+      // { path: 'consoles', component: ProfileComponent },
+      // { path: 'collections', component: ProfileComponent },
+      // { path: 'accesorios', component: ProfileComponent },
+      { path: '', redirectTo: 'home' , pathMatch: 'full'},
+
+
+      // Maintenance
+      { path: 'users', component: UsersComponent },
+
     ],
   },
 

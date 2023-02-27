@@ -4,9 +4,11 @@ import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
-import { UserComponent } from './user/user.component';
+import { ProfileComponent } from './profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PagesComponent } from './pages.component';
+import { UsersComponent } from './maintenance/users/users.component';
+import { MaterialModule } from '../shared/material.module';
 
 
 
@@ -14,11 +16,12 @@ import { PagesComponent } from './pages.component';
   declarations: [
     PagesComponent,
     HomeComponent,
-    UserComponent
+    ProfileComponent,
+    UsersComponent
   ],
   exports: [
     HomeComponent,
-    UserComponent,
+    ProfileComponent,
     PagesComponent
   ],
   imports: [
@@ -26,7 +29,8 @@ import { PagesComponent } from './pages.component';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    RouterModule
+    RouterModule,
+    MaterialModule
   ]
 })
 export class PagesModule { }

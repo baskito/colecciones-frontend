@@ -4,14 +4,48 @@
     <div class="flex-fill overflow-auto overflow-lg-visible scrollbar-hidden">
       <ul class="nav gap-1 flex-nowrap flex-lg-wrap">
         <li class="nav-item">
-          <a routerLink="/dashboard" class="navbar-nav-link rounded">
+          <a routerLink="/dashboard/home" routerLinkActive="active" class="navbar-nav-link rounded pointer">
             Inicio
           </a>
         </li>
         <li class="nav-item">
-          <a routerLink="/dashboard/user" class="navbar-nav-link rounded pointer">
+          <a routerLink="/dashboard/profile" routerLinkActive="active" class="navbar-nav-link rounded pointer">
             Perfil
           </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="navbar-nav-link dropdown-toggle rounded" routerLinkActive="active"
+            data-bs-toggle="dropdown">
+            Mantenimiento
+          </a>
+          <div class="dropdown-menu start-auto animate__animated animate__fadeIn animate__fast">
+            <div class="dropdown-header">
+              <h6 class="lh-base mb-0">Mantenimiento</h6>
+            </div>
+            <a routerLink="/dashboard/users" routerLinkActive="active" class="dropdown-item">Lista usuarios</a>
+            <a href="#" class="dropdown-item">Another action</a>
+            <div class="dropdown-header">
+              <h6 class="lh-base mb-0">Header Second</h6>
+            </div>
+            <a href="#" class="dropdown-item">Something else here</a>
+            <a href="#" class="dropdown-item">One more line</a>
+          </div>
+
+          <!-- <div class="dropdown-menu start-0 end-35 p-3 mx-md-3">
+            <div class="row">
+              <div class="col-md-4 mb-3 mb-md-0">
+                <div class="fw-bold border-bottom pb-2 mb-2">Mantenimiento</div>
+                <div class="mb-3 mb-md-0">
+                  <a href="layout_navbar_fixed.html" class="dropdown-item rounded">Lista usuarios</a>
+                  <a href="layout_navbar_hideable.html" class="dropdown-item rounded">Hideable navbar</a>
+                  <a href="layout_navbar_sticky.html" class="dropdown-item rounded">Sticky navbar</a>
+                  <a href="layout_fixed_footer.html" class="dropdown-item rounded">Fixed footer</a>
+                </div>
+              </div>
+
+
+            </div>
+          </div> -->
         </li>
         <!-- <li class="nav-item">
           <a href="#" class="navbar-nav-link dropdown-toggle rounded active" data-bs-toggle="dropdown">

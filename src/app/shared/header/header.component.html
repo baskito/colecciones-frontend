@@ -2,7 +2,7 @@
 <div class="navbar navbar-dark navbar-expand-lg">
   <div class="container-fluid">
     <div class="navbar-brand">
-      <a href="index.html" class="d-inline-flex align-items-center">
+      <a routerLink="/" class="d-inline-flex align-items-center">
         <img src="../../../assets/images/logo_collecciones.svg" alt="">
         <img src="../../../assets/images/logo_text_light.svg" class="d-none d-sm-inline-block h-16px ms-3" alt="">
       </a>
@@ -52,7 +52,7 @@
           <span class="d-none d-lg-inline-block mx-lg-2">{{ user.nombre }}</span>
         </a>
 
-        <div class="dropdown-menu dropdown-menu-end">
+        <div class="dropdown-menu dropdown-menu-end animate__animated animate__fadeIn animate__fast">
           <div class="d-flex align-items-center border-bottom p-3">
             <!-- <h6 class="mb-0">email </h6> -->
             <div class="flex-column">
@@ -61,7 +61,7 @@
             </div>
             <!-- <span>{{ (user.email.length > 20) ? '...' : '' }}</span> -->
           </div>
-          <a routerLink="/dashboard/user" class="dropdown-item pointer">
+          <a routerLink="/dashboard/profile" class="dropdown-item pointer">
             <i class="ph-user-circle me-2"></i>
             Perfil
           </a>

@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+
 import { environment } from 'src/environments/environment';
 import { SignupForm } from '../interfaces/signup-form.interface';
 import { LoginForm } from '../interfaces/login-form.interface';
-import { catchError, map, tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
-import { Router } from '@angular/router';
 import { User } from '../models/user.model';
-import Swal from 'sweetalert2';
 
 const base_url = environment.base_url;
 declare const google: any;
@@ -26,7 +27,9 @@ export class UserService {
     imageUrl: ''
   };
 
-  constructor( private http: HttpClient, private router: Router, private ngZone: NgZone ) { }
+  constructor( private http: HttpClient, private router: Router, private ngZone: NgZone ) {
+    // this.googleInit();
+  }
 
   get token(): string {
     return localStorage.getItem('token') || '';
@@ -110,18 +113,24 @@ export class UserService {
   }
 
   logout() {
-    console.log(this.user.email);
-    
     localStorage.removeItem('token');
+    if (this.user.google) {
 
-    google.accounts.id.revoke(this.user.email, () => {
-      this.ngZone.run(() => {
-        this.router.navigateByUrl('/login');
+      google.accounts.id.revoke(this.user.email, () => {
+        this.ngZone.run(() => {
+          this.router.navigateByUrl('/login');
+        });
+      }, (err:any) => {
+        console.log(err);
+
       });
-    }, (err:any) => {
-      console.log(err);
-      
-    });
+
+    } else {
+      this.router.navigateByUrl('/login');
+    }
+
+
+
 
 
   }
