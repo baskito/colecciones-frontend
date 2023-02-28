@@ -62,7 +62,17 @@ export class UsersComponent implements OnInit {
     } else if (this.paginacion >= this.totalUsers) {
       this.paginacion -= valor;
     }
+    
+    this.loadUsers(this.paginacion);
+  }
 
+  borrarInput() {
+    this.users = this.usersTemp;
+  }
+
+  pages(valor: number) {
+    this.paginacion = valor;
+    
     this.loadUsers(this.paginacion);
   }
 
