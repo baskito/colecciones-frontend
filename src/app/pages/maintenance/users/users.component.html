@@ -5,11 +5,11 @@
         <input class="form-control" type="search" name="search" placeholder="Type here to search">
       </div>
     </div> -->
-    <input class="form-control" type="search" name="search" placeholder="Type here to search">
+    <!-- <input class="form-control" type="search" name="search" placeholder="Buscar usuario" (keyup)="search( txtTerm.value )" #txtTerm> -->
   </div>
 </div>
-
-<div class="row animate__animated animate__fadeIn animate__fast">
+<br>
+<div *ngIf="loading" class="row animate__animated animate__fadeIn animate__fast">
   <div class="col-12">
     <div class="alert alert-info text-center">
       <h4 class="alert-heading">Cargando</h4>
@@ -22,52 +22,105 @@
   </div>
 </div>
 
-<div class="card">
-  <div class="card-header">
-    <h5 class="mb-0">Listado usuarios ({{ totalUsers }})</h5>
-  </div>
+<div *ngIf="!loading" class="animate__animated animate__fadeIn animate__fast">
+  <div class="card">
+    <div class="card-header d-sm-flex align-items-sm-center py-sm-0">
+      <h6 class="py-sm-3 mb-sm-auto">Listado usuarios ({{ totalUsers }}) - {{ paginas }}</h6>
+      <div class="ms-sm-auto">
+        <ul class="pagination pagination-flat">
+          <li class="page-item">
+            <a (click)="managePagination(-10)" class="page-link rounded pointer">←</a>
+          </li>
+          <li class="page-item active" *ngFor="let in of counter(paginas) ;let i = index">
+            <a (click)="loadUsers(i*10)" class="page-link rounded">{{i+1}}-{{i*10}}</a>
+          </li>
+          <!-- <li class="page-item">
+            <a href="#" class="page-link rounded">2</a>
+          </li>
+          <li class="page-item">
+            <a href="#" class="page-link rounded">3</a>
+          </li> -->
+          <li class="page-item">
+            <a (click)="managePagination(10)" class="page-link rounded pointer">→</a>
+          </li>
+        </ul>
+      </div>
+      <div class="ms-sm-auto my-sm-auto">
+        <div class="form-control-feedback form-control-feedback-end">
+          <input type="search" class="form-control wmin-200" (keyup)="search( txtTerm.value )"
+            placeholder="Búscar usuario..." #txtTerm>
+          <div class="form-control-feedback-icon">
+            <i class="ph-magnifying-glass text-muted"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="card-header">
+    <div class="row">
 
-  <!-- <div class="card-body">
-    Table below contains different examples of components that can be used in the table: form components, interface components, buttons, list of actions etc. All of them are adapted for different cases, such as multiple elements in the same table cell. These components support all available sizes and styles. Charts are also supported, but in certain sizes.
+      <h5 class="mb-0">Listado usuarios ({{ totalUsers }})</h5>
+      <div class="ms-sm-auto my-sm-auto">
+        <div class="form-control-feedback form-control-feedback-end">
+          <input type="search" class="form-control wmin-200" placeholder="Search...">
+          <div class="form-control-feedback-icon">
+            <i class="ph-magnifying-glass text-muted"></i>
+          </div>
+        </div>
+      </div>
+    </div>
   </div> -->
 
-  <div class="table-responsive">
-    <table class="table table-bordered table-lg table-hover">
-      <tbody>
-        <tr class="table-light">
-          <th>Imagen</th>
-          <th>Usuario</th>
-          <th>Role</th>
-          <th>Auth</th>
-          <th class="wmin-lg-50 text-nowrap">Acciones</th>
-        </tr>
-        <tr *ngFor="let user of users">
-          <td><a href="#" class="status-indicator-container">
-            <img [src]="user.imageUrl" class="w-40px h-40px rounded-pill" alt="">
-            <span class="status-indicator bg-success"></span>
-          </a></td>
-          <td><div class="flex-fill">
-            <div class="fw-semibold">{{ user.nombre }}</div>
-            <span class="text-muted">{{ user.email }}</span>
-          </div></td>
-          <td>{{ user.role }}</td>
-          <td>{{ user.google }}</td>
-          <td class="wmin-lg-50">
-            <div class="d-inline-flex">
-              <a class="text-primary" #tooltip="matTooltip"
-              matTooltip="Modificar"
-              matTooltipPosition="above">
-                <i class="ph-pen"></i>
-              </a>
-              <a class="text-danger mx-2" #tooltip="matTooltip"
-              matTooltip="Borrar"
-              matTooltipPosition="above">
-                <i class="ph-trash"></i>
-              </a>
-            </div>
-          </td>
-        </tr>
-        <!-- <tr>
+    <div class="card-body" *ngIf="txtTerm.value.length !== 0">
+      Búsqueda <span class="badge bg-dark"> {{ txtTerm.value }} </span> devuelve {{ totalSearch }} resultado{{
+      totalSearch !== 1 ? 's' : '' }}.
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-lg table-hover">
+        <tbody>
+          <tr class="table-light">
+            <th class="w100 text-center">Imagen</th>
+            <th>Usuario</th>
+            <th>Role</th>
+            <th class="w100 text-center">Auth</th>
+            <th class="w100 text-center">Estado</th>
+            <th class="wmin-lg-50 text-nowrap w100 text-center">Acciones</th>
+          </tr>
+          <tr *ngFor="let user of users">
+            <td class="text-center"><a href="#" class="">
+                <img [src]="user.imageUrl" class="w-56px h-56px rounded" alt="Imagen usuario">
+              </a></td>
+            <td>
+              <div class="flex-fill">
+                <div class="fw-semibold">{{ user.nombre }}</div>
+                <span class="text-muted">{{ user.email }}</span>
+              </div>
+            </td>
+            <td>{{ user.role }}</td>
+            <td class="text-center">
+              <span *ngIf="user.google" class="badge bg-danger">Google</span>
+              <span *ngIf="!user.google" class="badge bg-info">Email</span>
+            </td>
+            <td class="text-center">
+              <span *ngIf="!user.estado" class="badge bg-danger p-1">
+                <i class="ph-x"></i>
+              </span>
+              <span *ngIf="user.estado" class="badge bg-success p-1">
+                <i class="ph-check"></i>
+              </span>
+            </td>
+            <td class="wmin-lg-50 text-center">
+              <div class="d-inline-flex">
+                <a class="text-primary" #tooltip="matTooltip" matTooltip="Modificar" matTooltipPosition="above">
+                  <i class="ph-pen"></i>
+                </a>
+                <a class="text-danger mx-2" #tooltip="matTooltip" matTooltip="Borrar" matTooltipPosition="above">
+                  <i class="ph-trash"></i>
+                </a>
+              </div>
+            </td>
+          </tr>
+          <!-- <tr>
           <td>Links with dropdown</td>
           <td>
             <div class="d-inline-flex">
@@ -102,17 +155,19 @@
           <td>Control links with optional <code>dropdown</code> menu appended to one of the links</td>
         </tr> -->
 
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="txtTerm.value.length === 0">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li class="page-item pointer"><a class="page-link" (click)="managePagination(-5)">Anterior</a></li>
+        <!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+        <li class="page-item pointer"><a class="page-link" (click)="managePagination(5)">Siguiente</a></li>
+      </ul>
+    </nav>
   </div>
 </div>
-<nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-center">
-    <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
-    <!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-    <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
-  </ul>
-</nav>
-

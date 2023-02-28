@@ -29,7 +29,7 @@ export class UserService {
   };
 
   constructor( private http: HttpClient, private router: Router, private ngZone: NgZone ) {
-    this.googleInit();
+    // this.googleInit();
   }
 
   get token(): string {
@@ -144,8 +144,20 @@ export class UserService {
   }
 
   loadUsers( desde: number = 0 ) {
-    const url = `${ base_url }/usuarios?desde=${ desde }`;
-    return this.http.get<LoadUsers>(url, this.headers);
+    const url = `${ base_url }/usuarios?from=${ desde }`;
+    return this.http.get<LoadUsers>(url, this.headers)
+        .pipe(
+          map( resp => {
+            const users = resp.usuarios.map(
+              user => new User(user.nombre, user.email, user.role, user.google, user.estado, user.img, user.uid)
+              );
+
+            return {
+              total: resp.total,
+              usuarios: users
+            };
+          })
+        );
   }
 
 }
