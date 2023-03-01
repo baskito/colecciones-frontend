@@ -10,6 +10,9 @@ import { PagesComponent } from './pages.component';
 import { UsersComponent } from './maintenance/users/users.component';
 import { MaterialModule } from '../shared/material.module';
 import { ComponentsModule } from '../components/components.module';
+import { AccesoriosComponent } from './maintenance/accesorios/accesorios.component';
+import { CollectionsComponent } from './maintenance/collections/collections.component';
+import { ConsolesComponent } from './maintenance/consoles/consoles.component';
 
 
 
@@ -18,7 +21,10 @@ import { ComponentsModule } from '../components/components.module';
     PagesComponent,
     HomeComponent,
     ProfileComponent,
-    UsersComponent
+    UsersComponent,
+    CollectionsComponent,
+    AccesoriosComponent,
+    ConsolesComponent
   ],
   exports: [
     HomeComponent,

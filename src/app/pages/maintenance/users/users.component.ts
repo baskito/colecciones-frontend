@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
@@ -10,7 +12,7 @@ import { SearchService } from '../../../services/search.service';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
 
   public totalUsers: number = 0;
   public totalSearch: number = 0;
@@ -18,7 +20,7 @@ export class UsersComponent implements OnInit {
   public usersTemp: User[]= [];
   public paginacion: number = 0;
   public loading: boolean = true;
-  public paginas = 0;
+  public paginas: number = 0;
   public userSelected: User = {
     nombre: '',
     email: '',
@@ -29,12 +31,17 @@ export class UsersComponent implements OnInit {
   };
   public selectedUid: string = '';
   public selectedImg: string = '';
+  public imgSubs!: Subscription;
 
   constructor(private userService: UserService, private searchService: SearchService, private toastr: ToastrService) { }
 
+  ngOnDestroy(): void {
+    this.imgSubs.unsubscribe();
+  }
+
   ngOnInit(): void {
     this.loadUsers(0);
-    this.userService.newImage.subscribe( img => {
+    this.imgSubs = this.userService.newImage.pipe(delay(100)).subscribe( img => {
       this.loadUsers(0);
     });
   }
@@ -58,7 +65,6 @@ export class UsersComponent implements OnInit {
         this.users = usuarios;
         this.usersTemp = usuarios;
         this.paginas = Math.floor(total/10) + 1;
-        console.log(usuarios);
 
 
       }
@@ -92,7 +98,7 @@ export class UsersComponent implements OnInit {
     this.loadUsers(this.paginacion);
   }
 
-  search( term: string) {
+  search(term: string) {
 
     if (term.length === 0) {
       this.users = this.usersTemp;

@@ -1,0 +1,133 @@
+
+<div *ngIf="loading" class="row animate__animated animate__fadeIn animate__fast">
+    <div class="col-12">
+      <div class="alert alert-info text-center">
+        <h4 class="alert-heading">Cargando</h4>
+        <div class="spinner-border spinner-border-lg text-info me-1 x2" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="mb-0">Dame un respiro</p>
+  
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="!loading" class="animate__animated animate__fadeIn animate__fast">
+    <div class="card">
+      <div class="card-header d-sm-flex align-items-sm-center py-sm-0">
+        <h6 class="py-sm-3 mb-sm-auto">Listado colecciones ({{ totalCollections }})</h6>
+        <div class="ms-sm-auto" *ngIf="txtTerm.value.length === 0">
+          <ul class="pagination pagination-flat">
+            <li class="page-item">
+              <a (click)="managePagination(-10)"
+                class="page-link rounded pointer"
+                [ngClass]="paginacion === 0 ? 'disabled' : ''">←</a>
+            </li>
+            <li class="page-item"
+            [ngClass]="paginacion === i*10 ? 'active' : ''" *ngFor="let in of counter(paginas); let i = index">
+              <a (click)="pages(i*10)" class="page-link rounded pointer">{{i+1}}</a>
+            </li>
+            <li class="page-item">
+              <a (click)="managePagination(10)"
+              class="page-link rounded pointer"
+              [ngClass]="paginacion / 10 + 1 === paginas ? 'disabled' : ''">→</a>
+            </li>
+          </ul>
+        </div>
+        <div class="ms-sm-auto my-sm-auto">
+          <div class="form-control-feedback form-control-feedback-end">
+            <input type="search" class="form-control wmin-200" (search)="borrarInput()" (keyup)="search( txtTerm.value )"
+              placeholder="Búscar usuario..." #txtTerm>
+            <div class="form-control-feedback-icon">
+              <i class="ph-magnifying-glass text-muted"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card-body" *ngIf="txtTerm.value.length !== 0">
+        Búsqueda <span class="badge bg-dark"> {{ txtTerm.value }} </span> devuelve {{ totalSearch }} resultado{{
+        totalSearch !== 1 ? 's' : '' }}.
+      </div>
+  
+      <div class="table-responsive">
+        <table class="table table-bordered table-lg">
+          <tbody>
+            <tr class="table-light">
+              <th class="w100 text-center">Imagen</th>
+              <!-- <th>Usuario</th>
+              <th>Role</th>
+              <th class="w100 text-center">Auth</th>
+              <th class="w100 text-center">Estado</th>
+              <th class="wmin-lg-50 text-nowrap w100 text-center">Acciones</th> -->
+            </tr>
+            <tr>
+                <td>
+                        <h6 class="fw-semibold">Inline or block element</h6>
+                        <p class="mb-3">In this example, collapsible JS plugin is attached to inline <code>&lt;span&gt;</code> element instead of button or link</p>
+
+                        <span class="fw-semibold cursor-pointer collapsed" c data-bs-target="#collapse-text" aria-expanded="false">
+                            Toggle content
+                        </span>
+
+                        <div class="collapse" id="collapse-text" style="">
+                            <div class="mt-3">
+                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch.
+                            </div>
+                        </div>
+                </td>
+            </tr>
+            <!-- <tr *ngFor="let colec of users">
+              <td class="text-center"><a data-bs-toggle="modal" (click)="modalUser(user)" data-bs-target="#modal_default" class="pointer">
+                  <img [src]="user.imageUrl" class="w-56px h-56px rounded" alt="Imagen usuario">
+                </a></td>
+              <td>
+                <div class="flex-fill">
+                  <div class="fw-semibold">{{ user.nombre }}</div>
+                  <span class="text-muted">{{ user.email }}</span>
+                </div>
+              </td>
+              <td>
+                <select class="form-select" [(ngModel)]="user.role" (change)="changeRole( user )">
+                  <option value="ADMIN_ROLE">Admin</option>
+                  <option value="USER_ROLE">User</option>
+              </select>
+              </td>
+              <td class="text-center">
+                <span *ngIf="user.google" class="badge bg-danger">Google</span>
+                <span *ngIf="!user.google" class="badge bg-info">Email</span>
+              </td>
+              <td class="text-center">
+                <span *ngIf="!user.estado" class="badge bg-danger p-1">
+                  <i class="ph-x"></i>
+                </span>
+                <span *ngIf="user.estado" class="badge bg-success p-1">
+                  <i class="ph-check"></i>
+                </span>
+              </td>
+              <td class="wmin-lg-50 text-center">
+                <div class="d-inline-flex">
+                  <a (click)="deleteUser(user)" class="text-danger mx-2 pointer" #tooltip="matTooltip" matTooltip="Borrar" matTooltipPosition="above">
+                    <i class="ph-trash"></i>
+                  </a>
+                </div>
+              </td>
+            </tr> -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- <div *ngIf="txtTerm.value.length === 0">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item pointer"><a class="page-link" (click)="managePagination(-10)">Anterior</a></li>
+          <li class="page-item pointer"><a class="page-link" (click)="managePagination(10)">Siguiente</a></li>
+        </ul>
+      </nav>
+    </div> -->
+  </div>
+  
+  <!-- <app-modal-image [uid]="selectedUid" [img]="selectedImg" type="usuarios"></app-modal-image> -->
+  
+  
+  

@@ -5,6 +5,9 @@ import { PagesComponent } from './pages.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { UsersComponent } from './maintenance/users/users.component';
+import { AccesoriosComponent } from './maintenance/accesorios/accesorios.component';
+import { ConsolesComponent } from './maintenance/consoles/consoles.component';
+import { CollectionsComponent } from './maintenance/collections/collections.component';
 
 
 const routes: Routes = [
@@ -23,6 +26,9 @@ const routes: Routes = [
 
       // Maintenance
       { path: 'users', component: UsersComponent },
+      { path: 'consoles', component: ConsolesComponent },
+      { path: 'accesorios', component: AccesoriosComponent },
+      { path: 'collections', component: CollectionsComponent }
 
     ],
   },

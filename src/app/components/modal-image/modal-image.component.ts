@@ -5,6 +5,7 @@ import { FileUploadService } from 'src/app/services/file-upload.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from '../../models/user.model';
 import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-modal-image',
@@ -13,7 +14,6 @@ import Swal from 'sweetalert2';
 })
 export class ModalImageComponent implements OnInit {
 
-  @Input() userSelected!: User;
   @Input() img!: string;
   @Input() uid!: string;
   @Input() type!: 'usuarios' | 'consoles' | 'accesorios' | 'collections';
@@ -23,7 +23,7 @@ export class ModalImageComponent implements OnInit {
   public imgTemp: any;
   @ViewChild('closeBtn') closeBtn!: ElementRef;
 
-  constructor(private userService: UserService, private router: Router, private fb: FormBuilder, private fileUploadService: FileUploadService) { }
+  constructor(private userService: UserService, private toastr: ToastrService, private fileUploadService: FileUploadService) { }
 
   ngOnInit(): void {
 
@@ -49,12 +49,16 @@ export class ModalImageComponent implements OnInit {
     if (this.uploadImage) {
       this.fileUploadService.updateImage(this.uploadImage, this.type, this.uid )
         .then( img => {
-          this.img = img;
+          this.toastr.info('Imagen actualizada');
+          this.closeBtn.nativeElement.click();
+          this.fileButton ? this.fileButton.nativeElement.value = '' : '';
+          this.cerrarModal();
           this.userService.newImage.emit(img);
         });
     }
-    this.fileButton ? this.fileButton.nativeElement.value = '' : '';
-    this.closeBtn.nativeElement.click();
+  }
+
+  cerrarModal() {
     this.imgTemp = null;
   }
 
