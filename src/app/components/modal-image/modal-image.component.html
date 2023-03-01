@@ -1,0 +1,41 @@
+<div id="modal_default" class="modal fade" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Actualizar imagen</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+          <div class="sidebar-section-body text-center">
+            <div class="card-img-actions d-inline-block mb-3">
+              <img *ngIf="!imgTemp" class="img-fluid rounded-circle" [src]="img" referrerpolicy="no-referrer" width="150"
+                height="150" alt="">
+              <img *ngIf="imgTemp" class="img-fluid rounded-circle" [src]="imgTemp" referrerpolicy="no-referrer" width="150"
+                height="150" alt="">
+              <div class="card-img-actions-overlay card-img rounded-circle">
+                <a (click)="fileInput.click()" class="btn btn-outline-white btn-icon rounded-pill">
+                  <i class="ph-pencil"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- <h6 class="mb-0">{{ userSelected.nombre }}</h6>
+            <span class="text-muted">{{ userSelected.email }}</span> -->
+          </div>
+          <br>
+            <!-- <div class="col-lg-6 text-center">
+                <img *ngIf="imgTemp" [src]="imgTemp" class="img-fluid rounded-circle" alt="" width="150" height="150">
+            </div> -->
+              <input type="file" class="form-control" (change)="changeImage($any($event.target).files[0])"
+                #fileInput>
+              <div class="form-text text-muted">Formatos: gif, png, jpg. Tamaño máx. 2Mb</div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-link" data-bs-dismiss="modal" #closeBtn>Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="updateImage()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>

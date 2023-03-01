@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, NgZone } from '@angular/core';
+import { EventEmitter, Injectable, NgZone } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -27,6 +27,7 @@ export class UserService {
     estado: '',
     imageUrl: ''
   };
+  public newImage: EventEmitter<string> = new EventEmitter();
 
   constructor( private http: HttpClient, private router: Router, private ngZone: NgZone ) {
     // this.googleInit();
@@ -158,6 +159,19 @@ export class UserService {
             };
           })
         );
+  }
+
+  deleteUser(user: User) {
+    const url = `${ base_url }/usuarios/${ user.uid }`;
+    return this.http.delete(url, this.headers);
+  }
+
+  updateUser( user: User) {
+    // data = {
+    //   ...data,
+    //   role: this.user.role
+    // };
+    return this.http.put(`${ base_url }/usuarios/${ user.uid }`, user, this.headers);
   }
 
 }

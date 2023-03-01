@@ -19,13 +19,18 @@
       <div class="ms-sm-auto" *ngIf="txtTerm.value.length === 0">
         <ul class="pagination pagination-flat">
           <li class="page-item">
-            <a (click)="managePagination(-10)" class="page-link rounded pointer {{ paginacion === 0 ? 'disabled' : '' }}">←</a>
+            <a (click)="managePagination(-10)"
+              class="page-link rounded pointer"
+              [ngClass]="paginacion === 0 ? 'disabled' : ''">←</a>
           </li>
-          <li class="page-item {{ paginacion === i*10 ? 'active' : '' }}" *ngFor="let in of counter(paginas) ;let i = index">
+          <li class="page-item"
+          [ngClass]="paginacion === i*10 ? 'active' : ''" *ngFor="let in of counter(paginas); let i = index">
             <a (click)="pages(i*10)" class="page-link rounded pointer">{{i+1}}</a>
           </li>
           <li class="page-item">
-            <a (click)="managePagination(10)" class="page-link rounded pointer {{ paginacion / 10 + 1 === paginas ? 'disabled' : '' }}">→</a>
+            <a (click)="managePagination(10)"
+            class="page-link rounded pointer"
+            [ngClass]="paginacion / 10 + 1 === paginas ? 'disabled' : ''">→</a>
           </li>
         </ul>
       </div>
@@ -57,7 +62,7 @@
             <th class="wmin-lg-50 text-nowrap w100 text-center">Acciones</th>
           </tr>
           <tr *ngFor="let user of users">
-            <td class="text-center"><a href="#" class="">
+            <td class="text-center"><a data-bs-toggle="modal" (click)="modalUser(user)" data-bs-target="#modal_default" class="pointer">
                 <img [src]="user.imageUrl" class="w-56px h-56px rounded" alt="Imagen usuario">
               </a></td>
             <td>
@@ -66,7 +71,13 @@
                 <span class="text-muted">{{ user.email }}</span>
               </div>
             </td>
-            <td>{{ user.role }}</td>
+            <td>
+              <!-- {{ user.role }} -->
+              <select class="form-select" [(ngModel)]="user.role" (change)="changeRole( user )">
+                <option value="ADMIN_ROLE">Admin</option>
+                <option value="USER_ROLE">User</option>
+            </select>
+            </td>
             <td class="text-center">
               <span *ngIf="user.google" class="badge bg-danger">Google</span>
               <span *ngIf="!user.google" class="badge bg-info">Email</span>
@@ -81,50 +92,15 @@
             </td>
             <td class="wmin-lg-50 text-center">
               <div class="d-inline-flex">
-                <a class="text-primary" #tooltip="matTooltip" matTooltip="Modificar" matTooltipPosition="above">
+                <!-- <a (click)="updateUser(user)" class="text-primary pointer" #tooltip="matTooltip" matTooltip="Modificar" matTooltipPosition="above">
                   <i class="ph-pen"></i>
-                </a>
-                <a class="text-danger mx-2" #tooltip="matTooltip" matTooltip="Borrar" matTooltipPosition="above">
+                </a> -->
+                <a (click)="deleteUser(user)" class="text-danger mx-2 pointer" #tooltip="matTooltip" matTooltip="Borrar" matTooltipPosition="above">
                   <i class="ph-trash"></i>
                 </a>
               </div>
             </td>
           </tr>
-          <!-- <tr>
-          <td>Links with dropdown</td>
-          <td>
-            <div class="d-inline-flex">
-                      <a href="#" class="text-body">
-                        <i class="ph-pen"></i>
-                      </a>
-                      <a href="#" class="text-body mx-2">
-                        <i class="ph-trash"></i>
-                      </a>
-                      <div class="dropdown">
-                        <a href="#" class="text-body dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                          <i class="ph-gear"></i>
-                        </a>
-
-                <div class="dropdown-menu" style="">
-                  <a href="#" class="dropdown-item">
-                    <i class="ph-file-pdf me-2"></i>
-                    Export to PDF
-                  </a>
-                  <a href="#" class="dropdown-item">
-                    <i class="ph-file-xls me-2"></i>
-                    Export to CSV
-                  </a>
-                  <a href="#" class="dropdown-item">
-                    <i class="ph-file-doc me-2"></i>
-                    Export to DOC
-                  </a>
-                </div>
-                      </div>
-                    </div>
-          </td>
-          <td>Control links with optional <code>dropdown</code> menu appended to one of the links</td>
-        </tr> -->
-
         </tbody>
       </table>
     </div>
@@ -138,3 +114,7 @@
     </nav>
   </div> -->
 </div>
+
+<app-modal-image [userSelected]="userSelected" [uid]="selectedUid" [img]="selectedImg" type="usuarios"></app-modal-image>
+
+

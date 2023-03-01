@@ -33,4 +33,5 @@ $clitest-theme: mat.define-light-theme((
 // that you are using.
 @include mat.all-component-themes($clitest-theme);
 @import url('../node_modules/animate.css/animate.css');
+@import 'ngx-toastr/toastr';
 

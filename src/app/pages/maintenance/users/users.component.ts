@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
@@ -18,16 +19,29 @@ export class UsersComponent implements OnInit {
   public paginacion: number = 0;
   public loading: boolean = true;
   public paginas = 0;
+  public userSelected: User = {
+    nombre: '',
+    email: '',
+    role: '',
+    google: false,
+    estado: '',
+    imageUrl: ''
+  };
+  public selectedUid: string = '';
+  public selectedImg: string = '';
 
-  constructor(private userServide: UserService, private searchService: SearchService) { }
+  constructor(private userService: UserService, private searchService: SearchService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.loadUsers(0);
+    this.userService.newImage.subscribe( img => {
+      this.loadUsers(0);
+    });
   }
 
   loadUsers(pagination: number) {
     this.loading = true;
-    this.userServide.loadUsers(this.paginacion).subscribe({
+    this.userService.loadUsers(this.paginacion).subscribe({
       complete: () => {
         this.loading = false;
       }, // completeHandler
@@ -44,6 +58,8 @@ export class UsersComponent implements OnInit {
         this.users = usuarios;
         this.usersTemp = usuarios;
         this.paginas = Math.floor(total/10) + 1;
+        console.log(usuarios);
+
 
       }
     });
@@ -62,7 +78,7 @@ export class UsersComponent implements OnInit {
     } else if (this.paginacion >= this.totalUsers) {
       this.paginacion -= valor;
     }
-    
+
     this.loadUsers(this.paginacion);
   }
 
@@ -72,7 +88,7 @@ export class UsersComponent implements OnInit {
 
   pages(valor: number) {
     this.paginacion = valor;
-    
+
     this.loadUsers(this.paginacion);
   }
 
@@ -102,6 +118,83 @@ export class UsersComponent implements OnInit {
         this.totalSearch = totalSearch;
       }
     });
+  }
+
+  deleteUser(user: User) {
+    if (this.userService.uid === user.uid) {
+      Swal.fire(
+        'Error',
+        'No puedes darte de baja a ti mismo',
+        'error'
+      );
+      return;
+
+    }
+
+    Swal.fire({
+      title: '¿Dar de baja el usuario?',
+      text: `Estás apunto de dar de baja el usuario ${ user.nombre }`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, dar de baja'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.deleteUser(user).subscribe({
+          complete: () => {
+            Swal.fire(
+              'Borrado!',
+              `El usuario ${ user.nombre } ha sido dado de baja`,
+              'success'
+            );
+            this.loadUsers(0);
+          }, // completeHandler
+          error: (err) => {
+            console.log(err);
+            Swal.fire({
+              title: 'Error',
+              text: err.error.msg,
+              icon: 'error'
+            });
+          }
+        });
+
+      }
+    });
+  }
+
+  changeRole(user: User) {
+    console.log(user);
+    this.userService.updateUser(user).subscribe({
+      complete: () => {
+        // Swal.fire(
+        //   'Actualizado',
+        //   `El usuario ${ user.nombre } ha sido actualizado correctamente`,
+        //   'success'
+        // );
+        this.toastr.info('Usuario actualizado');
+
+      }, // completeHandler
+      error: (err) => {
+        console.log(err);
+        Swal.fire({
+          title: 'Error',
+          text: err.error.msg,
+          icon: 'error'
+        });
+      }, next: () => {
+        this.loadUsers(0);
+      }
+    });
+
+  }
+
+  modalUser(user: User) {
+    this.userSelected = user;
+    const userChild = new User(user.nombre, user.email, user.role, user.google, user.estado, user.img, user.uid);
+    this.selectedImg = userChild.imageUrl;
+    this.selectedUid = userChild.uid || '';
   }
 
 }

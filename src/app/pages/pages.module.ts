@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PagesComponent } from './pages.component';
 import { UsersComponent } from './maintenance/users/users.component';
 import { MaterialModule } from '../shared/material.module';
+import { ComponentsModule } from '../components/components.module';
 
 
 
@@ -30,7 +31,8 @@ import { MaterialModule } from '../shared/material.module';
     ReactiveFormsModule,
     SharedModule,
     RouterModule,
-    MaterialModule
+    MaterialModule,
+    ComponentsModule
   ]
 })
 export class PagesModule { }
