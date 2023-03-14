@@ -1,0 +1,38 @@
+<div *ngIf="loading" class="row animate__animated animate__fadeIn animate__fast">
+  <div class="col-12">
+    <div class="alert alert-info text-center">
+      <h4 class="alert-heading">Cargando</h4>
+      <div class="spinner-border spinner-border-lg text-info me-1 x2" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="mb-0">Dame un respiro</p>
+
+    </div>
+  </div>
+</div>
+<div class="card" *ngIf="!loading">
+  <div class="card-header">
+    <h5 class="mb-0"><a href="#" class="text-body">{{ collection.name }} #{{ num }}</a></h5>
+  </div>
+
+  <div class="card-body">
+    <div class="card-img-actions mb-3">
+      <img class="card-img img-fluid" *ngIf="num === '1'" [src]="collection.img1! | image:'collections':1" alt="">
+      <img class="card-img img-fluid" *ngIf="num === '2'" [src]="collection.img2! | image:'collections':2" alt="">
+      <img class="card-img img-fluid" *ngIf="num === '3'" [src]="collection.img3! | image:'collections':3" alt="">
+    </div>
+
+  </div>
+
+  <div class="card-footer d-sm-flex justify-content-sm-between flex-sm-wrap py-sm-2">
+    <ul class="pagination pagination-flat mt-2 mt-sm-0">
+      <li class="page-item pointer" [ngClass]="num === '1' ? 'disabled':''"><a (click)="managePag(-1)" class="page-link rounded">←</a></li>
+      <li class="page-item pointer" [ngClass]="num === '1' ? 'active' : ''"><a (click)="verImagen(1)" class="page-link rounded">1</a></li>
+      <li class="page-item pointer" [ngClass]="num === '2' ? 'active' : ''"><a (click)="verImagen(2)" class="page-link rounded">2</a></li>
+      <li class="page-item pointer" [ngClass]="num === '3' ? 'active' : ''"><a (click)="verImagen(3)" class="page-link rounded">3</a></li>
+      <li class="page-item pointer" [ngClass]="num === '3' ? 'disabled':''"><a (click)="managePag(1)" class="page-link rounded">→</a></li>
+    </ul>
+    <button type="button" (click)="back()"
+     class="btn btn-primary mt-3 mt-sm-0 w-100 w-sm-auto"><i class="ph-arrow-u-down-left"></i>&nbsp; Volver</button>
+  </div>
+</div>

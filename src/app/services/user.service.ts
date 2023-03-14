@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 import { SignupForm } from '../interfaces/signup-form.interface';
 import { LoginForm } from '../interfaces/login-form.interface';
 import { User } from '../models/user.model';
-import { LoadUsers } from '../interfaces/load-users.interface';
+import { LoadUsers } from '../interfaces/load.interface';
 
 const base_url = environment.base_url;
 declare const google: any;

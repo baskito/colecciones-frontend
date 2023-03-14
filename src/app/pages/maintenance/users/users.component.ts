@@ -6,6 +6,7 @@ import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 import { SearchService } from '../../../services/search.service';
+import { NewImageService } from '../../../services/new-image.service';
 
 @Component({
   selector: 'app-users',
@@ -33,7 +34,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   public selectedImg: string = '';
   public imgSubs!: Subscription;
 
-  constructor(private userService: UserService, private searchService: SearchService, private toastr: ToastrService) { }
+  constructor(private userService: UserService, private newImageService: NewImageService, private searchService: SearchService, private toastr: ToastrService) { }
 
   ngOnDestroy(): void {
     this.imgSubs.unsubscribe();
@@ -41,7 +42,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadUsers(0);
-    this.imgSubs = this.userService.newImage.pipe(delay(100)).subscribe( img => {
+    this.imgSubs = this.newImageService.newImage.pipe(delay(300)).subscribe( img => {
       this.loadUsers(0);
     });
   }
@@ -64,7 +65,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.totalUsers = total;
         this.users = usuarios;
         this.usersTemp = usuarios;
-        this.paginas = Math.floor(total/10) + 1;
+        this.paginas = Math.floor(total/10.1) + 1;
 
 
       }
@@ -118,8 +119,8 @@ export class UsersComponent implements OnInit, OnDestroy {
           icon: 'error'
         });
       },    // errorHandler
-      next: ({total, totalSearch, usuarios}) => {
-        this.users = usuarios;
+      next: ({total, totalSearch, arrayResp}) => {
+        this.users = arrayResp;
         this.totalUsers = total;
         this.totalSearch = totalSearch;
       }

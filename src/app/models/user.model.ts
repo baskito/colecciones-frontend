@@ -17,14 +17,14 @@ export class User {
   get imageUrl(): string {
 
     if ( !this.img ) {
-      return `${ base_url }/upload/usuarios/no-image`;
+      return `${ base_url }/upload/no-image`;
     }
 
     if ( this.img?.includes('https') ) {
       return this.img;
     }
 
-    return `${ base_url }/upload/usuarios/${ this.img }`;
+    return `${ base_url }/upload/usuarios/1/${ this.img }`;
 
   }
 }

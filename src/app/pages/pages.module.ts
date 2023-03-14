@@ -13,6 +13,12 @@ import { ComponentsModule } from '../components/components.module';
 import { AccesoriosComponent } from './maintenance/accesorios/accesorios.component';
 import { CollectionsComponent } from './maintenance/collections/collections.component';
 import { ConsolesComponent } from './maintenance/consoles/consoles.component';
+import { EditCollectionComponent } from './maintenance/collections/edit-collection/edit-collection.component';
+import { PipesModule } from '../pipes/pipes.module';
+import { ViewCollectionComponent } from './maintenance/collections/view-collection/view-collection.component';
+import { ViewImageComponent } from './view-image/view-image.component';
+import { EditAccesorioComponent } from './maintenance/accesorios/edit-accesorio/edit-accesorio.component';
+import { ViewAccesorioComponent } from './maintenance/accesorios/view-accesorio/view-collection.component';
 
 
 
@@ -24,7 +30,12 @@ import { ConsolesComponent } from './maintenance/consoles/consoles.component';
     UsersComponent,
     CollectionsComponent,
     AccesoriosComponent,
-    ConsolesComponent
+    ConsolesComponent,
+    EditCollectionComponent,
+    ViewCollectionComponent,
+    EditAccesorioComponent,
+    ViewAccesorioComponent,
+    ViewImageComponent
   ],
   exports: [
     HomeComponent,
@@ -38,7 +49,8 @@ import { ConsolesComponent } from './maintenance/consoles/consoles.component';
     SharedModule,
     RouterModule,
     MaterialModule,
-    ComponentsModule
+    ComponentsModule,
+    PipesModule
   ]
 })
 export class PagesModule { }

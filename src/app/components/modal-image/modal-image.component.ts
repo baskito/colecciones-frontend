@@ -1,11 +1,8 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormGroup } from '@angular/forms';
 import { FileUploadService } from 'src/app/services/file-upload.service';
-import { UserService } from 'src/app/services/user.service';
-import { User } from '../../models/user.model';
-import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
+import { NewImageService } from '../../services/new-image.service';
 
 @Component({
   selector: 'app-modal-image',
@@ -16,6 +13,7 @@ export class ModalImageComponent implements OnInit {
 
   @Input() img!: string;
   @Input() uid!: string;
+  @Input() numImg!: string;
   @Input() type!: 'usuarios' | 'consoles' | 'accesorios' | 'collections';
   public profileForm!: FormGroup;
   public uploadImage!: File;
@@ -23,7 +21,7 @@ export class ModalImageComponent implements OnInit {
   public imgTemp: any;
   @ViewChild('closeBtn') closeBtn!: ElementRef;
 
-  constructor(private userService: UserService, private toastr: ToastrService, private fileUploadService: FileUploadService) { }
+  constructor(private newImageService: NewImageService, private toastr: ToastrService, private fileUploadService: FileUploadService) { }
 
   ngOnInit(): void {
 
@@ -31,6 +29,7 @@ export class ModalImageComponent implements OnInit {
 
   changeImage(file: File) {
     this.uploadImage = file;
+    console.log('🚀 ~ ModalImageComponent ~ changeImage ~ uploadImage:', this.uploadImage);
 
     if (!file) {
       this.fileButton ? this.fileButton.nativeElement.value = '' : '';
@@ -42,18 +41,23 @@ export class ModalImageComponent implements OnInit {
     reader.readAsDataURL( file );
     reader.onloadend = () => {
       this.imgTemp = reader.result;
+      console.log('🚀 ~ ModalImageComponent ~ changeImage ~ this.imgTemp:', this.imgTemp);
     }
   }
 
   updateImage() {
     if (this.uploadImage) {
-      this.fileUploadService.updateImage(this.uploadImage, this.type, this.uid )
+      if (!(this.numImg in ['1', '2', '3'])) {
+        return;
+      }
+      this.fileUploadService.updateImage(this.uploadImage, this.type, this.uid, this.numImg )
         .then( img => {
           this.toastr.info('Imagen actualizada');
           this.closeBtn.nativeElement.click();
           this.fileButton ? this.fileButton.nativeElement.value = '' : '';
           this.cerrarModal();
-          this.userService.newImage.emit(img);
+          this.newImageService.newImage.emit(img);
+
         });
     }
   }

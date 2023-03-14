@@ -1,0 +1,228 @@
+<div class="card">
+  <div class="card-header d-flex align-items-center py-0">
+    <h6 class="py-3 mb-0">{{ tableTitle }}</h6>
+    <div class="ms-auto my-auto">
+      <button type="text" routerLink="../../view/{{collectionEdit._id}}" class="btn btn-primary">Ver <i class="ph-eye ms-2"></i></button>
+      &nbsp;&nbsp;<button type="text" (click)="saveCollection()" class="btn btn-secondary">Guardar <i class="ph-floppy-disk  ms-2"></i></button>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <form>
+      <div class="row">
+        <div class="col-lg-8">
+          <label class="form-label">Nombre colección</label>
+          <div class="mb-3">
+            <input type="text"
+            [(ngModel)]="this.collectionEdit.name"
+            [ngModelOptions]="{standalone: true}"
+            class="form-control"
+            ngClass="{{ !collectionEdit.name && formSubmitted ? 'is-invalid' : ''}}"
+            placeholder="Nombre">
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <label class="form-label">Editorial</label>
+          <div class="mb-3">
+            <input type="text" [(ngModel)]="this.collectionEdit.editorial" [ngModelOptions]="{standalone: true}" class="form-control" ngClass="{{ !collectionEdit.editorial && formSubmitted ? 'is-invalid' : ''}}" placeholder="Editorial">
+          </div>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-2">
+          <label class="form-label">Año publicación</label>
+          <div class="mb-3">
+            <select [(ngModel)]="this.collectionEdit.year" [ngModelOptions]="{standalone: true}" class="form-select" ngClass="{{ !collectionEdit.year && formSubmitted ? 'is-invalid' : ''}}">
+              <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-2">
+          <label class="form-label">Tipo</label>
+          <div class="mb-3">
+            <select [(ngModel)]="this.collectionEdit.tipology" [ngModelOptions]="{standalone: true}" class="form-select">
+              <option value="Cards">Cards</option>
+              <option value="Stickers">Stickers</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-lg-2">
+          <label class="form-label">Total</label>
+          <div class="mb-3">
+            <input type="number" [(ngModel)]="this.collectionEdit.fullCollection" [ngModelOptions]="{standalone: true}" class="form-control">
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <label class="form-label">Faltan</label>
+          <div class="mb-3">
+            <input type="text" [(ngModel)]="this.collectionEdit.missing" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Cromos faltantes, números separados por comas">
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <label class="form-label">Repetidos</label>
+          <div class="mb-3">
+            <input type="text" [(ngModel)]="this.collectionEdit.repeated" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Cromos repetidos">
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <label class="form-label">Extras</label>
+          <div class="mb-3">
+            <input type="text" [(ngModel)]="this.collectionEdit.extras" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Extras colección (hólogramas, etc)">
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <label class="form-label">Descripción</label>
+          <div class="mb-3">
+            <input type="text" [(ngModel)]="this.collectionEdit.description" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Descripción colección">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="form-label">Notas</label>
+        <textarea rows="2" cols="3" [(ngModel)]="this.collectionEdit.notes" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="notas"></textarea>
+      </div>
+      <br>
+      <!-- <div class="row row-cols-sm-3 mb-sm-3">
+        <div class="col-sm">
+          <div class="card card-img-actions h-sm-100 mb-sm-0">
+            <img class="card-img-top img-fluid" *ngIf="!this.imgTemp" [src]="collectionEdit.img1! | image:'collections':1" alt="Imagen 1">
+            <img class="card-img-top img-fluid" *ngIf="this.imgTemp" [src]="this.imgTemp" alt="Imagen 1">
+            <div class="card-img-actions-overlay card-img">
+              <a (click)="fileInput1.click()" class="btn btn-outline-white btn-icon rounded-pill">
+                <i class="ph-pencil"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm">
+          <div class="card card-img-actions h-sm-100 mb-sm-0">
+            <img class="card-img-top img-fluid" *ngIf="!this.imgTemp2" [src]="collectionEdit.img2! | image:'collections':2" alt="Imagen 2">
+            <img class="card-img-top img-fluid" *ngIf="this.imgTemp2" [src]="this.imgTemp2" alt="Imagen 2">
+            <div class="card-img-actions-overlay card-img">
+              <a (click)="fileInput2.click()" class="btn btn-outline-white btn-icon rounded-pill">
+                <i class="ph-pencil"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm">
+          <div class="card card-img-actions h-sm-100 mb-sm-0">
+            <img class="card-img img-fluid" *ngIf="!this.imgTemp3" [src]="collectionEdit.img3! | image:'collections':3" alt="Imagen 3">
+            <img class="card-img img-fluid" *ngIf="this.imgTemp3" [src]="this.imgTemp3" alt="Imagen 3">
+            <div class="card-img-actions-overlay card-img">
+              <a (click)="fileInput3.click()" class="btn btn-outline-white btn-icon rounded-pill">
+                <i class="ph-pencil"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div> -->
+      <div class="row" style="margin-top: -15px;">
+        <div class="col-sm-6 col-lg-4">
+
+          <div class="card">
+            <div class="card-img-actions mx-1 mt-1">
+              <img class="card-img img-fluid" *ngIf="!this.imgTemp" [src]="collectionEdit.img1! | image:'collections':1" alt="">
+              <img class="card-img img-fluid" *ngIf="this.imgTemp" [src]="this.imgTemp" alt="">
+              <div class="card-img-actions-overlay card-img">
+                <a (click)="fileInput1.click()" class="btn btn-outline-white btn-icon rounded-pill" data-bs-popup="lightbox" data-gallery="gallery1">
+                  <i class="ph-pencil"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="card-body text-center">
+              <div class="input-group">
+                <input type="file" class="form-control" (change)="changeImage($any($event.target).files[0], 1)" #fileInput1>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+
+          <div class="card">
+            <div class="card-img-actions mx-1 mt-1">
+              <img class="card-img img-fluid" *ngIf="!this.imgTemp2" [src]="collectionEdit.img2! | image:'collections':2" alt="">
+              <img class="card-img img-fluid" *ngIf="this.imgTemp2" [src]="this.imgTemp2" alt="">
+              <div class="card-img-actions-overlay card-img">
+                <a (click)="fileInput2.click()" class="btn btn-outline-white btn-icon rounded-pill" data-bs-popup="lightbox" data-gallery="gallery1">
+                  <i class="ph-pencil"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="card-body text-center">
+              <div class="input-group">
+                <input type="file" class="form-control" (change)="changeImage($any($event.target).files[0], 2)" #fileInput2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+
+          <div class="card">
+            <div class="card-img-actions mx-1 mt-1">
+              <img class="card-img img-fluid" *ngIf="!this.imgTemp3" [src]="collectionEdit.img3! | image:'collections':3" alt="">
+              <img class="card-img img-fluid" *ngIf="this.imgTemp3" [src]="this.imgTemp3" alt="">
+              <div class="card-img-actions-overlay card-img">
+                <a (click)="fileInput3.click()" class="btn btn-outline-white btn-icon rounded-pill" data-bs-popup="lightbox" data-gallery="gallery1">
+                  <i class="ph-pencil"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="card-body text-center">
+              <div class="input-group">
+                <input type="file" class="form-control" (change)="changeImage($any($event.target).files[0], 3)" #fileInput3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+
+      <!-- <div class="row row-cols-sm-3 mb-sm-3">
+        <div class="col-sm">
+          <div class="card-footer d-flex justify-content-between border-top-0 pt-0 pb-3">
+            <div class="input-group">
+              <input type="file" class="form-control" (change)="changeImage($any($event.target).files[0], 1)" #fileInput1>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="card-footer d-flex justify-content-between border-top-0 pt-0 pb-3">
+            <div class="input-group">
+              <input type="file" class="form-control" (change)="changeImage($any($event.target).files[0], 2)" #fileInput2>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="card-footer d-flex justify-content-between border-top-0 pt-0 pb-3">
+            <div class="input-group">
+              <input type="file" class="form-control" (change)="changeImage($any($event.target).files[0], 3)" #fileInput3>
+            </div>
+          </div>
+        </div>
+
+      </div> -->
+
+      <div class="text-end">
+        <button type="text" (click)="saveCollection()" class="btn btn-secondary">Guardar <i class="ph-floppy-disk  ms-2"></i></button>
+      </div>
+    </form>
+  </div>
+</div>

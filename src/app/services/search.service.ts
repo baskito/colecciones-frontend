@@ -55,7 +55,14 @@ export class SearchService {
                 return {
                   total: resp.total,
                   totalSearch: resp.totalSearch,
-                  usuarios: this.transformUsers( resp.results ),
+                  arrayResp: this.transformUsers( resp.results ),
+                };
+
+              case 'collections':
+                return {
+                  total: resp.total,
+                  totalSearch: resp.totalSearch,
+                  arrayResp: resp.results
                 };
 
 
@@ -63,7 +70,7 @@ export class SearchService {
                 return {
                   total: 0,
                   totalSearch: 0,
-                  usuarios: [],
+                  arrayResp: [],
                 };
             }
 

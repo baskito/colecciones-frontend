@@ -1,0 +1,223 @@
+<div class="card">
+  <div class="card-header d-flex align-items-center py-0">
+    <h6 class="py-3 mb-0">{{ tableTitle }}</h6>
+    <div class="ms-auto my-auto">
+      <button type="text" routerLink="../../view/{{accesorioEdit._id}}" class="btn btn-primary">Ver <i class="ph-eye ms-2"></i></button>
+      &nbsp;&nbsp;<button type="text" (click)="saveAccesorio()" class="btn btn-secondary">Guardar <i class="ph-floppy-disk  ms-2"></i></button>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <form>
+      <div class="row">
+        <div class="col-lg-5">
+          <label class="form-label">Nombre accesorio</label>
+          <div class="mb-3">
+            <input type="text"
+            [(ngModel)]="this.accesorioEdit.name"
+            [ngModelOptions]="{standalone: true}"
+            class="form-control"
+            ngClass="{{ !accesorioEdit.name && formSubmitted ? 'is-invalid' : ''}}"
+            placeholder="Nombre">
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <label class="form-label">Modelo</label>
+          <div class="mb-3">
+            <input type="text" [(ngModel)]="this.accesorioEdit.model" [ngModelOptions]="{standalone: true}" class="form-control" ngClass="{{ !accesorioEdit.model && formSubmitted ? 'is-invalid' : ''}}" placeholder="Modelo">
+          </div>
+
+        </div>
+        <div class="col-lg-3">
+          <label class="form-label">Marca</label>
+          <div class="mb-3">
+            <input type="text" [(ngModel)]="this.accesorioEdit.brand" [ngModelOptions]="{standalone: true}" class="form-control" ngClass="{{ !accesorioEdit.brand && formSubmitted ? 'is-invalid' : ''}}" placeholder="Marca">
+          </div>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-2">
+          <label class="form-label">Año lanzamiento</label>
+          <div class="mb-3">
+            <select [(ngModel)]="this.accesorioEdit.year" [ngModelOptions]="{standalone: true}" class="form-select" ngClass="{{ !accesorioEdit.year && formSubmitted ? 'is-invalid' : ''}}">
+              <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-2">
+          <label class="form-label">Tipo</label>
+          <div class="mb-3">
+            <select [(ngModel)]="this.accesorioEdit.tipology" [ngModelOptions]="{standalone: true}" class="form-select">
+              <option value="Cards">Cards</option>
+              <option value="Stickers">Stickers</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-lg-2">
+          <label class="form-label">Precio lanzamiento €</label>
+          <div class="mb-3">
+            <input type="number" [(ngModel)]="this.accesorioEdit.releasePrice" [ngModelOptions]="{standalone: true}" class="form-control">
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <label class="form-label">Soporte</label>
+          <div class="mb-3">
+            <input type="text" [(ngModel)]="this.accesorioEdit.support" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Cartucho, disco, tarjeta...">
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <label class="form-label">Número serie</label>
+          <div class="mb-3">
+            <input type="text" [(ngModel)]="this.accesorioEdit.serialNumber" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Número de serie">
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <label class="form-label">Compatible</label>
+          <div class="mb-3">
+            <input type="text" [(ngModel)]="this.accesorioEdit.compatibility" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Compatible con los sistemas...">
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <label class="form-label">Descripción</label>
+          <div class="mb-3">
+            <input type="text" [(ngModel)]="this.accesorioEdit.description" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Descripción accesorio">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <label class="form-label">Notas</label>
+        <textarea rows="2" cols="3" [(ngModel)]="this.accesorioEdit.notes" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="notas"></textarea>
+      </div>
+      <br>
+      <legend class="fs-base fw-bold border-bottom pb-2 mb-3">Datos compra</legend>
+      <div class="row">
+        <div class="col-lg-3">
+          <label class="form-label">Fecha compra</label>
+          <div class="mb-3">
+            <input type="date" [(ngModel)]="purchaseDateFormat" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Fecha compra">
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <label class="form-label">Precio compra €</label>
+          <div class="mb-3">
+            <input type="number" [(ngModel)]="this.accesorioEdit.purchasePrice" [ngModelOptions]="{standalone: true}" class="form-control">
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <label class="form-label">Sitio compra</label>
+          <div class="mb-3">
+            <input type="text" [(ngModel)]="this.accesorioEdit.purchasePlace" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Sitio compra">
+          </div>
+        </div>
+      </div>
+      <br>
+      <legend class="fs-base fw-bold border-bottom pb-2 mb-3">Datos Venta</legend>
+      <div class="row">
+        <div class="col-lg-2">
+          <div class="d-flex align-items-center">
+            <input type="checkbox" id="dc_ls_c" [checked]="accesorioEdit.sold" (change)="onChanged($event)">
+            <label class="ms-2" for="dc_ls_c">Vendido</label>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <label class="form-label">Fecha venta</label>
+          <div class="mb-3">
+            <input type="date" id="datePriceInput" [(ngModel)]="saleDateFormat" [disabled]="!accesorioEdit.sold!" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Fecha venta">
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <label class="form-label">Precio venta €</label>
+          <div class="mb-3">
+            <input type="number" id="salePriceInput" [(ngModel)]="this.accesorioEdit.salePrice" [disabled]="!accesorioEdit.sold!" [ngModelOptions]="{standalone: true}" class="form-control">
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <label class="form-label">Sitio venta</label>
+          <div class="mb-3">
+            <input type="text" id="placePriceInput" [(ngModel)]="this.accesorioEdit.salePlace" [disabled]="!accesorioEdit.sold!" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Sitio venta">
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row" style="margin-top: -15px;">
+        <div class="col-sm-6 col-lg-4">
+
+          <div class="card">
+            <div class="card-img-actions mx-1 mt-1">
+              <img class="card-img img-fluid" *ngIf="!this.imgTemp" [src]="accesorioEdit.img1! | image:'accesorios':1" alt="">
+              <img class="card-img img-fluid" *ngIf="this.imgTemp" [src]="this.imgTemp" alt="">
+              <div class="card-img-actions-overlay card-img">
+                <a (click)="fileInput1.click()" class="btn btn-outline-white btn-icon rounded-pill" data-bs-popup="lightbox" data-gallery="gallery1">
+                  <i class="ph-pencil"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="card-body text-center">
+              <div class="input-group">
+                <input type="file" class="form-control" (change)="changeImage($any($event.target).files[0], 1)" #fileInput1>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+
+          <div class="card">
+            <div class="card-img-actions mx-1 mt-1">
+              <img class="card-img img-fluid" *ngIf="!this.imgTemp2" [src]="accesorioEdit.img2! | image:'accesorios':2" alt="">
+              <img class="card-img img-fluid" *ngIf="this.imgTemp2" [src]="this.imgTemp2" alt="">
+              <div class="card-img-actions-overlay card-img">
+                <a (click)="fileInput2.click()" class="btn btn-outline-white btn-icon rounded-pill" data-bs-popup="lightbox" data-gallery="gallery1">
+                  <i class="ph-pencil"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="card-body text-center">
+              <div class="input-group">
+                <input type="file" class="form-control" (change)="changeImage($any($event.target).files[0], 2)" #fileInput2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+
+          <div class="card">
+            <div class="card-img-actions mx-1 mt-1">
+              <img class="card-img img-fluid" *ngIf="!this.imgTemp3" [src]="accesorioEdit.img3! | image:'accesorios':3" alt="">
+              <img class="card-img img-fluid" *ngIf="this.imgTemp3" [src]="this.imgTemp3" alt="">
+              <div class="card-img-actions-overlay card-img">
+                <a (click)="fileInput3.click()" class="btn btn-outline-white btn-icon rounded-pill" data-bs-popup="lightbox" data-gallery="gallery1">
+                  <i class="ph-pencil"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="card-body text-center">
+              <div class="input-group">
+                <input type="file" class="form-control" (change)="changeImage($any($event.target).files[0], 3)" #fileInput3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+
+
+      <div class="text-end">
+        <button type="text" (click)="saveAccesorio()" class="btn btn-secondary">Guardar <i class="ph-floppy-disk  ms-2"></i></button>
+      </div>
+    </form>
+  </div>
+</div>

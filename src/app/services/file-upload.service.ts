@@ -15,12 +15,15 @@ export class FileUploadService {
   async updateImage(
     file: File,
     type: 'usuarios'|'consoles'|'accesorios'|'collections',
-    id: string
+    id: string,
+    numImg: string
   ) {
 
     try {
 
-      const url = `${ base_url }/upload/${ type }/${ id }/1`;
+      const url = `${ base_url }/upload/${ type }/${ numImg }/${ id }`;
+
+      console.log('🚀 ~ FileUploadService ~ url:', url);
       const formdata = new FormData();
       formdata.append('image', file);
 

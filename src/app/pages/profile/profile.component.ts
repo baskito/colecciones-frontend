@@ -83,7 +83,7 @@ export class ProfileComponent implements OnInit {
   }
 
   uploadImageFunction() {
-    this.fileUploadService.updateImage(this.uploadImage, 'usuarios', this.user.uid! )
+    this.fileUploadService.updateImage(this.uploadImage, 'usuarios', this.user.uid!, '1' )
         .then( img => this.user.img = img);
   }
 

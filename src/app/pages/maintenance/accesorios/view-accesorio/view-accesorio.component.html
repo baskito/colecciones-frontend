@@ -1,0 +1,322 @@
+<div *ngIf="loading" class="row animate__animated animate__fadeIn animate__fast">
+  <div class="col-12">
+    <div class="alert alert-info text-center">
+      <h4 class="alert-heading">Cargando</h4>
+      <div class="spinner-border spinner-border-lg text-info me-1 x2" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="mb-0">Dame un respiro</p>
+
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!loading">
+  <div class="profile-cover">
+    <div class="profile-cover-img" [ngStyle]="{ 'background-image': 'url(' + imagen1 + ')'}"></div>
+    <!-- <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img [src]="collection.img1! | image:'collections':1" class="d-block w-100" alt="">
+        </div>
+        <div class="carousel-item">
+          <img [src]="collection.img2! | image:'collections':2" class="d-block w-100" alt="">
+        </div>
+        <div class="carousel-item">
+          <img [src]="collection.img3! | image:'collections':3" class="d-block w-100" alt="">
+        </div>
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+      </button>
+    </div> -->
+    <div
+      class="d-flex align-items-center text-center text-lg-start flex-column flex-lg-row position-absolute start-0 end-0 bottom-0 mx-3 mb-3">
+
+
+      <div class="profile-cover-text text-white">
+        <h1 class="mb-0">{{ collection.name }}</h1>
+        <span class="d-none d-lg-inline-block ms-2">
+          <span class="badge bg-warning ms-auto ms-lg-2">{{ collection.editorial }}</span>
+          <span class="badge bg-success rounded-pill ms-auto ms-lg-2">{{ collection.year }}</span>
+          <span class="badge bg-secondary ms-auto ms-lg-2">{{ collection.tipology }}</span>
+        </span>
+      </div>
+
+      <div class="ms-lg-auto mt-2 mt-lg-0">
+        <div class="d-inline-flex">
+          <a routerLink="../../edit/{{collection._id}}" class="btn btn-info border-transparent shadow ms-3 pointer">
+            <i class="ph-pen me-2"></i>
+            Modificar
+          </a>
+          <a (click)="deleteCollection(collection)" class="btn btn-danger border-transparent shadow ms-3 pointer">
+            <i class="ph-trash me-2"></i>
+            Borrar
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="row" style="margin-top: -15px;">
+    <div class="col-sm-6 col-lg-4">
+      <div class="card">
+        <div class="card-img-actions m-1">
+          <img class="card-img img-fluid" [src]="collection.img1! | image:'collections':1" alt="">
+          <div class="card-img-actions-overlay card-img">
+            <a [href]="collection.img1! | image:'collections':1" class="btn btn-outline-white btn-icon rounded-pill" data-bs-popup="lightbox" data-gallery="gallery1">
+              <i class="ph-eye"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-4">
+      <div class="card">
+        <div class="card-img-actions m-1">
+          <img class="card-img img-fluid" [src]="collection.img2! | image:'collections':2" alt="">
+          <div class="card-img-actions-overlay card-img">
+            <a [href]="collection.img2! | image:'collections':2" class="btn btn-outline-white btn-icon rounded-pill" data-bs-popup="lightbox" data-gallery="gallery1">
+              <i class="ph-eye"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-4">
+      <div class="card">
+        <div class="card-img-actions m-1">
+          <img class="card-img img-fluid" [src]="collection.img3! | image:'collections':3" alt="">
+          <div class="card-img-actions-overlay card-img">
+            <a [href]="collection.img3! | image:'collections':3" class="btn btn-outline-white btn-icon rounded-pill" data-bs-popup="lightbox" data-gallery="gallery1">
+              <i class="ph-eye"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div> -->
+  <!-- <div class="row">
+
+    <div class="col-sm-6 col-lg-4">
+      <div class="card bg-pink text-white text-center p-3" style="background-image: url(../../../assets/images/backgrounds/panel_bg.png); background-size: contain;">
+        <div>
+          <a href="#" class="btn btn-outline-white btn-lg btn-icon border-width-2 rounded-pill mb-3 mt-1">
+            <i class="ph-quotes"></i>
+          </a>
+        </div>
+
+        <blockquote class="blockquote mb-0">
+          <p>"Delivered is to ye belonging enjoyment preferred. Astonished and acceptance men two discretion"</p>
+          <footer class="blockquote-footer text-white">
+            <span>
+              Someone famous in <cite title="Source Title">Source Title</cite>
+            </span>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+  </div> -->
+
+  <br>
+  <div class="row">
+    <div class="col-9">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">Colección del año <span class="badge bg-success rounded-pill ms-auto ms-lg-2">{{
+              collection.year }}</span> de la editorial <span class="badge bg-warning ms-auto ms-lg-2">{{
+              collection.editorial }}</span> <span *ngIf="collection.fullCollection"> que consta de {{
+              collection.fullCollection }} {{ collection.tipology }}</span> </h5>
+        </div>
+
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6 col-xl-3">
+
+              <!-- Missing cards -->
+              <div class="card card-body text-center" *ngIf="collection.fullCollection">
+								<h6 class="mb-0">Cromos colección {{collection.fullCollection}}</h6>
+								<div *ngIf="collection.missing" class="fs-sm text-muted mb-3">Faltan los cromos {{ collection.missing }}</div>
+								<div *ngIf="!collection.missing" class="fs-sm text-muted mb-3">Colección completa</div>
+                <app-missing-chart *ngIf="collection.missing" [dataArrayInput]="data"></app-missing-chart>
+                <i *ngIf="!collection.missing" class="ph-check-circle ph-5x text-success mt-1 mb-3"></i>
+							</div>
+              <div class="card card-body text-center" *ngIf="!collection.fullCollection">
+								<h6 class="mb-0">Sin datos</h6>
+								<div class="fs-sm text-muted mb-3">Completa los cromos de la colección y tus faltas</div>
+							</div>
+              <!-- /Missing cards -->
+
+            </div>
+
+            <div class="col-sm-6 col-xl-9">
+              <div class="card border-success">
+								<div class="card-header bg-success bg-opacity-10 border-success d-flex justify-content-between">
+									<span class="fw-semibold">{{ collection.description }}</span>
+									<span *ngIf="collection.fullCollection" class="text-success fw-semibold">{{collection.fullCollection}} {{ collection.tipology }}</span>
+								</div>
+								<div class="card-body">
+                  <h5 class="card-title">Extras de la colección</h5>
+                  <p class="mb-3">{{ collection.extras }}</p>
+                  <h5 class="card-title">Notas</h5>
+                  <p class="mb-3">{{ collection.notes }}</p>
+								</div>
+
+								<div class="card-footer d-flex justify-content-between border-top-0 pt-0 pb-3">
+									<span class="text-muted">Cromos repetidos</span>
+									<span class="hstack gap-1">
+										<span class="text-muted ms-1">{{ collection.repeated }}</span>
+									</span>
+								</div>
+							</div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Colección del año <span class="badge bg-success rounded-pill ms-auto ms-lg-2">{{ collection.year }}</span> de la editorial <span class="badge bg-warning ms-auto ms-lg-2">{{ collection.editorial }}</span> <span *ngIf="collection.fullCollection"> que consta de {{ collection.fullCollection }} {{ collection.tipology }}</span> </h5>
+      </div>
+
+      <div class="card-body">
+        <div class="accordion">
+          <div class="accordion-item" *ngIf="collection.description">
+            <div class="accordion-header">
+              <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#question1" aria-expanded="true">
+                <i class="ph-question me-2"></i>
+                Descripción
+              </button>
+            </div>
+
+            <div id="question1" class="accordion-collapse collapse show">
+              <div class="accordion-body">
+                <p class="mb-3">{{ collection.description }}</p>
+
+
+              </div>
+            </div>
+          </div>
+
+
+          <div class="accordion-item"  *ngIf="collection.extras">
+            <div class="accordion-header">
+              <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#question2">
+                <i class="ph-question me-2"></i>
+                Extras de la colección
+              </button>
+            </div>
+
+            <div id="question2" class="accordion-collapse collapse">
+              <div class="accordion-body">
+                <p class="mb-3">{{ collection.extras }}</p>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item"  *ngIf="collection.missing">
+            <div class="accordion-header">
+              <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#question3">
+                <i class="ph-question me-2"></i>
+                Cromos faltantes
+              </button>
+            </div>
+
+            <div id="question3" class="accordion-collapse collapse">
+              <div class="accordion-body">
+                <p class="mb-3">{{ collection.missing }}</p>
+
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item"  *ngIf="!collection.missing">
+            <div class="accordion-header">
+              <button type="button" class="accordion-button collapsed">
+                <i class="ph-question me-2"></i>
+                Colección completa
+              </button>
+            </div>
+          </div>
+
+          <div class="accordion-item"  *ngIf="collection.repeated">
+            <div class="accordion-header">
+              <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#question4">
+                <i class="ph-question me-2"></i>
+                Cromos repetidos
+              </button>
+            </div>
+
+            <div id="question4" class="accordion-collapse collapse">
+              <div class="accordion-body">
+                <p class="mb-3">{{ collection.repeated }}</p>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item"  *ngIf="collection.notes">
+            <div class="accordion-header">
+              <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#question5">
+                <i class="ph-question me-2"></i>
+                Notas
+              </button>
+            </div>
+
+            <div id="question5" class="accordion-collapse collapse">
+              <div class="accordion-body">
+                <p class="mb-3">{{ collection.notes }}</p>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div> -->
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="card">
+        <div class="card-img-actions m-1">
+          <img class="card-img img-fluid" [src]="collection.img1! | image:'collections':1" alt="">
+          <div class="card-img-actions-overlay card-img">
+            <a (click)="verImagen(1)" class="btn btn-outline-white btn-icon rounded-pill"
+              data-bs-popup="lightbox" data-gallery="gallery1">
+              <i class="ph-eye"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="card-img-actions m-1">
+          <img class="card-img img-fluid" [src]="collection.img2! | image:'collections':2" alt="">
+          <div class="card-img-actions-overlay card-img">
+            <a (click)="verImagen(2)" class="btn btn-outline-white btn-icon rounded-pill"
+              data-bs-popup="lightbox" data-gallery="gallery1">
+              <i class="ph-eye"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="card-img-actions m-1">
+          <img class="card-img img-fluid" [src]="collection.img3! | image:'collections':3" alt="">
+          <div class="card-img-actions-overlay card-img">
+            <a (click)="verImagen(3)" class="btn btn-outline-white btn-icon rounded-pill"
+              data-bs-popup="lightbox" data-gallery="gallery1">
+              <i class="ph-eye"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
