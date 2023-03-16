@@ -64,8 +64,12 @@
           <tr class="table-light">
             <th class="w100 text-center">Imagen</th>
             <th>Colección</th>
-            <th class="w100 text-center">Tipo</th>
-            <th class="w100 text-center">Cromos</th>
+            <th class="w50 text-center">Tipo</th>
+            <th class="w50 text-center">Año</th>
+            <th class="w50 text-center">Color</th>
+            <th class="w50 text-center">Fecha compra</th>
+            <th class="w50 text-center">Precio compra</th>
+            <th>Consola</th>
             <th>Descripción</th>
             <!-- <th class="w100 text-center">Extras</th>
             <th class="w100 text-center">Faltan</th>
@@ -88,6 +92,13 @@
               <span class="badge bg-purple">{{ acc.tipology }}</span>
             </td>
             <td class="text-center">{{ acc.year }}</td>
+            <td class="text-center">
+              <button *ngIf="acc.color"  class="material-button" [ngStyle]="{'background-color': acc.color}">&nbsp;&nbsp;&nbsp;</button>
+            </td>
+            <td class="text-center">{{ acc.purchaseDate | date: 'dd-MM-yy' }}</td>
+            <td class="text-center">{{ acc.purchasePrice }}</td>
+            <td><button data-bs-toggle="modal" data-bs-target="#modal_console" (click)="modalConsole(acc.console!)" type="button" class="btn btn-outline-primary border-transparent">{{ getConsole(acc.console!) }}</button></td>
+            <!-- <td>{{ getConsole(acc.console) }}</td> -->
             <td>{{ acc.description }}</td>
             <!-- <td>{{ colec.extras }}</td>
             <td>{{ colec.missing }}</td>
@@ -127,6 +138,7 @@
 
 <!-- <app-modal-image [uid]="selectedUid" [img]="selectedImg" type="usuarios"></app-modal-image> -->
 <app-modal-image [uid]="selectedUid" [img]="selectedImg" type="accesorios" numImg="1"></app-modal-image>
+<app-modal-console [consSel]="consModal"></app-modal-console>
 
 
 

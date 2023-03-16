@@ -9,6 +9,8 @@ import { LoadCollections } from '../../../../interfaces/load.interface';
 import { FileUploadService } from '../../../../services/file-upload.service';
 import { Accesorio } from '../../../../models/accesorio.model';
 import { AccesoriosService } from '../../../../services/accesorios.service';
+import { ConsoleService } from '../../../../services/console.service';
+import { Console } from 'src/app/models/console.model';
 
 @Component({
   selector: 'app-edit-accesorio',
@@ -38,6 +40,7 @@ export class EditAccesorioComponent implements OnInit, OnDestroy {
   public inputName: boolean = false;
   public saleDateFormat: string = '';
   public purchaseDateFormat: string = '';
+  public consoles: Console[] = [];
 
   // public collectionForm: FormGroup = new FormGroup({
   //   name: new FormControl(this.collectionEdit.name, [Validators.required]),
@@ -47,7 +50,14 @@ export class EditAccesorioComponent implements OnInit, OnDestroy {
 
   // });
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private fileUploadService: FileUploadService, private toast: ToastrService, private accService: AccesoriosService) { }
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private fileUploadService: FileUploadService,
+    private toast: ToastrService,
+    private accService: AccesoriosService,
+    private consoleService: ConsoleService
+    ) { }
 
   ngOnDestroy(): void {
     if (this.idParamSubs) {
@@ -57,6 +67,7 @@ export class EditAccesorioComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.createYearsArray();
+    this.loadConsolesByUser();
     if (this.router.url.includes('edit')) {
       this.idParamSubs = this.activatedRoute.paramMap.subscribe((resp:any) => {
           this.loadAccesorioById(resp.params.id);
@@ -72,6 +83,8 @@ export class EditAccesorioComponent implements OnInit, OnDestroy {
       this.accService.loadAccesorioById(id).subscribe({
         complete: () => {
         this.tableTitle = this.accesorioEdit.name;
+
+        console.log(this.accesorioEdit.console);
         }, // completeHandler
         error: (err) => {
           console.log(err);
@@ -85,11 +98,32 @@ export class EditAccesorioComponent implements OnInit, OnDestroy {
           this.accesorioEdit = accesorio;
           accesorio.saleDate ? this.saleDateFormat = accesorio.saleDate.toString().substring(0,10) : '';
           accesorio.purchaseDate ? this.purchaseDateFormat = accesorio.purchaseDate.toString().substring(0,10) : '';
+          this.loadConsolesByUser();
 
         }
     });
 
 
+  }
+
+  loadConsolesByUser() {
+    this.consoleService.loadConsoles().subscribe({
+      complete: () => {
+        console.log(this.consoles);
+      }, // completeHandler
+      error: (err) => {
+        console.log(err);
+        Swal.fire({
+          title: 'Error',
+          text: err.error.msg,
+          icon: 'error'
+        });
+      },    // errorHandler
+      next: ({consoles}) => {
+        this.consoles = consoles;
+
+      }
+    });
   }
 
   createYearsArray() {

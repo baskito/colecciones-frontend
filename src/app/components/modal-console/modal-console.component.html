@@ -1,0 +1,80 @@
+<div id="modal_console" class="modal fade" tabindex="-1">
+  <div class="modal-dialog">
+    <!-- <div class="modal-content"> -->
+      <!-- <div class="modal-header">
+        <h5 class="modal-title">{{ consSel.name }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+          <div class="sidebar-section-body text-center">
+            <div class="card-img-actions d-inline-block mb-3">
+              <img *ngIf="consSel.img1" class="img-fluid rounded-circle" [src]="consSel.img1! | image:'consoles':1" referrerpolicy="no-referrer" width="150"
+                height="150" alt="">
+            </div>
+
+            <h6 class="mb-0">{{ consSel.name }}</h6>
+            <span class="text-muted">{{ consSel.brand }}</span>
+          </div>
+          <br>
+      </div> -->
+      <div class="card bg-secondary text-white" style="background-image: url(../../../assets/images/backgrounds/panel_bg.png); background-size: contain;">
+        <div class="card-body text-center">
+          <div class="card-img-actions d-inline-block mb-3">
+            <img class="flex-shrink-0 rounded max-size" [src]="consSel.img1! | image:'consoles':1" alt="">
+          </div>
+
+            <h6 class="mb-0">{{ consSel.name }}</h6>
+            <span class="opacity-75">{{ consSel.model }} </span>
+            <span class="badge bg-warning rounded-pill">{{ consSel.brand }}</span>
+
+          <div class="d-flex justify-content-center mt-3">
+            <!-- <a href="#" class="text-white" data-bs-popup="tooltip" aria-label="Google Drive" data-bs-original-title="Google Drive">
+              <i class="ph-google-logo"></i>
+            </a>
+            <a href="#" class="text-white mx-2" data-bs-popup="tooltip" aria-label="Twitter" data-bs-original-title="Twitter">
+              <i class="ph-twitter-logo"></i>
+            </a>
+            <a href="#" class="text-white" data-bs-popup="tooltip" aria-label="Github" data-bs-original-title="Github">
+              <i class="ph-github-logo"></i>
+            </a> -->
+            {{ consSel.description }}
+
+
+          </div>
+          </div>
+          <ul class="list-group list-group-flush border-top">
+            <li class="list-group-item d-flex text-white">
+              Datos compra
+              <div class="ms-auto">
+                <span class="badge bg-dark ms-auto">Comprado el día {{ consSel.purchaseDate | date: 'dd-MM-yy' }} en {{ consSel.purchasePlace }} por {{ consSel.purchasePrice }} €</span>
+              </div>
+            </li>
+            <li class="list-group-item d-flex text-white">
+              Número de serie
+              <span class="badge bg-pink rounded-pill ms-auto">{{ consSel.serialNumber }}</span>
+            </li>
+            <li class="list-group-item d-flex text-white">
+              Devilish yellow unsafe jerkily
+              <span class="badge bg-indigo ms-auto">Fixed</span>
+            </li>
+            <li *ngIf="consSel.color" class="list-group-item d-flex text-white">
+              Color
+              <button class="material-button ms-auto" [ngStyle]="{'background-color': consSel.color}">&nbsp;&nbsp;&nbsp;</button>
+            </li>
+            <li *ngIf="consSel.notes" class="list-group-item d-flex text-white">
+              Notas&nbsp;&nbsp;&nbsp;&nbsp;
+              <span class="text-white ms-auto">{{ consSel.notes }}</span>
+            </li>
+            <li class="list-group-item d-flex">
+              <button type="button" class="btn btn-warning">Ver consola</button>
+              <button type="button" class="btn btn-primary ms-auto"data-bs-dismiss="modal">Cerrar</button>
+            </li>
+          </ul>
+        </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="cerrarModal()" data-bs-dismiss="modal" #closeBtn>Cerrar</button>
+      </div> -->
+    <!-- </div> -->
+  </div>
+</div>

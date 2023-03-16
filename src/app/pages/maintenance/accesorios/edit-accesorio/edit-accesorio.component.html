@@ -50,8 +50,23 @@
           <label class="form-label">Tipo</label>
           <div class="mb-3">
             <select [(ngModel)]="this.accesorioEdit.tipology" [ngModelOptions]="{standalone: true}" class="form-select">
-              <option value="Cards">Cards</option>
-              <option value="Stickers">Stickers</option>
+              <option value="Juego">Juego</option>
+              <option value="Camara">Camara</option>
+              <option value="Caja">Caja</option>
+              <option value="Instrucciones">Instrucciones</option>
+              <option value="Funda">Funda</option>
+              <option value="Soporte">Soporte</option>
+              <option value="Base">Base</option>
+              <option value="Cargador">Cargador</option>
+              <option value="Soporte">Soporte</option>
+              <option value="Sintonizador">Sintonizador</option>
+              <option value="Mando">Mando</option>
+              <option value="Cable">Cable</option>
+              <option value="Conector">Conector</option>
+              <option value="Maletin">Maletín</option>
+              <option value="Auriculares">Auriculares</option>
+              <option value="Tarjeta memoria">Tarjeta memoria</option>
+              <option value="Otro">Otro</option>
             </select>
           </div>
         </div>
@@ -71,9 +86,9 @@
         </div>
 
         <div class="col-lg-3">
-          <label class="form-label">Número serie</label>
+          <label class="form-label">Color</label>
           <div class="mb-3">
-            <input type="text" [(ngModel)]="this.accesorioEdit.serialNumber" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Número de serie">
+            <input type="color" [(ngModel)]="this.accesorioEdit.color" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Color">
           </div>
 
         </div>
@@ -90,6 +105,23 @@
           <label class="form-label">Descripción</label>
           <div class="mb-3">
             <input type="text" [(ngModel)]="this.accesorioEdit.description" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Descripción accesorio">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4">
+          <label class="form-label">Número serie</label>
+          <div class="mb-3">
+            <input type="text" [(ngModel)]="this.accesorioEdit.serialNumber" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Número de serie">
+          </div>
+
+        </div>
+        <div class="col-lg-8">
+          <label class="form-label">Consola asociada</label>
+          <div class="mb-3">
+            <select [(ngModel)]="accesorioEdit.console" [ngModelOptions]="{standalone: true}" class="form-select">
+              <option *ngFor="let console of consoles" [ngValue]="console._id">{{ console.name }} - {{ console.brand }} - {{ console.model }} - {{ console.color }}</option>
+            </select>
           </div>
         </div>
       </div>

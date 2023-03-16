@@ -7,6 +7,8 @@ import { Accesorio } from '../../../models/accesorio.model';
 import { AccesoriosService } from '../../../services/accesorios.service';
 import { NewImageService } from '../../../services/new-image.service';
 import { environment } from '../../../../environments/environment.prod';
+import { ConsoleService } from 'src/app/services/console.service';
+import { Console } from 'src/app/models/console.model';
 const base_url = environment.base_url;
 
 @Component({
@@ -19,6 +21,7 @@ export class AccesoriosComponent implements OnInit {
   public loading: boolean = true;
   public totalAccesorios: number = 0;
   public accesorios: Accesorio[] = [];
+  public consoles: Console[] = [];
   public accesoriosTemp: Accesorio[] = [];
   public totalSearch: number = 0;
   public paginacion: number = 0;
@@ -31,11 +34,25 @@ export class AccesoriosComponent implements OnInit {
     brand: ''
   };
   public imgSubs!: Subscription;
+  public consSel: any;
+  public consModal: any = {
+    name: '',
+    model: '',
+    brand: '',
+    img1: ''
+  };
 
-  constructor(private accesorioService: AccesoriosService, private newImageService: NewImageService, private searchService: SearchService, private router: Router) { }
+  constructor(
+    private accesorioService: AccesoriosService,
+    private newImageService: NewImageService,
+    private searchService: SearchService,
+    private router: Router,
+    private consoleService: ConsoleService
+    ) { }
 
   ngOnInit(): void {
     this.loadAccesorios(0);
+    this.loadConsolesByUser();
     this.imgSubs = this.newImageService.newImage.pipe(delay(300)).subscribe( img => {
       this.loadAccesorios(0);
     });
@@ -77,6 +94,42 @@ export class AccesoriosComponent implements OnInit {
     });
   }
 
+  loadConsolesByUser() {
+    this.consoleService.loadConsoles().subscribe({
+      complete: () => {
+
+      }, // completeHandler
+      error: (err) => {
+        console.log(err);
+        Swal.fire({
+          title: 'Error',
+          text: err.error.msg,
+          icon: 'error'
+        });
+      },    // errorHandler
+      next: ({consoles}) => {
+        this.consoles = consoles;
+
+      }
+    });
+  }
+
+  getConsole(consola: Console) {
+
+    if (consola) {
+      this.consSel = this.consoles.find(c => c._id === consola._id);
+      if (this.consSel) {
+
+        return this.consSel.name;
+      } else {
+        return '';
+      }
+    } else {
+      return '';
+    }
+
+  }
+
   borrarInput() {
     this.accesorios = this.accesoriosTemp;
   }
@@ -103,7 +156,6 @@ export class AccesoriosComponent implements OnInit {
       },    // errorHandler
       next: ({total, totalSearch, arrayResp}) => {
         this.accesorios = arrayResp;
-        console.log(total);
 
         this.totalAccesorios = total;
         this.totalSearch = totalSearch;
@@ -118,7 +170,6 @@ export class AccesoriosComponent implements OnInit {
 
   pages(valor: number) {
     this.paginacion = valor;
-    console.log(valor);
 
     this.loadAccesorios(this.paginacion);
   }
@@ -166,8 +217,11 @@ export class AccesoriosComponent implements OnInit {
       this.selectedImg = `${ base_url }/upload/collections/1/${ accesorio.img1 }`;
     }
     this.selectedUid = accesorio._id || '';
-    console.log(this.selectedUid);
+  }
 
+  modalConsole(consola: Console) {
+    this.consModal = this.consoles.find(c => c._id === consola._id) || undefined;
+    console.log(this.consModal);
 
   }
 
