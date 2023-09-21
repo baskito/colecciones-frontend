@@ -1,37 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { delay, Subscription } from 'rxjs';
 import { SearchService } from 'src/app/services/search.service';
 import Swal from 'sweetalert2';
-import { Accesorio } from '../../../models/accesorio.model';
-import { AccesoriosService } from '../../../services/accesorios.service';
 import { NewImageService } from '../../../services/new-image.service';
 import { environment } from '../../../../environments/environment.prod';
 import { ConsoleService } from 'src/app/services/console.service';
 import { Console } from 'src/app/models/console.model';
+import { Game } from 'src/app/models/game.model';
+import { GameService } from 'src/app/services/game.service';
 const base_url = environment.base_url;
 
 @Component({
   selector: 'app-accesorios',
-  templateUrl: './accesorios.component.html',
-  styleUrls: ['./accesorios.component.scss']
+  templateUrl: './game.component.html',
+  styleUrls: ['./game.component.scss']
 })
-export class AccesoriosComponent implements OnInit {
+export class GameComponent implements OnInit {
 
   public loading: boolean = true;
-  public totalAccesorios: number = 0;
-  public accesorios: Accesorio[] = [];
+  public totalGames: number = 0;
+  public games: Game[] = [];
   public consoles: Console[] = [];
-  public accesoriosTemp: Accesorio[] = [];
+  public gamesTemp: Game[] = [];
   public totalSearch: number = 0;
   public paginacion: number = 0;
   public paginas: number = 0;
   public selectedUid: string = '';
   public selectedImg: string = '';
-  public accesorioSelected: Accesorio = {
+  public gameSelected: Game = {
     name: '',
-    model: '',
-    brand: ''
+    genre: '',
+    editorial: '',
+    platform: ''
   };
   public imgSubs!: Subscription;
   public consSel: any;
@@ -43,18 +43,17 @@ export class AccesoriosComponent implements OnInit {
   };
 
   constructor(
-    private accesorioService: AccesoriosService,
     private newImageService: NewImageService,
     private searchService: SearchService,
-    private router: Router,
-    private consoleService: ConsoleService
+    private consoleService: ConsoleService,
+    private gameService: GameService
     ) { }
 
   ngOnInit(): void {
-    this.loadAccesorios(0);
+    this.loadGames(0);
     this.loadConsolesByUser();
     this.imgSubs = this.newImageService.newImage.pipe(delay(300)).subscribe( img => {
-      this.loadAccesorios(0);
+      this.loadGames(0);
     });
   }
 
@@ -64,16 +63,16 @@ export class AccesoriosComponent implements OnInit {
 
     if (this.paginacion < 0 ) {
       this.paginacion = 0;
-    } else if (this.paginacion >= this.totalAccesorios) {
+    } else if (this.paginacion >= this.totalGames) {
       this.paginacion -= valor;
     }
 
-    this.loadAccesorios(this.paginacion);
+    this.loadGames(this.paginacion);
   }
 
-  loadAccesorios(paginacion:number) {
+  loadGames(paginacion:number) {
     this.loading = true;
-    this.accesorioService.loadAccesorios(this.paginacion).subscribe({
+    this.gameService.loadGames(this.paginacion).subscribe({
       complete: () => { // completeHandler
         this.loading = false;
       },
@@ -86,10 +85,10 @@ export class AccesoriosComponent implements OnInit {
         });
       },    // nextHandler
       next: (resp) => {
-        this.totalAccesorios = resp.total;
-        this.accesorios = resp.accesorios;
-        this.accesoriosTemp = this.accesorios;
-        this.paginas = Math.floor(this.totalAccesorios/10.1) + 1;
+        this.totalGames = resp.total;
+        this.games = resp.games;
+        this.gamesTemp = this.games;
+        this.paginas = Math.floor(this.totalGames/10.1) + 1;
       }
     });
   }
@@ -131,18 +130,18 @@ export class AccesoriosComponent implements OnInit {
   }
 
   borrarInput() {
-    this.accesorios = this.accesoriosTemp;
+    this.games = this.gamesTemp;
   }
 
   search(term: string) {
 
     if (term.length === 0) {
-      this.accesorios = this.accesoriosTemp;
+      this.games = this.gamesTemp;
       return;
     }
 
 
-    this.searchService.search('accesorios', term).subscribe({
+    this.searchService.search('games', term).subscribe({
       complete: () => {
 
       }, // completeHandler
@@ -155,9 +154,9 @@ export class AccesoriosComponent implements OnInit {
         });
       },    // errorHandler
       next: ({total, totalSearch, arrayResp}) => {
-        this.accesorios = arrayResp;
+        this.games = arrayResp;
 
-        this.totalAccesorios = total;
+        this.totalGames = total;
         this.totalSearch = totalSearch;
       }
     });
@@ -171,13 +170,13 @@ export class AccesoriosComponent implements OnInit {
   pages(valor: number) {
     this.paginacion = valor;
 
-    this.loadAccesorios(this.paginacion);
+    this.loadGames(this.paginacion);
   }
 
-  deleteAccesorio(accesorio: Accesorio) {
+  deleteGame(game: Game) {
     Swal.fire({
-      title: '¿Eliminar accesorio?',
-      text: `Estás apunto de eliminar definitivamente el accesorio ${ accesorio.name }`,
+      title: '¿Eliminar juego?',
+      text: `Estás apunto de eliminar definitivamente el juego ${ game.name }`,
       icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -185,15 +184,15 @@ export class AccesoriosComponent implements OnInit {
       confirmButtonText: 'Sí, eliminar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.accesorioService.deleteAccesorio(accesorio).subscribe({
+        this.gameService.deleteGame(game).subscribe({
           complete: () => {
             Swal.fire(
               'Eliminada!',
-              `El accesorio ${ accesorio.name } ha sido eliminado`,
+              `El accesorio ${ game.name } ha sido eliminado`,
               'success'
             );
             // this.collections = this.collections.filter(item => item._id !== collection._id);
-            this.loadAccesorios(this.paginacion);
+            this.loadGames(this.paginacion);
           }, // completeHandler
           error: (err) => {
             console.log(err);
@@ -209,14 +208,14 @@ export class AccesoriosComponent implements OnInit {
     });
   }
 
-  modalAccesorio(accesorio: Accesorio) {
-    this.accesorioSelected = accesorio;
-    if ( !accesorio.img1 ) {
+  modalGame(game: Game) {
+    this.gameSelected = game;
+    if ( !game.img1 ) {
       this.selectedImg = `${ base_url }/upload/usuarios/1/no-img.jpg`;
     } else {
-      this.selectedImg = `${ base_url }/upload/accesorios/1/${ accesorio.img1 }`;
+      this.selectedImg = `${ base_url }/upload/games/1/${ game.img1 }`;
     }
-    this.selectedUid = accesorio._id || '';
+    this.selectedUid = game._id || '';
   }
 
   modalConsole(consola: Console) {

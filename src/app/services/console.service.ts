@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment.prod';
 import { LoadConsoles } from '../interfaces/load.interface';
+import { Console } from '../models/console.model';
 
 const base_url = environment.base_url;
 
@@ -28,5 +29,10 @@ export class ConsoleService {
   loadConsoles() {
     const url = `${ base_url }/consoles/all`;
     return this.http.get<LoadConsoles>(url, this.headers);
+  }
+
+  loadConsoleById(id: string) {
+    const url = `${ base_url }/consoles/${ id }`;
+    return this.http.get<{ok:boolean, console: Console}>(url, this.headers);
   }
 }

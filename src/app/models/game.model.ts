@@ -1,27 +1,21 @@
-export interface _ColecUser {
-  _id: string,
-  nombre: string,
-  email: string,
-  img?: string
-}
+import { _ColecUser } from './collection.model';
+import { _ConsoleAcces } from './platform.model';
 
-export class Console {
+export class Game {
 
   constructor(
     public name: string,
-    public model: string,
-    public brand: string,
+    public genre: string,
+    public editorial: string,
+    public platform: string,
     public _id?: string,
     public user?: _ColecUser,
-    public tipology?: string,
-    public color?: string,
-    public generation?: string,
-    public description?: string,
+    public console?: _ConsoleAcces,
     public year?: string,
+    public description?: string,
     public releasePrice?: number,
     public support?: string,
     public compatibility?: string,
-    public powerSupply?: string,
     public serialNumber?: string,
     public estimatedValue?: number,
     public purchaseDate?: Date,
@@ -35,6 +29,7 @@ export class Console {
     public img1?: string,
     public img2?: string,
     public img3?: string
+
   ) {}
 
 }

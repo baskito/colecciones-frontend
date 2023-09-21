@@ -25,6 +25,7 @@ export class Accesorio {
     public support?: string,
     public compatibility?: string,
     public serialNumber?: string,
+    public estimatedValue?: number,
     public purchaseDate?: Date,
     public purchasePrice?: number,
     public purchasePlace?: string,

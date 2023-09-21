@@ -48,16 +48,16 @@
       class="d-flex align-items-center text-center text-lg-start flex-column flex-lg-row position-absolute start-0 end-0 bottom-0 mx-3 mb-3"
     >
       <div class="profile-cover-text text-white">
-        <h1 class="mb-0">{{ accesorio.name }}</h1>
+        <h1 class="mb-0">{{ game.name }}</h1>
         <span class="d-none d-lg-inline-block ms-2">
           <span class="badge bg-warning ms-auto ms-lg-2">{{
-            accesorio.model
+            game.genre
           }}</span>
           <span class="badge bg-success rounded-pill ms-auto ms-lg-2">{{
-            accesorio.brand
+            game.editorial
           }}</span>
           <span class="badge bg-secondary ms-auto ms-lg-2">{{
-            accesorio.tipology
+            game.platform
           }}</span>
         </span>
       </div>
@@ -65,14 +65,14 @@
       <div class="ms-lg-auto mt-2 mt-lg-0">
         <div class="d-inline-flex">
           <a
-            routerLink="../../edit/{{ accesorio._id }}"
+            routerLink="../../edit/{{ game._id }}"
             class="btn btn-info border-transparent shadow ms-3 pointer"
           >
             <i class="ph-pen me-2"></i>
             Modificar
           </a>
           <a
-            (click)="deleteAccesorio(accesorio)"
+            (click)="deleteGame(game)"
             class="btn btn-danger border-transparent shadow ms-3 pointer"
           >
             <i class="ph-trash me-2"></i>
@@ -83,68 +83,6 @@
     </div>
   </div>
 
-  <!-- <div class="row" style="margin-top: -15px;">
-    <div class="col-sm-6 col-lg-4">
-      <div class="card">
-        <div class="card-img-actions m-1">
-          <img class="card-img img-fluid" [src]="collection.img1! | image:'collections':1" alt="">
-          <div class="card-img-actions-overlay card-img">
-            <a [href]="collection.img1! | image:'collections':1" class="btn btn-outline-white btn-icon rounded-pill" data-bs-popup="lightbox" data-gallery="gallery1">
-              <i class="ph-eye"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-6 col-lg-4">
-      <div class="card">
-        <div class="card-img-actions m-1">
-          <img class="card-img img-fluid" [src]="collection.img2! | image:'collections':2" alt="">
-          <div class="card-img-actions-overlay card-img">
-            <a [href]="collection.img2! | image:'collections':2" class="btn btn-outline-white btn-icon rounded-pill" data-bs-popup="lightbox" data-gallery="gallery1">
-              <i class="ph-eye"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-6 col-lg-4">
-      <div class="card">
-        <div class="card-img-actions m-1">
-          <img class="card-img img-fluid" [src]="collection.img3! | image:'collections':3" alt="">
-          <div class="card-img-actions-overlay card-img">
-            <a [href]="collection.img3! | image:'collections':3" class="btn btn-outline-white btn-icon rounded-pill" data-bs-popup="lightbox" data-gallery="gallery1">
-              <i class="ph-eye"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-  </div> -->
-  <!-- <div class="row">
-
-    <div class="col-sm-6 col-lg-4">
-      <div class="card bg-pink text-white text-center p-3" style="background-image: url(../../../assets/images/backgrounds/panel_bg.png); background-size: contain;">
-        <div>
-          <a href="#" class="btn btn-outline-white btn-lg btn-icon border-width-2 rounded-pill mb-3 mt-1">
-            <i class="ph-quotes"></i>
-          </a>
-        </div>
-
-        <blockquote class="blockquote mb-0">
-          <p>"Delivered is to ye belonging enjoyment preferred. Astonished and acceptance men two discretion"</p>
-          <footer class="blockquote-footer text-white">
-            <span>
-              Someone famous in <cite title="Source Title">Source Title</cite>
-            </span>
-          </footer>
-        </blockquote>
-      </div>
-    </div>
-  </div> -->
-
   <br />
   <div class="row">
     <div class="col-9">
@@ -153,92 +91,86 @@
           <h5 class="mb-0">
             Lanzado el año
             <span class="badge bg-success rounded-pill ms-auto ms-lg-2">{{
-              accesorio.year
+              game.year
             }}</span>
             por
             <span class="badge bg-warning ms-auto ms-lg-2">{{
-              accesorio.brand
+              game.editorial
             }}</span>
-            <span *ngIf="accesorio.year">
-              a un precio de {{ accesorio.releasePrice }}</span
+            <span *ngIf="game.year">
+              para {{ game.platform }}</span
             >
           </h5>
         </div>
 
         <div class="card-body">
           <mat-list>
-            <h4>Datos accesorio</h4>
+            <h4>Datos juego</h4>
             <div class="row">
               <div class="col-4">
                 <mat-list-item>
                   <div matListItemTitle>Nombre</div>
-                  <div matListItemLine>{{ accesorio.name }}</div>
+                  <div matListItemLine>{{ game.name }}</div>
                 </mat-list-item>
               </div>
               <div class="col-4">
                 <mat-list-item>
-                  <div matListItemTitle>Modelo</div>
-                  <div matListItemLine>{{ accesorio.model }}</div>
+                  <div matListItemTitle>Género</div>
+                  <div matListItemLine>{{ game.genre }}</div>
                 </mat-list-item>
               </div>
               <div class="col-4">
                 <mat-list-item>
-                  <div matListItemTitle>Marca</div>
-                  <div matListItemLine>{{ accesorio.brand }}</div>
+                  <div matListItemTitle>Editorial</div>
+                  <div matListItemLine>{{ game.editorial }}</div>
                 </mat-list-item>
               </div>
             </div>
             <div class="row">
               <div class="col-4">
                 <mat-list-item>
-                  <div matListItemTitle>Tipo</div>
-                  <div matListItemLine>{{ accesorio.tipology }}</div>
-                </mat-list-item>
-              </div>
-              <div class="col-4">
-                <mat-list-item>
-                  <div matListItemTitle>Color</div>
-                  <div matListItemLine><button *ngIf="accesorio.color"  class="material-button" [ngStyle]="{'background-color': accesorio.color}">&nbsp;&nbsp;&nbsp;</button></div>
+                  <div matListItemTitle>Plataforma</div>
+                  <div matListItemLine>{{ game.platform }}</div>
                 </mat-list-item>
               </div>
               <div class="col-4">
                 <mat-list-item>
                   <div matListItemTitle>Valor estimado</div>
-                  <div matListItemLine>{{ accesorio.estimatedValue }}</div>
+                  <div matListItemLine>{{ game.estimatedValue }}</div>
+                </mat-list-item>
+              </div>
+              <div class="col-4">
+                <mat-list-item>
+                  <div matListItemTitle>Año</div>
+                  <div matListItemLine>{{ game.year }}</div>
                 </mat-list-item>
               </div>
             </div>
             <div class="row">
               <div class="col-4">
                 <mat-list-item>
-                  <div matListItemTitle>Año</div>
-                  <div matListItemLine>{{ accesorio.year }}</div>
-                </mat-list-item>
-              </div>
-              <div class="col-4">
-                <mat-list-item>
                   <div matListItemTitle>Precio lanz.</div>
-                  <div matListItemLine>{{ accesorio.releasePrice }}</div>
+                  <div matListItemLine>{{ game.releasePrice }}</div>
                 </mat-list-item>
               </div>
               <div class="col-4">
                 <mat-list-item>
                   <div matListItemTitle>Soporte</div>
-                  <div matListItemLine>{{ accesorio.support }}</div>
+                  <div matListItemLine>{{ game.support }}</div>
+                </mat-list-item>
+              </div>
+              <div class="col-4">
+                <mat-list-item>
+                  <div matListItemTitle>Compatibilidad</div>
+                  <div matListItemLine>{{ game.compatibility }}</div>
                 </mat-list-item>
               </div>
             </div>
             <div class="row">
               <div class="col-4">
                 <mat-list-item>
-                  <div matListItemTitle>Compatibilidad</div>
-                  <div matListItemLine>{{ accesorio.compatibility }}</div>
-                </mat-list-item>
-              </div>
-              <div class="col-4">
-                <mat-list-item>
                   <div matListItemTitle>Descripción</div>
-                  <div matListItemLine>{{ accesorio.description }}</div>
+                  <div matListItemLine>{{ game.description }}</div>
                 </mat-list-item>
               </div>
             </div>
@@ -249,13 +181,13 @@
               <div class="col-4">
                 <mat-list-item>
                   <div matListItemTitle>Número serie</div>
-                  <div matListItemLine>{{ accesorio.serialNumber }}</div>
+                  <div matListItemLine>{{ game.serialNumber }}</div>
                 </mat-list-item>
               </div>
               <div class="col-4">
                 <mat-list-item>
                   <div matListItemTitle>Notas</div>
-                  <div matListItemLine>{{ accesorio.notes }}</div>
+                  <div matListItemLine>{{ game.notes }}</div>
                 </mat-list-item>
               </div>
             </div>
@@ -263,39 +195,39 @@
               <div class="col-4">
                 <mat-list-item>
                   <div matListItemTitle>Coste</div>
-                  <div matListItemLine>{{ accesorio.purchasePrice }}</div>
+                  <div matListItemLine>{{ game.purchasePrice }}</div>
                 </mat-list-item>
               </div>
               <div class="col-4">
                 <mat-list-item>
                   <div matListItemTitle>Fecha compra</div>
-                  <div matListItemLine>{{ accesorio.purchaseDate }}</div>
+                  <div matListItemLine>{{ game.purchaseDate }}</div>
                 </mat-list-item>
               </div>
               <div class="col-4">
                 <mat-list-item>
                   <div matListItemTitle>Lugar compra</div>
-                  <div matListItemLine>{{ accesorio.purchasePlace }}</div>
+                  <div matListItemLine>{{ game.purchasePlace }}</div>
                 </mat-list-item>
               </div>
             </div>
-            <div class="row" *ngIf="accesorio.sold">
+            <div class="row" *ngIf="game.sold">
               <div class="col-4">
                 <mat-list-item>
                   <div matListItemTitle>Precio</div>
-                  <div matListItemLine>{{ accesorio.salePrice}}</div>
+                  <div matListItemLine>{{ game.salePrice}}</div>
                 </mat-list-item>
               </div>
               <div class="col-4">
                 <mat-list-item>
                   <div matListItemTitle>Fecha venta</div>
-                  <div matListItemLine>{{ accesorio.saleDate }}</div>
+                  <div matListItemLine>{{ game.saleDate }}</div>
                 </mat-list-item>
               </div>
               <div class="col-4">
                 <mat-list-item>
                   <div matListItemTitle>Lugar venta</div>
-                  <div matListItemLine>{{ accesorio.salePlace }}</div>
+                  <div matListItemLine>{{ game.salePlace }}</div>
                 </mat-list-item>
               </div>
             </div>
@@ -308,7 +240,7 @@
         <div class="card-img-actions m-1">
           <img
             class="card-img img-fluid"
-            [src]="accesorio.img1! | image : 'accesorios' : 1"
+            [src]="game.img1! | image : 'games' : 1"
             alt=""
           />
           <div class="card-img-actions-overlay card-img">
@@ -326,7 +258,7 @@
         <div class="card-img-actions m-1">
           <img
             class="card-img img-fluid"
-            [src]="accesorio.img2! | image : 'accesorios' : 2"
+            [src]="game.img2! | image : 'games' : 2"
             alt=""
           />
           <div class="card-img-actions-overlay card-img">
@@ -344,7 +276,7 @@
         <div class="card-img-actions m-1">
           <img
             class="card-img img-fluid"
-            [src]="accesorio.img3! | image : 'accesorios' : 3"
+            [src]="game.img3! | image : 'games' : 3"
             alt=""
           />
           <div class="card-img-actions-overlay card-img">

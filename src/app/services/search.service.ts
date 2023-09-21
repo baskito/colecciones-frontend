@@ -42,7 +42,7 @@ export class SearchService {
   }
 
   search(
-    type: 'usuarios' | 'consoles' | 'accesorios' | 'collections',
+    type: 'usuarios' | 'consoles' | 'accesorios' | 'collections' | 'games',
     term: string
     ) {
 

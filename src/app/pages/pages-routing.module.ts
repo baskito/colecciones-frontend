@@ -12,7 +12,10 @@ import { EditCollectionComponent } from './maintenance/collections/edit-collecti
 import { ViewCollectionComponent } from './maintenance/collections/view-collection/view-collection.component';
 import { ViewImageComponent } from './view-image/view-image.component';
 import { EditAccesorioComponent } from './maintenance/accesorios/edit-accesorio/edit-accesorio.component';
-import { ViewAccesorioComponent } from './maintenance/accesorios/view-accesorio/view-collection.component';
+import { ViewAccesorioComponent } from './maintenance/accesorios/view-accesorio/view-accesorio.component';
+import { GameComponent } from './maintenance/games/game.component';
+import { EditGameComponent } from './maintenance/games/edit-game/edit-game.component';
+import { ViewGameComponent } from './maintenance/games/view-game/view-game.component';
 
 
 const routes: Routes = [
@@ -39,6 +42,11 @@ const routes: Routes = [
       { path: 'accesorios/new', component: EditAccesorioComponent },
       { path: 'accesorios/edit/:id', component: EditAccesorioComponent },
       { path: 'accesorios/view/:id', component: ViewAccesorioComponent },
+      // Juegos
+      { path: 'games', component: GameComponent },
+      { path: 'games/new', component: EditGameComponent },
+      { path: 'games/edit/:id', component: EditGameComponent },
+      { path: 'games/view/:id', component: ViewGameComponent },
       // Collections
       { path: 'collections', component: CollectionsComponent },
       { path: 'collections/new', component: EditCollectionComponent },

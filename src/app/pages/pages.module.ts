@@ -18,7 +18,10 @@ import { PipesModule } from '../pipes/pipes.module';
 import { ViewCollectionComponent } from './maintenance/collections/view-collection/view-collection.component';
 import { ViewImageComponent } from './view-image/view-image.component';
 import { EditAccesorioComponent } from './maintenance/accesorios/edit-accesorio/edit-accesorio.component';
-import { ViewAccesorioComponent } from './maintenance/accesorios/view-accesorio/view-collection.component';
+import { ViewAccesorioComponent } from './maintenance/accesorios/view-accesorio/view-accesorio.component';
+import { GameComponent } from './maintenance/games/game.component';
+import { EditGameComponent } from './maintenance/games/edit-game/edit-game.component';
+import { ViewGameComponent } from './maintenance/games/view-game/view-game.component';
 
 
 
@@ -30,12 +33,15 @@ import { ViewAccesorioComponent } from './maintenance/accesorios/view-accesorio/
     UsersComponent,
     CollectionsComponent,
     AccesoriosComponent,
+    GameComponent,
     ConsolesComponent,
     EditCollectionComponent,
     ViewCollectionComponent,
     EditAccesorioComponent,
     ViewAccesorioComponent,
-    ViewImageComponent
+    EditGameComponent,
+    ViewImageComponent,
+    ViewGameComponent
   ],
   exports: [
     HomeComponent,

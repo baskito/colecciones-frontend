@@ -15,7 +15,7 @@
 <div *ngIf="!loading" class="animate__animated animate__fadeIn animate__fast">
   <div class="card">
     <div class="card-header d-sm-flex align-items-sm-center py-sm-0">
-      <h6 class="py-sm-3 mb-sm-auto">Listado colecciones ({{ totalAccesorios }})</h6>
+      <h6 class="py-sm-3 mb-sm-auto">Listado juegos ({{ totalGames }})</h6>
       <div class="ms-sm-auto" *ngIf="txtTerm.value.length === 0">
         <ul class="pagination pagination-flat">
           <li class="page-item">
@@ -66,7 +66,6 @@
             <th>Colección</th>
             <th class="w50 text-center">Tipo</th>
             <th class="w50 text-center">Año</th>
-            <th class="w50 text-center">Color</th>
             <th class="w50 text-center">Fecha compra</th>
             <th class="w50 text-center">Precio compra</th>
             <th class="w50 text-center">Valor estimado</th>
@@ -78,47 +77,44 @@
             <!-- <th class="text-center">Notas</th> -->
             <th class="w100 text-nowrap text-center">Acciones</th>
           </tr>
-          <tr *ngFor="let acc of accesorios; index as i">
-            <td class="text-center"><a (click)="modalAccesorio(acc)" data-bs-toggle="modal" data-bs-target="#modal_default" class="pointer">
-                <img [src]="acc.img1! | image:'accesorios':1" [alt]="acc.name" class="w-56px h-56px rounded" alt="Imagen accesorio">
+          <tr *ngFor="let game of games; index as i">
+            <td class="text-center"><a (click)="modalGame(game)" data-bs-toggle="modal" data-bs-target="#modal_default" class="pointer">
+                <img [src]="game.img1! | image:'games':1" [alt]="game.name" class="w-56px h-56px rounded" alt="Imagen juego">
               </a></td>
             <td>
               <div class="flex-fill">
-                <div class="fw-semibold">{{ acc.name }}</div>
-                <span class="text-muted">{{ acc.model }} </span>
-                <span class="badge bg-secondary rounded-pill">{{ acc.brand }}</span>
+                <div class="fw-semibold">{{ game.name }}</div>
+                <span class="text-muted">{{ game.genre }} </span>
+                <span class="badge bg-secondary rounded-pill">{{ game.editorial }}</span>
               </div>
             </td>
             <td class="text-center">
-              <span class="badge bg-purple">{{ acc.tipology }}</span>
+              <span class="badge bg-purple">{{ game.platform }}</span>
             </td>
-            <td class="text-center">{{ acc.year }}</td>
-            <td class="text-center">
-              <button *ngIf="acc.color"  class="material-button" [ngStyle]="{'background-color': acc.color}">&nbsp;&nbsp;&nbsp;</button>
-            </td>
-            <td class="text-center">{{ acc.purchaseDate | date: 'dd-MM-yy' }}</td>
-            <td class="text-center">{{ acc.purchasePrice }}</td>
-            <td class="text-center">{{ acc.estimatedValue }}</td>
-            <td><button data-bs-toggle="modal" data-bs-target="#modal_console" (click)="modalConsole(acc.console!)" type="button" class="btn btn-outline-primary border-transparent">{{ getConsole(acc.console!) }}</button></td>
+            <td class="text-center">{{ game.year }}</td>
+            <td class="text-center">{{ game.purchaseDate | date: 'dd-MM-yy' }}</td>
+            <td class="text-center">{{ game.purchasePrice }}</td>
+            <td class="text-center">{{ game.estimatedValue }}</td>
+            <td><button data-bs-toggle="modal" data-bs-target="#modal_console" (click)="modalConsole(game.console!)" type="button" class="btn btn-outline-primary border-transparent">{{ getConsole(game.console!) }}</button></td>
             <!-- <td>{{ getConsole(acc.console) }}</td> -->
-            <td>{{ acc.description }}</td>
+            <td>{{ game.description }}</td>
             <!-- <td>{{ colec.extras }}</td>
             <td>{{ colec.missing }}</td>
             <td>{{ colec.repeated }}</td> -->
             <!-- <td>{{ colec.notes }}</td> -->
             <td class="wmin-lg-50 text-center">
               <div class="d-inline-flex pointer">
-                <a routerLink="./view/{{acc._id}}" class="text-success mx-2 pointer" #tooltip="matTooltip" matTooltip="Ver colección" matTooltipPosition="above">
+                <a routerLink="./view/{{game._id}}" class="text-success mx-2 pointer" #tooltip="matTooltip" matTooltip="Ver colección" matTooltipPosition="above">
                   <i class="ph-eye"></i>
                 </a>
               </div>
               <div class="d-inline-flex">
-                <a routerLink="./edit/{{acc._id}}" class="text-primary mx-2 pointer" #tooltip="matTooltip" matTooltip="Modificar" matTooltipPosition="above">
+                <a routerLink="./edit/{{game._id}}" class="text-primary mx-2 pointer" #tooltip="matTooltip" matTooltip="Modificar" matTooltipPosition="above">
                   <i class="ph-pen"></i>
                 </a>
               </div>
               <div class="d-inline-flex">
-                <a (click)="deleteAccesorio(acc)" class="text-danger mx-2 pointer" #tooltip="matTooltip" matTooltip="Borrar" matTooltipPosition="above">
+                <a (click)="deleteGame(game)" class="text-danger mx-2 pointer" #tooltip="matTooltip" matTooltip="Borrar" matTooltipPosition="above">
                   <i class="ph-trash"></i>
                 </a>
               </div>
@@ -139,7 +135,7 @@
 </div>
 
 <!-- <app-modal-image [uid]="selectedUid" [img]="selectedImg" type="usuarios"></app-modal-image> -->
-<app-modal-image [uid]="selectedUid" [img]="selectedImg" type="accesorios" numImg="1"></app-modal-image>
+<app-modal-image [uid]="selectedUid" [img]="selectedImg" type="games" numImg="1"></app-modal-image>
 <app-modal-console [consSel]="consModal"></app-modal-console>
 
 

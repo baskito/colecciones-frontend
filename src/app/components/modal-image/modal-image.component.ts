@@ -14,7 +14,7 @@ export class ModalImageComponent implements OnInit {
   @Input() img!: string;
   @Input() uid!: string;
   @Input() numImg!: string;
-  @Input() type!: 'usuarios' | 'consoles' | 'accesorios' | 'collections';
+  @Input() type!: 'usuarios' | 'consoles' | 'accesorios' | 'collections' | 'games';
   public profileForm!: FormGroup;
   public uploadImage!: File;
   @ViewChild('fileInput') fileButton: ElementRef | undefined;

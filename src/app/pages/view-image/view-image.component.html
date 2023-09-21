@@ -12,14 +12,24 @@
 </div>
 <div class="card" *ngIf="!loading">
   <div class="card-header">
-    <h5 class="mb-0"><a href="#" class="text-body">{{ collection.name }} #{{ num }}</a></h5>
+    <h5 class="mb-0"><a href="#" class="text-body">{{ name }} #{{ num }}</a></h5>
   </div>
 
   <div class="card-body">
-    <div class="card-img-actions mb-3">
-      <img class="card-img img-fluid" *ngIf="num === '1'" [src]="collection.img1! | image:'collections':1" alt="">
-      <img class="card-img img-fluid" *ngIf="num === '2'" [src]="collection.img2! | image:'collections':2" alt="">
-      <img class="card-img img-fluid" *ngIf="num === '3'" [src]="collection.img3! | image:'collections':3" alt="">
+    <div class="card-img-actions mb-3" *ngIf="type === 'collections'">
+      <img class="card-img img-fluid" *ngIf="num === '1'" [src]="img1 | image:'collections':1" alt="">
+      <img class="card-img img-fluid" *ngIf="num === '2'" [src]="img2 | image:'collections':2" alt="">
+      <img class="card-img img-fluid" *ngIf="num === '3'" [src]="img3 | image:'collections':3" alt="">
+    </div>
+    <div class="card-img-actions mb-3" *ngIf="type === 'accesorios'">
+      <img class="card-img img-fluid" *ngIf="num === '1'" [src]="img1 | image:'accesorios':1" alt="">
+      <img class="card-img img-fluid" *ngIf="num === '2'" [src]="img2 | image:'accesorios':2" alt="">
+      <img class="card-img img-fluid" *ngIf="num === '3'" [src]="img3 | image:'accesorios':3" alt="">
+    </div>
+    <div class="card-img-actions mb-3" *ngIf="type === 'consoles'">
+      <img class="card-img img-fluid" *ngIf="num === '1'" [src]="img1 | image:'consoles':1" alt="">
+      <img class="card-img img-fluid" *ngIf="num === '2'" [src]="img2 | image:'consoles':2" alt="">
+      <img class="card-img img-fluid" *ngIf="num === '3'" [src]="img3 | image:'consoles':3" alt="">
     </div>
 
   </div>

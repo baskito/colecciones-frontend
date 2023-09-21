@@ -14,7 +14,7 @@ export class FileUploadService {
 
   async updateImage(
     file: File,
-    type: 'usuarios'|'consoles'|'accesorios'|'collections',
+    type: 'usuarios'|'consoles'|'accesorios'|'collections'|'games',
     id: string,
     numImg: string
   ) {
