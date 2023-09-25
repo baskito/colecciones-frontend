@@ -1,0 +1,143 @@
+
+<div *ngIf="loading" class="row animate__animated animate__fadeIn animate__fast">
+  <div class="col-12">
+    <div class="alert alert-info text-center">
+      <h4 class="alert-heading">Cargando</h4>
+      <div class="spinner-border spinner-border-lg text-info me-1 x2" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="mb-0">Dame un respiro</p>
+
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!loading" class="animate__animated animate__fadeIn animate__fast">
+  <div class="card">
+    <div class="card-header d-sm-flex align-items-sm-center py-sm-0">
+      <h6 class="py-sm-3 mb-sm-auto">Listado juegos ({{ totalGames }})</h6>
+      <div class="ms-sm-auto" *ngIf="txtTerm.value.length === 0">
+        <ul class="pagination pagination-flat">
+          <li class="page-item">
+            <a (click)="managePagination(-10)"
+              class="page-link rounded pointer"
+              [ngClass]="paginacion === 0 ? 'disabled' : ''">←</a>
+          </li>
+          <li class="page-item"
+          [ngClass]="paginacion === i*10 ? 'active' : ''" *ngFor="let in of counter(paginas); let i = index">
+            <a (click)="pages(i*10)" class="page-link rounded pointer">{{i+1}}</a>
+          </li>
+          <li class="page-item">
+            <a (click)="managePagination(10)"
+            class="page-link rounded pointer"
+            [ngClass]="paginacion / 10 + 1 === paginas ? 'disabled' : ''">→</a>
+          </li>
+        </ul>
+      </div>
+      <div class="ms-sm-auto my-sm-auto">
+        <div class="form-control-feedback form-control-feedback-end">
+          <button routerLink="./new" type="button" class="btn btn-primary pointer">
+            <i class="ph-plus me-2"></i>
+            Nueva
+        </button>
+        </div>
+      </div>
+      <div class="ms-sm-auto my-sm-auto">
+        <div class="form-control-feedback form-control-feedback-end">
+          <input type="search" class="form-control wmin-200" (search)="borrarInput()" (keyup)="search( txtTerm.value )"
+            placeholder="Búscar colección..." #txtTerm>
+          <div class="form-control-feedback-icon">
+            <i class="ph-magnifying-glass text-muted"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body" *ngIf="txtTerm.value.length !== 0">
+      Búsqueda <span class="badge bg-dark"> {{ txtTerm.value }} </span> devuelve {{ totalSearch }} resultado{{
+      totalSearch !== 1 ? 's' : '' }}.
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-lg">
+        <tbody>
+          <tr class="table-light">
+            <th class="w100 text-center">Imagen</th>
+            <th>Colección</th>
+            <th class="w50 text-center">Tipo</th>
+            <th class="w50 text-center">Año</th>
+            <th class="w50 text-center">Fecha compra</th>
+            <th class="w50 text-center">Precio compra</th>
+            <th class="w50 text-center">Valor estimado</th>
+            <th class="text-center">Consola</th>
+            <th>Descripción</th>
+            <!-- <th class="w100 text-center">Extras</th>
+            <th class="w100 text-center">Faltan</th>
+            <th class="w100 text-center">Repetidos</th> -->
+            <!-- <th class="text-center">Notas</th> -->
+            <th class="w100 text-nowrap text-center">Acciones</th>
+          </tr>
+          <tr *ngFor="let console of consoles; index as i">
+            <td class="text-center"><a (click)="modalConsole(console)" data-bs-toggle="modal" data-bs-target="#modal_default" class="pointer">
+                <img [src]="console.img1! | image:'games':1" [alt]="console.name" class="w-56px h-56px rounded" alt="Imagen Consola">
+              </a></td>
+            <td>
+              <div class="flex-fill">
+                <div class="fw-semibold">{{ console.name }}</div>
+                <span class="text-muted">{{ console.brand }} </span>
+                <span class="badge bg-secondary rounded-pill">{{ console.model }}</span>
+              </div>
+            </td>
+            <td class="text-center">
+              <span class="badge bg-purple">{{ console.generation }}</span>
+            </td>
+            <td class="text-center">{{ console.year }}</td>
+            <td class="text-center">{{ console.purchaseDate | date: 'dd-MM-yy' }}</td>
+            <td class="text-center">{{ console.purchasePrice }}</td>
+            <td class="text-center">{{ console.estimatedValue }}</td>
+            <!-- <td><button data-bs-toggle="modal" data-bs-target="#modal_console" (click)="modalConsole(game.console!)" type="button" class="btn btn-outline-primary border-transparent">{{ getConsole(game.console!) }}</button></td> -->
+            <!-- <td>{{ getConsole(acc.console) }}</td> -->
+            <td>{{ console.description }}</td>
+            <!-- <td>{{ colec.extras }}</td>
+            <td>{{ colec.missing }}</td>
+            <td>{{ colec.repeated }}</td> -->
+            <!-- <td>{{ colec.notes }}</td> -->
+            <td class="wmin-lg-50 text-center">
+              <div class="d-inline-flex pointer">
+                <a routerLink="./view/{{console._id}}" class="text-success mx-2 pointer" #tooltip="matTooltip" matTooltip="Ver colección" matTooltipPosition="above">
+                  <i class="ph-eye"></i>
+                </a>
+              </div>
+              <div class="d-inline-flex">
+                <a routerLink="./edit/{{console._id}}" class="text-primary mx-2 pointer" #tooltip="matTooltip" matTooltip="Modificar" matTooltipPosition="above">
+                  <i class="ph-pen"></i>
+                </a>
+              </div>
+              <div class="d-inline-flex">
+                <a (click)="deleteConsole(console)" class="text-danger mx-2 pointer" #tooltip="matTooltip" matTooltip="Borrar" matTooltipPosition="above">
+                  <i class="ph-trash"></i>
+                </a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- <div *ngIf="txtTerm.value.length === 0">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li class="page-item pointer"><a class="page-link" (click)="managePagination(-10)">Anterior</a></li>
+        <li class="page-item pointer"><a class="page-link" (click)="managePagination(10)">Siguiente</a></li>
+      </ul>
+    </nav>
+  </div> -->
+</div>
+
+<!-- <app-modal-image [uid]="selectedUid" [img]="selectedImg" type="usuarios"></app-modal-image> -->
+<app-modal-image [uid]="selectedUid" [img]="selectedImg" type="games" numImg="1"></app-modal-image>
+<app-modal-console [consSel]="consModal"></app-modal-console>
+
+
+
+

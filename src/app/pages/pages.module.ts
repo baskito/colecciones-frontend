@@ -22,6 +22,8 @@ import { ViewAccesorioComponent } from './maintenance/accesorios/view-accesorio/
 import { GameComponent } from './maintenance/games/game.component';
 import { EditGameComponent } from './maintenance/games/edit-game/edit-game.component';
 import { ViewGameComponent } from './maintenance/games/view-game/view-game.component';
+import { EditConsoleComponent } from './maintenance/consoles/edit-console/edit-console.component';
+import { ViewConsoleComponent } from './maintenance/consoles/view-console/view-console.component';
 
 
 
@@ -41,7 +43,10 @@ import { ViewGameComponent } from './maintenance/games/view-game/view-game.compo
     ViewAccesorioComponent,
     EditGameComponent,
     ViewImageComponent,
-    ViewGameComponent
+    ViewGameComponent,
+    EditConsoleComponent,
+    ViewConsoleComponent,
+    ViewConsoleComponent
   ],
   exports: [
     HomeComponent,

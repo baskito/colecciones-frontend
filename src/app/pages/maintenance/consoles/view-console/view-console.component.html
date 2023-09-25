@@ -1,0 +1,296 @@
+<div
+  *ngIf="loading"
+  class="row animate__animated animate__fadeIn animate__fast"
+>
+  <div class="col-12">
+    <div class="alert alert-info text-center">
+      <h4 class="alert-heading">Cargando</h4>
+      <div
+        class="spinner-border spinner-border-lg text-info me-1 x2"
+        role="status"
+      >
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="mb-0">Dame un respiro</p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!loading">
+  <div class="profile-cover">
+    <div
+      class="profile-cover-img"
+      [ngStyle]="{ 'background-image': 'url(' + imagen1 + ')' }"
+    ></div>
+    <!-- <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img [src]="collection.img1! | image:'collections':1" class="d-block w-100" alt="">
+        </div>
+        <div class="carousel-item">
+          <img [src]="collection.img2! | image:'collections':2" class="d-block w-100" alt="">
+        </div>
+        <div class="carousel-item">
+          <img [src]="collection.img3! | image:'collections':3" class="d-block w-100" alt="">
+        </div>
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+      </button>
+    </div> -->
+    <div
+      class="d-flex align-items-center text-center text-lg-start flex-column flex-lg-row position-absolute start-0 end-0 bottom-0 mx-3 mb-3"
+    >
+      <div class="profile-cover-text text-white">
+        <h1 class="mb-0">{{ game.name }}</h1>
+        <span class="d-none d-lg-inline-block ms-2">
+          <span class="badge bg-warning ms-auto ms-lg-2">{{
+            game.genre
+          }}</span>
+          <span class="badge bg-success rounded-pill ms-auto ms-lg-2">{{
+            game.editorial
+          }}</span>
+          <span class="badge bg-secondary ms-auto ms-lg-2">{{
+            game.platform
+          }}</span>
+        </span>
+      </div>
+
+      <div class="ms-lg-auto mt-2 mt-lg-0">
+        <div class="d-inline-flex">
+          <a
+            routerLink="../../edit/{{ game._id }}"
+            class="btn btn-info border-transparent shadow ms-3 pointer"
+          >
+            <i class="ph-pen me-2"></i>
+            Modificar
+          </a>
+          <a
+            (click)="deleteGame(game)"
+            class="btn btn-danger border-transparent shadow ms-3 pointer"
+          >
+            <i class="ph-trash me-2"></i>
+            Borrar
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br />
+  <div class="row">
+    <div class="col-9">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">
+            Lanzado el año
+            <span class="badge bg-success rounded-pill ms-auto ms-lg-2">{{
+              game.year
+            }}</span>
+            por
+            <span class="badge bg-warning ms-auto ms-lg-2">{{
+              game.editorial
+            }}</span>
+            <span *ngIf="game.year">
+              para {{ game.platform }}</span
+            >
+          </h5>
+        </div>
+
+        <div class="card-body">
+          <mat-list>
+            <h4>Datos juego</h4>
+            <div class="row">
+              <div class="col-4">
+                <mat-list-item>
+                  <div matListItemTitle>Nombre</div>
+                  <div matListItemLine>{{ game.name }}</div>
+                </mat-list-item>
+              </div>
+              <div class="col-4">
+                <mat-list-item>
+                  <div matListItemTitle>Género</div>
+                  <div matListItemLine>{{ game.genre }}</div>
+                </mat-list-item>
+              </div>
+              <div class="col-4">
+                <mat-list-item>
+                  <div matListItemTitle>Editorial</div>
+                  <div matListItemLine>{{ game.editorial }}</div>
+                </mat-list-item>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <mat-list-item>
+                  <div matListItemTitle>Plataforma</div>
+                  <div matListItemLine>{{ game.platform }}</div>
+                </mat-list-item>
+              </div>
+              <div class="col-4">
+                <mat-list-item>
+                  <div matListItemTitle>Valor estimado</div>
+                  <div matListItemLine>{{ game.estimatedValue }}</div>
+                </mat-list-item>
+              </div>
+              <div class="col-4">
+                <mat-list-item>
+                  <div matListItemTitle>Año</div>
+                  <div matListItemLine>{{ game.year }}</div>
+                </mat-list-item>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <mat-list-item>
+                  <div matListItemTitle>Precio lanz.</div>
+                  <div matListItemLine>{{ game.releasePrice }}</div>
+                </mat-list-item>
+              </div>
+              <div class="col-4">
+                <mat-list-item>
+                  <div matListItemTitle>Soporte</div>
+                  <div matListItemLine>{{ game.support }}</div>
+                </mat-list-item>
+              </div>
+              <div class="col-4">
+                <mat-list-item>
+                  <div matListItemTitle>Compatibilidad</div>
+                  <div matListItemLine>{{ game.compatibility }}</div>
+                </mat-list-item>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <mat-list-item>
+                  <div matListItemTitle>Descripción</div>
+                  <div matListItemLine>{{ game.description }}</div>
+                </mat-list-item>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+            <br />
+            <h4>Datos particulares</h4>
+            <div class="row">
+              <div class="col-4">
+                <mat-list-item>
+                  <div matListItemTitle>Número serie</div>
+                  <div matListItemLine>{{ game.serialNumber }}</div>
+                </mat-list-item>
+              </div>
+              <div class="col-4">
+                <mat-list-item>
+                  <div matListItemTitle>Notas</div>
+                  <div matListItemLine>{{ game.notes }}</div>
+                </mat-list-item>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <mat-list-item>
+                  <div matListItemTitle>Coste</div>
+                  <div matListItemLine>{{ game.purchasePrice }}</div>
+                </mat-list-item>
+              </div>
+              <div class="col-4">
+                <mat-list-item>
+                  <div matListItemTitle>Fecha compra</div>
+                  <div matListItemLine>{{ game.purchaseDate }}</div>
+                </mat-list-item>
+              </div>
+              <div class="col-4">
+                <mat-list-item>
+                  <div matListItemTitle>Lugar compra</div>
+                  <div matListItemLine>{{ game.purchasePlace }}</div>
+                </mat-list-item>
+              </div>
+            </div>
+            <div class="row" *ngIf="game.sold">
+              <div class="col-4">
+                <mat-list-item>
+                  <div matListItemTitle>Precio</div>
+                  <div matListItemLine>{{ game.salePrice}}</div>
+                </mat-list-item>
+              </div>
+              <div class="col-4">
+                <mat-list-item>
+                  <div matListItemTitle>Fecha venta</div>
+                  <div matListItemLine>{{ game.saleDate }}</div>
+                </mat-list-item>
+              </div>
+              <div class="col-4">
+                <mat-list-item>
+                  <div matListItemTitle>Lugar venta</div>
+                  <div matListItemLine>{{ game.salePlace }}</div>
+                </mat-list-item>
+              </div>
+            </div>
+            </mat-list>
+        </div>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="card">
+        <div class="card-img-actions m-1">
+          <img
+            class="card-img img-fluid"
+            [src]="game.img1! | image : 'games' : 1"
+            alt=""
+          />
+          <div class="card-img-actions-overlay card-img">
+            <a
+              (click)="verImagen(1)"
+              class="btn btn-outline-white btn-icon rounded-pill"
+              data-bs-popup="lightbox"
+              data-gallery="gallery1"
+            >
+              <i class="ph-eye"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="card-img-actions m-1">
+          <img
+            class="card-img img-fluid"
+            [src]="game.img2! | image : 'games' : 2"
+            alt=""
+          />
+          <div class="card-img-actions-overlay card-img">
+            <a
+              (click)="verImagen(2)"
+              class="btn btn-outline-white btn-icon rounded-pill"
+              data-bs-popup="lightbox"
+              data-gallery="gallery1"
+            >
+              <i class="ph-eye"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="card-img-actions m-1">
+          <img
+            class="card-img img-fluid"
+            [src]="game.img3! | image : 'games' : 3"
+            alt=""
+          />
+          <div class="card-img-actions-overlay card-img">
+            <a
+              (click)="verImagen(3)"
+              class="btn btn-outline-white btn-icon rounded-pill"
+              data-bs-popup="lightbox"
+              data-gallery="gallery1"
+            >
+              <i class="ph-eye"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

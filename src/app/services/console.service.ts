@@ -26,13 +26,28 @@ export class ConsoleService {
     }
   }
 
-  loadConsoles() {
-    const url = `${ base_url }/consoles/all`;
+  loadConsoles( desde: number = 0  ) {
+    const url = `${ base_url }/consoles?from=${ desde }`;
     return this.http.get<LoadConsoles>(url, this.headers);
   }
 
   loadConsoleById(id: string) {
     const url = `${ base_url }/consoles/${ id }`;
     return this.http.get<{ok:boolean, console: Console}>(url, this.headers);
+  }
+
+  updateConsole(console: Console) {
+    const url = `${ base_url }/consoles/${ console._id }`;
+    return this.http.put(url, console, this.headers);
+  }
+
+  createConsole(console: Console) {
+    const url = `${ base_url }/consoles`;
+    return this.http.post<{ok: boolean, console: Console}>(url, console, this.headers);
+  }
+
+  deleteConsole(console: Console) {
+    const url = `${ base_url }/consoles/${ console._id }`;
+    return this.http.delete(url, this.headers);
   }
 }
