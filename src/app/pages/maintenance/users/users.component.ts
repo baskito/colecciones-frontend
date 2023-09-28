@@ -42,9 +42,13 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadUsers(0);
-    this.imgSubs = this.newImageService.newImage.pipe(delay(300)).subscribe( img => {
-      this.loadUsers(0);
+    this.imgSubs = this.newImageService.newImage.pipe(delay(300)).subscribe( newImage => {
+      this.users[this.users.findIndex(obj => obj.uid === newImage.uid)].img = newImage.img;
+      this.usersTemp = this.users;
     });
+    // this.imgSubs = this.newImageService.newImage.pipe(delay(300)).subscribe( img => {
+    //   this.loadUsers(0);
+    // });
   }
 
   loadUsers(pagination: number) {

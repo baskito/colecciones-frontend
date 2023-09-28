@@ -35,3 +35,10 @@ export interface LoadGames {
   total: number,
   games: Game[];
 }
+
+export interface NewImage {
+  img: string,
+  type: 'usuarios' | 'consoles' | 'accesorios' | 'collections' | 'games',
+  uid: string,
+  numImg: string
+}

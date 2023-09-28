@@ -52,9 +52,13 @@ export class GameComponent implements OnInit {
   ngOnInit(): void {
     this.loadGames(0);
     this.loadConsolesByUser();
-    this.imgSubs = this.newImageService.newImage.pipe(delay(300)).subscribe( img => {
-      this.loadGames(0);
+    this.imgSubs = this.newImageService.newImage.pipe(delay(300)).subscribe( newImage => {
+      this.games[this.games.findIndex(obj => obj._id === newImage.uid)].img1 = newImage.img;
+      this.gamesTemp = this.games;
     });
+    // this.imgSubs = this.newImageService.newImage.pipe(delay(300)).subscribe( img => {
+    //   this.loadGames(0);
+    // });
   }
 
   managePagination( valor: number ) {

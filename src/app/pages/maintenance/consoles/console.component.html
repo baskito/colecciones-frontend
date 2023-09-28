@@ -15,7 +15,7 @@
 <div *ngIf="!loading" class="animate__animated animate__fadeIn animate__fast">
   <div class="card">
     <div class="card-header d-sm-flex align-items-sm-center py-sm-0">
-      <h6 class="py-sm-3 mb-sm-auto">Listado juegos ({{ totalGames }})</h6>
+      <h6 class="py-sm-3 mb-sm-auto">Listado consolas ({{ totalConsoles }})</h6>
       <div class="ms-sm-auto" *ngIf="txtTerm.value.length === 0">
         <ul class="pagination pagination-flat">
           <li class="page-item">
@@ -79,7 +79,7 @@
           </tr>
           <tr *ngFor="let console of consoles; index as i">
             <td class="text-center"><a (click)="modalConsole(console)" data-bs-toggle="modal" data-bs-target="#modal_default" class="pointer">
-                <img [src]="console.img1! | image:'games':1" [alt]="console.name" class="w-56px h-56px rounded" alt="Imagen Consola">
+                <img [src]="console.img1! | image:'consoles':1" [alt]="console.name" class="w-56px h-56px rounded" alt="Imagen Consola">
               </a></td>
             <td>
               <div class="flex-fill">
@@ -135,7 +135,7 @@
 </div>
 
 <!-- <app-modal-image [uid]="selectedUid" [img]="selectedImg" type="usuarios"></app-modal-image> -->
-<app-modal-image [uid]="selectedUid" [img]="selectedImg" type="games" numImg="1"></app-modal-image>
+<app-modal-image [uid]="selectedUid" [img]="selectedImg" type="consoles" numImg="1"></app-modal-image>
 <app-modal-console [consSel]="consModal"></app-modal-console>
 
 

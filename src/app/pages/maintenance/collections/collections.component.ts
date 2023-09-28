@@ -37,9 +37,14 @@ export class CollectionsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadCollections(0);
-    this.imgSubs = this.newImageService.newImage.pipe(delay(300)).subscribe( img => {
-      this.loadCollections(0);
+    this.imgSubs = this.newImageService.newImage.pipe(delay(300)).subscribe( newImage => {
+      this.collections[this.collections.findIndex(obj => obj._id === newImage.uid)].img1 = newImage.img;
+      this.collectionsTemp = this.collections;
     });
+    // this.imgSubs = this.newImageService.newImage.pipe(delay(300)).subscribe( img => {
+
+    //   this.loadCollections(0);
+    // });
   }
 
   managePagination( valor: number ) {

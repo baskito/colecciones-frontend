@@ -56,7 +56,13 @@ export class ModalImageComponent implements OnInit {
           this.closeBtn.nativeElement.click();
           this.fileButton ? this.fileButton.nativeElement.value = '' : '';
           this.cerrarModal();
-          this.newImageService.newImage.emit(img);
+          const newImage = {
+            img: img,
+            type: this.type,
+            uid:  this.uid,
+            numImg: this.numImg
+          }
+          this.newImageService.newImage.emit(newImage);
 
         });
     }

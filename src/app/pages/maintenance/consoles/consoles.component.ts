@@ -58,8 +58,10 @@ export class ConsolesComponent implements OnInit {
   ngOnInit(): void {
     this.loadConsoles(0);
     this.loadConsolesByUser();
-    this.imgSubs = this.newImageService.newImage.pipe(delay(300)).subscribe( img => {
-      this.loadGames(0);
+    this.imgSubs = this.newImageService.newImage.pipe(delay(300)).subscribe( newImage => {
+      this.consoles[this.consoles.findIndex(obj => obj._id === newImage.uid)].img1 = newImage.img;
+      this.consolesTemp = this.consoles;
+      // this.loadConsoles(0);
     });
   }
 
@@ -73,31 +75,31 @@ export class ConsolesComponent implements OnInit {
       this.paginacion -= valor;
     }
 
-    this.loadGames(this.paginacion);
+    this.loadConsoles(this.paginacion);
   }
 
-  loadGames(paginacion:number) {
-    this.loading = true;
-    this.gameService.loadGames(this.paginacion).subscribe({
-      complete: () => { // completeHandler
-        this.loading = false;
-      },
-      error: (err) => {  // errorHandler
-        console.log(err);
-        Swal.fire({
-          title: 'Error',
-          text: err.error.msg,
-          icon: 'error'
-        });
-      },    // nextHandler
-      next: (resp) => {
-        this.totalGames = resp.total;
-        this.games = resp.games;
-        this.gamesTemp = this.games;
-        this.paginas = Math.floor(this.totalGames/10.1) + 1;
-      }
-    });
-  }
+  // loadGames(paginacion:number) {
+  //   this.loading = true;
+  //   this.gameService.loadGames(this.paginacion).subscribe({
+  //     complete: () => { // completeHandler
+  //       this.loading = false;
+  //     },
+  //     error: (err) => {  // errorHandler
+  //       console.log(err);
+  //       Swal.fire({
+  //         title: 'Error',
+  //         text: err.error.msg,
+  //         icon: 'error'
+  //       });
+  //     },    // nextHandler
+  //     next: (resp) => {
+  //       this.totalGames = resp.total;
+  //       this.games = resp.games;
+  //       this.gamesTemp = this.games;
+  //       this.paginas = Math.floor(this.totalGames/10.1) + 1;
+  //     }
+  //   });
+  // }
 
   loadConsoles(paginacion:number) {
     this.loading = true;
@@ -185,7 +187,7 @@ export class ConsolesComponent implements OnInit {
       next: ({total, totalSearch, arrayResp}) => {
         this.games = arrayResp;
 
-        this.totalGames = total;
+        this.totalConsoles = total;
         this.totalSearch = totalSearch;
       }
     });
@@ -199,7 +201,7 @@ export class ConsolesComponent implements OnInit {
   pages(valor: number) {
     this.paginacion = valor;
 
-    this.loadGames(this.paginacion);
+    this.loadConsoles(this.paginacion);
   }
 
   deleteConsole(consoleDel: Console) {

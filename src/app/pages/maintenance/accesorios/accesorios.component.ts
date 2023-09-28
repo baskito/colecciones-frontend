@@ -53,9 +53,13 @@ export class AccesoriosComponent implements OnInit {
   ngOnInit(): void {
     this.loadAccesorios(0);
     this.loadConsolesByUser();
-    this.imgSubs = this.newImageService.newImage.pipe(delay(300)).subscribe( img => {
-      this.loadAccesorios(0);
+    this.imgSubs = this.newImageService.newImage.pipe(delay(300)).subscribe( newImage => {
+      this.accesorios[this.accesorios.findIndex(obj => obj._id === newImage.uid)].img1 = newImage.img;
+      this.accesoriosTemp = this.accesorios;
     });
+    // this.imgSubs = this.newImageService.newImage.pipe(delay(300)).subscribe( img => {
+    //   this.loadAccesorios(0);
+    // });
   }
 
   managePagination( valor: number ) {
