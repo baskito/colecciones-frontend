@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs';
 import { environment } from '../../../../../environments/environment.prod';
 import { Game } from 'src/app/models/game.model';
 import { GameService } from 'src/app/services/game.service';
+import { ConsoleService } from 'src/app/services/console.service';
+import { Console } from 'src/app/models/console.model';
 
 
 
@@ -20,16 +22,15 @@ export class ViewConsoleComponent implements OnInit, OnDestroy {
 
   loading: boolean = true;
   public idParamSubs!: Subscription;
-  public game: Game = {
+  public console: Console = {
     name: '',
-    genre: '',
-    editorial: '',
-    platform: ''
-  };
+    model: '',
+    brand: ''
+  }
   public imagen1!: string;
   public missing?: string[] = [];
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private toast: ToastrService, private gameService: GameService) { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private toast: ToastrService, private consoleService: ConsoleService) { }
 
   ngOnDestroy(): void {
     this.idParamSubs.unsubscribe();
@@ -39,14 +40,14 @@ export class ViewConsoleComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.idParamSubs = this.activatedRoute.paramMap.subscribe((resp:any) => {
-      this.loadGameById(resp.params.id);
+      this.loadConsoleById(resp.params.id);
     });
 
   }
 
-  loadGameById(id:string) {
+  loadConsoleById(id:string) {
     this.loading = true;
-    this.gameService.loadGameById(id).subscribe({
+    this.consoleService.loadConsoleById(id).subscribe({
       complete: () => {
         this.loading = false;
       }, // completeHandler
@@ -57,21 +58,19 @@ export class ViewConsoleComponent implements OnInit, OnDestroy {
           text: err.error.msg,
           icon: 'error'
         });
+        this.router.navigateByUrl( `dashboard/consoles`);
       },    // errorHandler
-      next: ({game}) => {
-        this.game = game;
-
-        this.imagen1 = `${ base_url }/upload/games/1/${ game.img1 }`;
+      next: ({console}) => {
+        this.console = console;
+        this.imagen1 = `${ base_url }/upload/consoles/1/${ console.img1 }`;
       }
     });
-
-
   }
 
-  deleteGame(game: Game) {
+  deleteConsole(consola: Console) {
     Swal.fire({
-      title: '¿Eliminar colección',
-      text: `Estás apunto de eliminar definitivamente ${ game.name }`,
+      title: '¿Eliminar consola?',
+      text: `Estás apunto de eliminar definitivamente la consola ${ consola.name }`,
       icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -79,15 +78,15 @@ export class ViewConsoleComponent implements OnInit, OnDestroy {
       confirmButtonText: 'Sí, eliminar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.gameService.deleteGame(game).subscribe({
+        this.consoleService.deleteConsole(consola).subscribe({
           complete: () => {
             Swal.fire(
               'Eliminado!',
-              `El juego ${ game.name } ha sido eliminado`,
+              `La consola ${ consola.name } ha sido eliminada`,
               'success'
             );
             // this.collections = this.collections.filter(item => item._id !== collection._id);
-            this.router.navigateByUrl('/dashboard/games')
+            this.router.navigateByUrl('/dashboard/consoles')
           }, // completeHandler
           error: (err) => {
             console.log(err);
@@ -104,7 +103,7 @@ export class ViewConsoleComponent implements OnInit, OnDestroy {
   }
 
   verImagen(num: number) {
-    const url: string  = `dashboard/games/view/image/${this.game._id}/${num}`;
+    const url: string  = `dashboard/consoles/view/image/${this.console._id}/${num}`;
     this.router.navigateByUrl(url);
   }
 

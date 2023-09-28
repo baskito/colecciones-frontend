@@ -18,11 +18,10 @@ export class EditConsoleComponent implements OnInit, OnDestroy {
 
   public idParamSubs!: Subscription;
 
-  public gameEdit: Game = {
+  public consoleEdit: Console = {
     name: '',
-    genre: '',
-    editorial: '',
-    platform: ''
+    model: '',
+    brand: ''
   };
   public formSubmitted = false;
   public tableTitle = '';
@@ -66,24 +65,22 @@ export class EditConsoleComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.createYearsArray();
-    this.loadConsolesByUser();
+    this.loadGamesByConsole();
     if (this.router.url.includes('edit')) {
       this.idParamSubs = this.activatedRoute.paramMap.subscribe((resp:any) => {
-          this.loadGameById(resp.params.id);
+          this.loadConsoleById(resp.params.id);
         });
 
       } else {
-        this.tableTitle = 'Nueva colección';
+        this.tableTitle = 'Nueva consola';
       }
 
     }
 
-    loadGameById(id:string) {
-      this.gameService.loadGameById(id).subscribe({
+    loadConsoleById(id:string) {
+      this.consoleService.loadConsoleById(id).subscribe({
         complete: () => {
-        this.tableTitle = this.gameEdit.name;
-
-        console.log(this.gameEdit.console);
+          this.tableTitle = this.consoleEdit.name;
         }, // completeHandler
         error: (err) => {
           console.log(err);
@@ -93,19 +90,18 @@ export class EditConsoleComponent implements OnInit, OnDestroy {
             icon: 'error'
           });
         },    // errorHandler
-        next: ({game}) => {
-          this.gameEdit = game;
-          game.saleDate ? this.saleDateFormat = game.saleDate.toString().substring(0,10) : '';
-          game.purchaseDate ? this.purchaseDateFormat = game.purchaseDate.toString().substring(0,10) : '';
-          this.loadConsolesByUser();
-
+        next: ({console}) => {
+          this.consoleEdit = console;
+          console.saleDate ? this.saleDateFormat = console.saleDate.toString().substring(0,10) : '';
+          console.purchaseDate ? this.purchaseDateFormat = console.purchaseDate.toString().substring(0,10) : '';
+          this.loadGamesByConsole();
         }
-    });
+      });
 
 
   }
 
-  loadConsolesByUser() {
+  loadGamesByConsole() {
     this.consoleService.loadConsoles().subscribe({
       complete: () => {
         console.log(this.consoles);
@@ -131,52 +127,52 @@ export class EditConsoleComponent implements OnInit, OnDestroy {
   }
 
   onChanged($event: any) {
-    this.gameEdit.sold = $event && $event.target && $event.target.checked;
+    this.consoleEdit.sold = $event && $event.target && $event.target.checked;
     (<HTMLInputElement>document.getElementById('salePriceInput')!).value = '';
     (<HTMLInputElement>document.getElementById('datePriceInput')!).value = '';
     (<HTMLInputElement>document.getElementById('placePriceInput')!).value = '';
     this.saleDateFormat = '';
-    this.gameEdit.salePlace = '';
-    this.gameEdit.salePrice = 0;
+    this.consoleEdit.salePlace = '';
+    this.consoleEdit.salePrice = 0;
   }
 
   async saveGame() {
     this.formSubmitted = true;
-    if(!this.gameEdit.name) {
+    if(!this.consoleEdit.name) {
       this.toast.error('El nombre es obligatorio');
       return;
     }
-    if(!this.gameEdit.genre) {
+    if(!this.consoleEdit.genre) {
       this.toast.error('El género es obligatorio');
       return;
     }
-    if(!this.gameEdit.editorial) {
+    if(!this.consoleEdit.editorial) {
       this.toast.error('La editorial es obligatoria');
       return;
     }
-    if(!this.gameEdit.platform) {
+    if(!this.consoleEdit.platform) {
       this.toast.error('La plataforma es obligatoria');
       return;
     }
 
     if (this.saleDateFormat) {
-      this.gameEdit.saleDate = new Date(this.saleDateFormat);
+      this.consoleEdit.saleDate = new Date(this.saleDateFormat);
     } else {
-      this.gameEdit.saleDate = new Date(0);
+      this.consoleEdit.saleDate = new Date(0);
     }
     if (this.purchaseDateFormat) {
-      this.gameEdit.purchaseDate = new Date(this.purchaseDateFormat);
+      this.consoleEdit.purchaseDate = new Date(this.purchaseDateFormat);
     } else {
-      this.gameEdit.purchaseDate = new Date(0);
+      this.consoleEdit.purchaseDate = new Date(0);
     }
-    console.log(this.gameEdit);
+    console.log(this.consoleEdit);
 
-    // this.saleDateFormat ? this.gameEdit.saleDate = new Date(this.saleDateFormat): this.gameEdit.saleDate = undefined;
-    // this.purchaseDateFormat ? this.gameEdit.purchaseDate = new Date(this.purchaseDateFormat): this.gameEdit.purchaseDate = undefined;
+    // this.saleDateFormat ? this.consoleEdit.saleDate = new Date(this.saleDateFormat): this.consoleEdit.saleDate = undefined;
+    // this.purchaseDateFormat ? this.consoleEdit.purchaseDate = new Date(this.purchaseDateFormat): this.consoleEdit.purchaseDate = undefined;
     if (this.router.url.includes('edit')) {
-      await this.cargaImagenNum(this.gameEdit._id!);
+      await this.cargaImagenNum(this.consoleEdit._id!);
 
-      this.gameService.updateGame(this.gameEdit).subscribe({
+      this.gameService.updateGame(this.consoleEdit).subscribe({
         complete: () => { // completeHandler
           Swal.fire({
             title: 'Juego actualizado',
@@ -198,7 +194,7 @@ export class EditConsoleComponent implements OnInit, OnDestroy {
         }
       });
     } else if (this.router.url.includes('new')) {
-      this.gameService.createGame(this.gameEdit).subscribe({
+      this.gameService.createGame(this.consoleEdit).subscribe({
         complete: () => { // completeHandler
 
           Swal.fire({
@@ -293,19 +289,19 @@ export class EditConsoleComponent implements OnInit, OnDestroy {
       case '1':
         this.fileUploadService.updateImage(this.uploadImage, 'games', id, num )
         .then( img => {
-            this.gameEdit.img1 = img;
+            this.consoleEdit.img1 = img;
           });
           break;
       case '2':
         this.fileUploadService.updateImage(this.uploadImage2, 'games', id, num )
         .then( img => {
-            this.gameEdit.img2 = img;
+            this.consoleEdit.img2 = img;
           });
           break;
       case '3':
         this.fileUploadService.updateImage(this.uploadImage3, 'games', id, num )
         .then( img => {
-          this.gameEdit.img3 = img;
+          this.consoleEdit.img3 = img;
         });
         break;
     }

@@ -63,13 +63,13 @@
         <tbody>
           <tr class="table-light">
             <th class="w100 text-center">Imagen</th>
-            <th>Colección</th>
-            <th class="w50 text-center">Tipo</th>
+            <th>Consola</th>
+            <th class="w50 text-center">Gen.</th>
             <th class="w50 text-center">Año</th>
+            <th class="w50 text-center">Color</th>
             <th class="w50 text-center">Fecha compra</th>
             <th class="w50 text-center">Precio compra</th>
             <th class="w50 text-center">Valor estimado</th>
-            <th class="text-center">Consola</th>
             <th>Descripción</th>
             <!-- <th class="w100 text-center">Extras</th>
             <th class="w100 text-center">Faltan</th>
@@ -84,14 +84,17 @@
             <td>
               <div class="flex-fill">
                 <div class="fw-semibold">{{ console.name }}</div>
-                <span class="text-muted">{{ console.brand }} </span>
-                <span class="badge bg-secondary rounded-pill">{{ console.model }}</span>
+                <span class="text-muted">{{ console.model }} </span>
+                <span class="badge bg-secondary rounded-pill">{{ console.brand }}</span>
               </div>
             </td>
             <td class="text-center">
               <span class="badge bg-purple">{{ console.generation }}</span>
             </td>
             <td class="text-center">{{ console.year }}</td>
+            <td class="text-center">
+              <button *ngIf="console.color"  class="material-button" [ngStyle]="{'background-color': console.color}">&nbsp;&nbsp;&nbsp;</button>
+            </td>
             <td class="text-center">{{ console.purchaseDate | date: 'dd-MM-yy' }}</td>
             <td class="text-center">{{ console.purchasePrice }}</td>
             <td class="text-center">{{ console.estimatedValue }}</td>

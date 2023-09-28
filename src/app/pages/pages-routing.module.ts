@@ -16,6 +16,8 @@ import { ViewAccesorioComponent } from './maintenance/accesorios/view-accesorio/
 import { GameComponent } from './maintenance/games/game.component';
 import { EditGameComponent } from './maintenance/games/edit-game/edit-game.component';
 import { ViewGameComponent } from './maintenance/games/view-game/view-game.component';
+import { EditConsoleComponent } from './maintenance/consoles/edit-console/edit-console.component';
+import { ViewConsoleComponent } from './maintenance/consoles/view-console/view-console.component';
 
 
 const routes: Routes = [
@@ -37,6 +39,9 @@ const routes: Routes = [
       { path: 'users', component: UsersComponent },
       // Consoles
       { path: 'consoles', component: ConsolesComponent },
+      { path: 'consoles/new', component: EditConsoleComponent },
+      { path: 'consoles/edit/:id', component: EditConsoleComponent },
+      { path: 'consoles/view/:id', component: ViewConsoleComponent },
       // Accesorios
       { path: 'accesorios', component: AccesoriosComponent },
       { path: 'accesorios/new', component: EditAccesorioComponent },
