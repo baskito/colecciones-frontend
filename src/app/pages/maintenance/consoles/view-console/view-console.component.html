@@ -23,7 +23,7 @@
             console.brand
             }}</span>
           <span class="badge bg-secondary ms-auto ms-lg-2">{{
-            console.generation
+            console.year
             }}</span>
         </span>
       </div>
@@ -63,7 +63,7 @@
 
         <div class="card-body">
           <mat-list>
-            <h4>Datos juego</h4>
+            <h4>Datos consola</h4>
             <div class="row">
               <div class="col-4">
                 <mat-list-item>
@@ -190,6 +190,63 @@
               </div>
             </div>
           </mat-list>
+          <h4>Accesorios de la consola</h4>
+          <div class="table-responsive">
+            <table class="table table-bordered table-lg">
+              <tbody>
+                <tr class="table-light">
+                  <th class="w100 text-center">Imagen</th>
+                  <th>Colección</th>
+                  <th class="w50 text-center">Tipo</th>
+                  <th class="w50 text-center">Año</th>
+                  <th class="w50 text-center">Color</th>
+                  <th class="w50 text-center">Fecha compra</th>
+                  <th class="w50 text-center">Precio compra</th>
+                  <th class="w50 text-center">Valor estimado</th>
+                  <th class="w100 text-nowrap text-center">Acciones</th>
+                </tr>
+                <tr *ngFor="let acc of accesorios; index as i">
+                  <td class="text-center">
+                      <img [src]="acc.img1! | image:'accesorios':1" [alt]="acc.name" class="w-56px h-56px rounded" alt="Imagen accesorio">
+                  </td>
+                  <td>
+                    <div class="flex-fill">
+                      <div class="fw-semibold">{{ acc.name }}</div>
+                      <span class="text-muted">{{ acc.model }} </span>
+                      <span class="badge bg-secondary rounded-pill">{{ acc.brand }}</span>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <span class="badge bg-purple">{{ acc.tipology }}</span>
+                  </td>
+                  <td class="text-center">{{ acc.year }}</td>
+                  <td class="text-center">
+                    <button *ngIf="acc.color"  class="material-button" [ngStyle]="{'background-color': acc.color}">&nbsp;&nbsp;&nbsp;</button>
+                  </td>
+                  <td class="text-center">{{ acc.purchaseDate | date: 'dd-MM-yy' }}</td>
+                  <td class="text-center">{{ acc.purchasePrice }}</td>
+                  <td class="text-center">{{ acc.estimatedValue }}</td>
+                  <td class="wmin-lg-50 text-center">
+                    <div class="d-inline-flex pointer">
+                      <a routerLink="./view/{{acc._id}}" class="text-success mx-2 pointer" #tooltip="matTooltip" matTooltip="Ver colección" matTooltipPosition="above">
+                        <i class="ph-eye"></i>
+                      </a>
+                    </div>
+                    <div class="d-inline-flex">
+                      <a routerLink="./edit/{{acc._id}}" class="text-primary mx-2 pointer" #tooltip="matTooltip" matTooltip="Modificar" matTooltipPosition="above">
+                        <i class="ph-pen"></i>
+                      </a>
+                    </div>
+                    <div class="d-inline-flex">
+                      <a (click)="deleteAccesorio(acc)" class="text-danger mx-2 pointer" #tooltip="matTooltip" matTooltip="Borrar" matTooltipPosition="above">
+                        <i class="ph-trash"></i>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

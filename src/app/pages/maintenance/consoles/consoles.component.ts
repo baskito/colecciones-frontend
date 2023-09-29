@@ -15,7 +15,7 @@ const base_url = environment.base_url;
 @Component({
   selector: 'app-consoles',
   templateUrl: './console.component.html',
-  styleUrls: ['./console.component.scss']
+  styleUrls: ['./console.component.scss'],
 })
 export class ConsolesComponent implements OnInit {
 
@@ -46,6 +46,27 @@ export class ConsolesComponent implements OnInit {
     brand: '',
     img1: ''
   };
+  numConsolesStock: number = 0;
+  numConsolesSold: number = 0;
+  totalEstimatedStock: number = 0;
+  totalCostSold: number = 0;
+  totalPriceSold: number = 0;
+  totalCostConsoles: number = 0;
+  public data = {
+    labels: [
+      'Consolas',
+      'Vendidas'
+    ],
+    datasets: [{
+      // label: 'My First Dataset',
+      data: [15, 195],
+      backgroundColor: [
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)'
+      ],
+      hoverOffset: 4
+    }]
+  };
 
   constructor(
     private newImageService: NewImageService,
@@ -57,7 +78,7 @@ export class ConsolesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadConsoles(0);
-    this.loadConsolesByUser();
+    // this.loadConsolesByUser();
     this.imgSubs = this.newImageService.newImage.pipe(delay(300)).subscribe( newImage => {
       this.consoles[this.consoles.findIndex(obj => obj._id === newImage.uid)].img1 = newImage.img;
       this.consolesTemp = this.consoles;
@@ -120,6 +141,19 @@ export class ConsolesComponent implements OnInit {
         this.consoles = resp.consoles;
         this.consolesTemp = this.consoles;
         this.paginas = Math.floor(this.totalConsoles/10.1) + 1;
+        for (let cons of resp.consoles) {
+          if (cons.sold) {
+            this.numConsolesSold++;
+            this.totalCostSold += cons.salePrice! | 0;
+            this.totalPriceSold += cons.purchasePrice! | 0;
+
+          } else {
+            this.numConsolesStock++;
+            this.totalEstimatedStock += cons.estimatedValue! | 0;
+          }
+        }
+        this.data.datasets[0].data[0] = this.totalConsoles;
+        this.data.datasets[0].data[1] = this.numConsolesSold;
       }
     });
   }

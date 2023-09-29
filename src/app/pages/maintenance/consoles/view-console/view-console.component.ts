@@ -8,6 +8,8 @@ import { Game } from 'src/app/models/game.model';
 import { GameService } from 'src/app/services/game.service';
 import { ConsoleService } from 'src/app/services/console.service';
 import { Console } from 'src/app/models/console.model';
+import { AccesoriosService } from 'src/app/services/accesorios.service';
+import { Accesorio } from 'src/app/models/accesorio.model';
 
 
 
@@ -29,8 +31,9 @@ export class ViewConsoleComponent implements OnInit, OnDestroy {
   }
   public imagen1!: string;
   public missing?: string[] = [];
+  public accesorios: Accesorio[] = [];
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private toast: ToastrService, private consoleService: ConsoleService) { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private toast: ToastrService, private accService: AccesoriosService, private consoleService: ConsoleService) { }
 
   ngOnDestroy(): void {
     this.idParamSubs.unsubscribe();
@@ -49,7 +52,7 @@ export class ViewConsoleComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.consoleService.loadConsoleById(id).subscribe({
       complete: () => {
-        this.loading = false;
+        this.loadAccesorioByConsole(id);
       }, // completeHandler
       error: (err) => {
         console.log(err);
@@ -63,6 +66,61 @@ export class ViewConsoleComponent implements OnInit, OnDestroy {
       next: ({console}) => {
         this.console = console;
         this.imagen1 = `${ base_url }/upload/consoles/1/${ console.img1 }`;
+      }
+    });
+  }
+
+  loadAccesorioByConsole(id:string) {
+    this.loading = true;
+    this.accService.loadAccesoriosByConsole(id).subscribe({
+      complete: () => {
+        this.loading = false;
+      }, // completeHandler
+      error: (err) => {
+        console.log(err);
+        Swal.fire({
+          title: 'Error',
+          text: err.error.msg,
+          icon: 'error'
+        });
+        this.router.navigateByUrl( `dashboard/consoles`);
+      },    // errorHandler
+      next: ({accesorios}) => {
+        this.accesorios = accesorios;
+
+      }
+    });
+  }
+
+  deleteAccesorio(accesorio: Accesorio) {
+    Swal.fire({
+      title: '¿Eliminar accesorio?',
+      text: `Estás apunto de eliminar definitivamente el accesorio ${ accesorio.name }`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.accService.deleteAccesorio(accesorio).subscribe({
+          complete: () => {
+            Swal.fire(
+              'Eliminado!',
+              `El accesorio ${ accesorio.name } ha sido eliminado`,
+              'success'
+            );
+          }, // completeHandler
+          error: (err) => {
+            console.log(err);
+            Swal.fire({
+              title: 'Error',
+              text: err.error.msg,
+              icon: 'error'
+            });
+          }
+        });
+
       }
     });
   }

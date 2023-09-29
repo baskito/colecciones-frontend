@@ -13,6 +13,110 @@
 </div>
 
 <div *ngIf="!loading" class="animate__animated animate__fadeIn animate__fast">
+    <div class="card" *ngIf="totalConsoles > 0">
+      <div class="card-header">
+        <h5 class="mb-0">Resumen colección Consolas
+          <!-- <span class="badge bg-success rounded-pill ms-auto ms-lg-2">{{
+            collection.year }}</span> de la editorial
+            <span class="badge bg-warning ms-auto ms-lg-2">{{
+            collection.editorial }}</span>
+            <span *ngIf="collection.fullCollection"> que consta de {{
+            collection.fullCollection }} {{ collection.tipology }}</span>  -->
+          </h5>
+      </div>
+
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-6 col-xl-3">
+
+            <!-- Missing cards -->
+            <div class="card card-body text-center">
+              <h6 class="mb-0">Consolas en la colección {{this.numConsolesStock}}</h6>
+              <div class="fs-sm text-muted mb-3">Valor estimado {{ this.totalCostSold }}</div>
+              <app-missing-chart *ngIf="totalConsoles > 0" [dataArrayInput]="data"></app-missing-chart>
+              <!-- <i class="ph-check-circle ph-5x text-success mt-1 mb-3"></i> -->
+            </div>
+            <!-- /Missing cards -->
+
+          </div>
+
+          <div class="col-sm-6 col-xl-9">
+            <div class="card border-success">
+              <div class="card-header bg-success bg-opacity-10 border-success d-flex justify-content-between">
+                <span class="fw-semibold">Total consolas</span>
+                <span class="text-success fw-semibold">{{ this.totalConsoles }}</span>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                <div class="col-sm-6">
+                  <mat-list>
+                    <div mat-subheader>Folders</div>
+                    <mat-list-item>
+                      <mat-icon matListItemIcon>folder</mat-icon>
+                      <div matListItemTitle>dfghdfg</div>
+                      <div matListItemLine>12</div>
+                    </mat-list-item>
+                    <mat-list-item>
+                      <mat-icon matListItemIcon>folder</mat-icon>
+                      <div matListItemTitle>dfghdfg</div>
+                      <div matListItemLine>12</div>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>
+                      <mat-icon matListItemIcon>folder</mat-icon>
+                      <div matListItemTitle>dfghdfg</div>
+                      <div matListItemLine>12</div>
+                    </mat-list-item>
+                  </mat-list>
+                </div>
+                <div class="col-sm-6">
+                  <mat-list>
+                    <div mat-subheader>Folders</div>
+                    <mat-list-item>
+                      <mat-icon matListItemIcon>folder</mat-icon>
+                      <div matListItemTitle>dfghdfg</div>
+                      <div matListItemLine>12</div>
+                    </mat-list-item>
+                    <mat-list-item>
+                      <mat-icon matListItemIcon>folder</mat-icon>
+                      <div matListItemTitle>dfghdfg</div>
+                      <div matListItemLine>12</div>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>
+                      <mat-icon matListItemIcon>folder</mat-icon>
+                      <div matListItemTitle>dfghdfg</div>
+                      <div matListItemLine>12</div>
+                    </mat-list-item>
+                  </mat-list>
+                </div>
+              </div>
+                <div class="col-sm-6 col-xl-3">
+                  <h5 class="card-title">Consolas en la colección</h5>
+                  <p class="mb-3">{{ this.numConsolesStock }}</p>
+                  <h5 class="card-title">Consolas vendidas</h5>
+                  <p class="mb-3">{{ this.totalCostSold }}€</p>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                  <h5 class="card-title">Valor estimado colección</h5>
+                  <p class="mb-3">{{ this.totalEstimatedStock }}</p>
+                  <h5 class="card-title">Valor consolas vendidas</h5>
+                  <p class="mb-3">{{ this.totalCostSold }}€</p>
+                </div>
+              </div>
+
+              <div class="card-footer d-flex justify-content-between border-top-0 pt-0 pb-3">
+                <span class="text-muted">Balance consolas vendidas</span>
+                <span class="hstack gap-1">
+                  <span class="text-muted ms-1">{{ this.totalPriceSold }}€</span>
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
   <div class="card">
     <div class="card-header d-sm-flex align-items-sm-center py-sm-0">
       <h6 class="py-sm-3 mb-sm-auto">Listado consolas ({{ totalConsoles }})</h6>
@@ -70,14 +174,14 @@
             <th class="w50 text-center">Fecha compra</th>
             <th class="w50 text-center">Precio compra</th>
             <th class="w50 text-center">Valor estimado</th>
-            <th>Descripción</th>
+            <th>Notas</th>
             <!-- <th class="w100 text-center">Extras</th>
             <th class="w100 text-center">Faltan</th>
             <th class="w100 text-center">Repetidos</th> -->
             <!-- <th class="text-center">Notas</th> -->
             <th class="w100 text-nowrap text-center">Acciones</th>
           </tr>
-          <tr *ngFor="let console of consoles; index as i">
+          <tr *ngFor="let console of consoles; index as i" [ngClass]="{'sold': console.sold}">
             <td class="text-center"><a (click)="modalConsole(console)" data-bs-toggle="modal" data-bs-target="#modal_default" class="pointer">
                 <img [src]="console.img1! | image:'consoles':1" [alt]="console.name" class="w-56px h-56px rounded" alt="Imagen Consola">
               </a></td>
@@ -100,7 +204,7 @@
             <td class="text-center">{{ console.estimatedValue }}</td>
             <!-- <td><button data-bs-toggle="modal" data-bs-target="#modal_console" (click)="modalConsole(game.console!)" type="button" class="btn btn-outline-primary border-transparent">{{ getConsole(game.console!) }}</button></td> -->
             <!-- <td>{{ getConsole(acc.console) }}</td> -->
-            <td>{{ console.description }}</td>
+            <td>{{ console.notes }}</td>
             <!-- <td>{{ colec.extras }}</td>
             <td>{{ colec.missing }}</td>
             <td>{{ colec.repeated }}</td> -->

@@ -38,6 +38,11 @@ export class AccesoriosService {
     return this.http.get<{ok:boolean, accesorio: Accesorio}>(url, this.headers);
   }
 
+  loadAccesoriosByConsole(id: string) {
+    const url = `${ base_url }/accesorios/console/${ id }`;
+    return this.http.get<LoadAccesorios>(url, this.headers);
+  }
+
   updateAccesorio( accesorio: Accesorio) {
     const url = `${ base_url }/accesorios/${ accesorio._id }`;
     return this.http.put(url, accesorio, this.headers);

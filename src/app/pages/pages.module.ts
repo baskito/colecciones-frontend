@@ -24,6 +24,9 @@ import { EditGameComponent } from './maintenance/games/edit-game/edit-game.compo
 import { ViewGameComponent } from './maintenance/games/view-game/view-game.component';
 import { EditConsoleComponent } from './maintenance/consoles/edit-console/edit-console.component';
 import { ViewConsoleComponent } from './maintenance/consoles/view-console/view-console.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 
 
 
@@ -61,7 +64,10 @@ import { ViewConsoleComponent } from './maintenance/consoles/view-console/view-c
     RouterModule,
     MaterialModule,
     ComponentsModule,
-    PipesModule
+    PipesModule,
+    MatListModule,
+    MatDividerModule,
+    MatIconModule
   ]
 })
 export class PagesModule { }

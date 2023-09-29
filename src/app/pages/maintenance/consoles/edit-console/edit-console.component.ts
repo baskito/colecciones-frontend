@@ -65,7 +65,7 @@ export class EditConsoleComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.createYearsArray();
-    this.loadGamesByConsole();
+    // this.loadConsoleById();
     if (this.router.url.includes('edit')) {
       this.idParamSubs = this.activatedRoute.paramMap.subscribe((resp:any) => {
           this.loadConsoleById(resp.params.id);
@@ -78,6 +78,8 @@ export class EditConsoleComponent implements OnInit, OnDestroy {
     }
 
     loadConsoleById(id:string) {
+      console.log(id);
+
       this.consoleService.loadConsoleById(id).subscribe({
         complete: () => {
           this.tableTitle = this.consoleEdit.name;
@@ -94,32 +96,32 @@ export class EditConsoleComponent implements OnInit, OnDestroy {
           this.consoleEdit = console;
           console.saleDate ? this.saleDateFormat = console.saleDate.toString().substring(0,10) : '';
           console.purchaseDate ? this.purchaseDateFormat = console.purchaseDate.toString().substring(0,10) : '';
-          this.loadGamesByConsole();
+          // this.loadGamesByConsole();
         }
       });
 
 
   }
 
-  loadGamesByConsole() {
-    this.consoleService.loadConsoles().subscribe({
-      complete: () => {
-        console.log(this.consoles);
-      }, // completeHandler
-      error: (err) => {
-        console.log(err);
-        Swal.fire({
-          title: 'Error',
-          text: err.error.msg,
-          icon: 'error'
-        });
-      },    // errorHandler
-      next: ({consoles}) => {
-        this.consoles = consoles;
+  // loadGamesByConsole() {
+  //   this.consoleService.loadConsoles().subscribe({
+  //     complete: () => {
+  //       console.log(this.consoles);
+  //     }, // completeHandler
+  //     error: (err) => {
+  //       console.log(err);
+  //       Swal.fire({
+  //         title: 'Error',
+  //         text: err.error.msg,
+  //         icon: 'error'
+  //       });
+  //     },    // errorHandler
+  //     next: ({consoles}) => {
+  //       this.consoles = consoles;
 
-      }
-    });
-  }
+  //     }
+  //   });
+  // }
 
   createYearsArray() {
     const currentYear = new Date().getFullYear();
@@ -136,22 +138,22 @@ export class EditConsoleComponent implements OnInit, OnDestroy {
     this.consoleEdit.salePrice = 0;
   }
 
-  async saveGame() {
+  async saveConsole() {
     this.formSubmitted = true;
     if(!this.consoleEdit.name) {
       this.toast.error('El nombre es obligatorio');
       return;
     }
-    if(!this.consoleEdit.genre) {
-      this.toast.error('El género es obligatorio');
+    if(!this.consoleEdit.brand) {
+      this.toast.error('La marca es obligatoria');
       return;
     }
-    if(!this.consoleEdit.editorial) {
-      this.toast.error('La editorial es obligatoria');
+    if(!this.consoleEdit.model) {
+      this.toast.error('EL modelo es obligatorio');
       return;
     }
-    if(!this.consoleEdit.platform) {
-      this.toast.error('La plataforma es obligatoria');
+    if(!this.consoleEdit.generation) {
+      this.toast.error('La generación es obligatoria');
       return;
     }
 
@@ -172,14 +174,14 @@ export class EditConsoleComponent implements OnInit, OnDestroy {
     if (this.router.url.includes('edit')) {
       await this.cargaImagenNum(this.consoleEdit._id!);
 
-      this.gameService.updateGame(this.consoleEdit).subscribe({
+      this.consoleService.updateConsole(this.consoleEdit).subscribe({
         complete: () => { // completeHandler
           Swal.fire({
-            title: 'Juego actualizado',
-            text: 'El juego se ha modificado correctamente',
+            title: 'Consola actualizada',
+            text: 'La consola se ha modificado correctamente',
             icon: 'success'
           });
-          this.router.navigateByUrl('/dashboard/games');
+          this.router.navigateByUrl('/dashboard/consoles');
         },
         error: (err) => { // errorHandler
           console.log(err);
@@ -194,15 +196,15 @@ export class EditConsoleComponent implements OnInit, OnDestroy {
         }
       });
     } else if (this.router.url.includes('new')) {
-      this.gameService.createGame(this.consoleEdit).subscribe({
+      this.consoleService.createConsole(this.consoleEdit).subscribe({
         complete: () => { // completeHandler
 
           Swal.fire({
-            title: 'Juego creado',
-            text: 'El juego se ha creado correctamente',
+            title: 'Consola creada',
+            text: 'La consola se ha creado correctamente',
             icon: 'success'
           });
-          this.router.navigateByUrl('/dashboard/games');
+          this.router.navigateByUrl('/dashboard/consoles');
         },
         error: (err) => { // errorHandler
           console.log(err);
@@ -213,8 +215,8 @@ export class EditConsoleComponent implements OnInit, OnDestroy {
           });
         },    // nextHandler
         next: async (resp) => {
-          await this.cargaImagenNum(resp.game._id!);
-          console.log(resp);
+          await this.cargaImagenNum(resp.console._id!);
+          // console.log(resp);
         }
       });
     }
@@ -287,19 +289,19 @@ export class EditConsoleComponent implements OnInit, OnDestroy {
   uploadImageFunction(num: string, id: string) {
     switch (num) {
       case '1':
-        this.fileUploadService.updateImage(this.uploadImage, 'games', id, num )
+        this.fileUploadService.updateImage(this.uploadImage, 'consoles', id, num )
         .then( img => {
             this.consoleEdit.img1 = img;
           });
           break;
       case '2':
-        this.fileUploadService.updateImage(this.uploadImage2, 'games', id, num )
+        this.fileUploadService.updateImage(this.uploadImage2, 'consoles', id, num )
         .then( img => {
             this.consoleEdit.img2 = img;
           });
           break;
       case '3':
-        this.fileUploadService.updateImage(this.uploadImage3, 'games', id, num )
+        this.fileUploadService.updateImage(this.uploadImage3, 'consoles', id, num )
         .then( img => {
           this.consoleEdit.img3 = img;
         });
