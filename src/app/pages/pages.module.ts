@@ -12,7 +12,7 @@ import { MaterialModule } from '../shared/material.module';
 import { ComponentsModule } from '../components/components.module';
 import { AccesoriosComponent } from './maintenance/accesorios/accesorios.component';
 import { CollectionsComponent } from './maintenance/collections/collections.component';
-import { ConsolesComponent } from './maintenance/consoles/consoles.component';
+import { ConsoleComponent } from './maintenance/consoles/console.component';
 import { EditCollectionComponent } from './maintenance/collections/edit-collection/edit-collection.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { ViewCollectionComponent } from './maintenance/collections/view-collection/view-collection.component';
@@ -39,7 +39,7 @@ import { MatIconModule } from '@angular/material/icon';
     CollectionsComponent,
     AccesoriosComponent,
     GameComponent,
-    ConsolesComponent,
+    ConsoleComponent,
     EditCollectionComponent,
     ViewCollectionComponent,
     EditAccesorioComponent,

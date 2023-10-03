@@ -27,7 +27,7 @@
 
       <div class="card-body">
         <div class="row">
-          <div class="col-sm-6 col-xl-3">
+          <div class="col-sm-3 col-xl-3">
 
             <!-- Missing cards -->
             <div class="card card-body text-center">
@@ -40,75 +40,53 @@
 
           </div>
 
-          <div class="col-sm-6 col-xl-9">
+          <div class="col-sm-9 col-xl-9">
             <div class="card border-success">
               <div class="card-header bg-success bg-opacity-10 border-success d-flex justify-content-between">
-                <span class="fw-semibold">Total consolas</span>
-                <span class="text-success fw-semibold">{{ this.totalConsoles }}</span>
+                <span class="fw-semibold">Total consolas {{ this.totalConsoles }}</span>
+                <!-- <span class="text-success fw-semibold">{{ this.totalConsoles }}</span> -->
               </div>
               <div class="card-body">
                 <div class="row">
                 <div class="col-sm-6">
                   <mat-list>
-                    <div mat-subheader>Folders</div>
+                    <div mat-subheader><h3>Colección vigente</h3></div>
                     <mat-list-item>
-                      <mat-icon matListItemIcon>folder</mat-icon>
-                      <div matListItemTitle>dfghdfg</div>
-                      <div matListItemLine>12</div>
+                      <span matListItemTitle>{{ numConsolesStock }}</span>
+                      <span matListItemLine>Total consolas</span>
                     </mat-list-item>
                     <mat-list-item>
-                      <mat-icon matListItemIcon>folder</mat-icon>
-                      <div matListItemTitle>dfghdfg</div>
-                      <div matListItemLine>12</div>
+                      <span matListItemTitle>{{ totalEstimatedStock }}€</span>
+                      <span matListItemLine>Valor estimado</span>
                     </mat-list-item>
-                    <mat-divider></mat-divider>
                     <mat-list-item>
-                      <mat-icon matListItemIcon>folder</mat-icon>
-                      <div matListItemTitle>dfghdfg</div>
-                      <div matListItemLine>12</div>
+                      <span matListItemTitle>{{ totalCostConsoles }}€</span>
+                      <span matListItemLine>Coste compra</span>
                     </mat-list-item>
                   </mat-list>
                 </div>
                 <div class="col-sm-6">
                   <mat-list>
-                    <div mat-subheader>Folders</div>
+                    <div mat-subheader><h3>Ventas</h3></div>
                     <mat-list-item>
-                      <mat-icon matListItemIcon>folder</mat-icon>
-                      <div matListItemTitle>dfghdfg</div>
-                      <div matListItemLine>12</div>
+                      <span matListItemTitle>{{ numConsolesSold }}</span>
+                      <span matListItemLine>Total consolas vendidas</span>
                     </mat-list-item>
                     <mat-list-item>
-                      <mat-icon matListItemIcon>folder</mat-icon>
-                      <div matListItemTitle>dfghdfg</div>
-                      <div matListItemLine>12</div>
+                      <span matListItemTitle>{{ totalPriceSold }}€</span>
+                      <span matListItemLine>Precio compra</span>
                     </mat-list-item>
-                    <mat-divider></mat-divider>
                     <mat-list-item>
-                      <mat-icon matListItemIcon>folder</mat-icon>
-                      <div matListItemTitle>dfghdfg</div>
-                      <div matListItemLine>12</div>
+                      <span matListItemTitle>{{ totalCostSold }}€</span>
+                      <span matListItemLine>Precio venta</span>
                     </mat-list-item>
                   </mat-list>
                 </div>
-              </div>
-                <div class="col-sm-6 col-xl-3">
-                  <h5 class="card-title">Consolas en la colección</h5>
-                  <p class="mb-3">{{ this.numConsolesStock }}</p>
-                  <h5 class="card-title">Consolas vendidas</h5>
-                  <p class="mb-3">{{ this.totalCostSold }}€</p>
-                </div>
-                <div class="col-sm-6 col-xl-3">
-                  <h5 class="card-title">Valor estimado colección</h5>
-                  <p class="mb-3">{{ this.totalEstimatedStock }}</p>
-                  <h5 class="card-title">Valor consolas vendidas</h5>
-                  <p class="mb-3">{{ this.totalCostSold }}€</p>
-                </div>
-              </div>
 
               <div class="card-footer d-flex justify-content-between border-top-0 pt-0 pb-3">
-                <span class="text-muted">Balance consolas vendidas</span>
+                <span class="text-muted">Balance consolas vendidas + estimado colección {{ totalEstimatedStock - totalCostConsoles + totalCostSold - totalPriceSold }}€</span>
                 <span class="hstack gap-1">
-                  <span class="text-muted ms-1">{{ this.totalPriceSold }}€</span>
+                  <span class="text-muted ms-1">{{ totalEstimatedStock - totalCostConsoles + totalCostSold - totalPriceSold }}€</span>
                 </span>
               </div>
             </div>
@@ -119,7 +97,7 @@
     </div>
   <div class="card">
     <div class="card-header d-sm-flex align-items-sm-center py-sm-0">
-      <h6 class="py-sm-3 mb-sm-auto">Listado consolas ({{ totalConsoles }})</h6>
+      <h6 class="py-sm-3 mb-sm-auto">Listado consolas ({{ this.consoles.length }})</h6>
       <div class="ms-sm-auto" *ngIf="txtTerm.value.length === 0">
         <ul class="pagination pagination-flat">
           <li class="page-item">
@@ -143,6 +121,11 @@
           <button routerLink="./new" type="button" class="btn btn-primary pointer">
             <i class="ph-plus me-2"></i>
             Nueva
+        </button> &nbsp;&nbsp;&nbsp;
+          <button (click)="hideSold()" type="button" class="btn btn-indigo pointer">
+            <i *ngIf="soldHided" class="ph-eye me-2"></i>
+            <i *ngIf="!soldHided" class="ph-eye-slash me-2"></i>
+            Vendidos
         </button>
         </div>
       </div>

@@ -62,141 +62,112 @@
         </div>
 
         <div class="card-body">
-          <mat-list>
-            <h4>Datos consola</h4>
-            <div class="row">
-              <div class="col-4">
+          <div class="row">
+            <div><h4>Datos consola</h4></div>
+            <div class="col-sm-4">
+              <mat-list>
                 <mat-list-item>
                   <div matListItemTitle>Nombre</div>
                   <div matListItemLine>{{ console.name }}</div>
                 </mat-list-item>
-              </div>
-              <div class="col-4">
-                <mat-list-item>
-                  <div matListItemTitle>Modelo</div>
-                  <div matListItemLine>{{ console.model }}</div>
-                </mat-list-item>
-              </div>
-              <div class="col-4">
-                <mat-list-item>
-                  <div matListItemTitle>Marca</div>
-                  <div matListItemLine>{{ console.brand }}</div>
-                </mat-list-item>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-4">
                 <mat-list-item>
                   <div matListItemTitle>Generación</div>
                   <div matListItemLine>{{ console.generation }}</div>
                 </mat-list-item>
-              </div>
-              <div class="col-4">
-                <mat-list-item>
-                  <div matListItemTitle>Valor estimado</div>
-                  <div matListItemLine>{{ console.estimatedValue }}</div>
-                </mat-list-item>
-              </div>
-              <div class="col-4">
-                <mat-list-item>
-                  <div matListItemTitle>Año</div>
-                  <div matListItemLine>{{ console.year }}</div>
-                </mat-list-item>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-4">
                 <mat-list-item>
                   <div matListItemTitle>Precio lanz.</div>
                   <div matListItemLine>{{ console.releasePrice }}</div>
                 </mat-list-item>
-              </div>
-              <div class="col-4">
-                <mat-list-item>
-                  <div matListItemTitle>Soporte</div>
-                  <div matListItemLine>{{ console.support }}</div>
-                </mat-list-item>
-              </div>
-              <div class="col-4">
-                <mat-list-item>
-                  <div matListItemTitle>Compatibilidad</div>
-                  <div matListItemLine>{{ console.compatibility }}</div>
-                </mat-list-item>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-4">
                 <mat-list-item>
                   <div matListItemTitle>Descripción</div>
                   <div matListItemLine>{{ console.description }}</div>
                 </mat-list-item>
-              </div>
+              </mat-list>
+            </div>
+            <div class="col-sm-4">
+              <mat-list>
+                <mat-list-item>
+                  <div matListItemTitle>Modelo</div>
+                  <div matListItemLine>{{ console.model }}</div>
+                </mat-list-item>
+                <mat-list-item>
+                  <div matListItemTitle>Valor estimado</div>
+                  <div matListItemLine>{{ console.estimatedValue }}</div>
+                </mat-list-item>
+                <mat-list-item>
+                  <div matListItemTitle>Soporte</div>
+                  <div matListItemLine>{{ console.support }}</div>
+                </mat-list-item>
+              </mat-list>
+            </div>
+            <div class="col-sm-4">
+              <mat-list>
+                <mat-list-item>
+                  <div matListItemTitle>Marca</div>
+                  <div matListItemLine>{{ console.brand }}</div>
+                </mat-list-item>
+                <mat-list-item>
+                  <div matListItemTitle>Año</div>
+                  <div matListItemLine>{{ console.year }}</div>
+                </mat-list-item>
+                <mat-list-item>
+                  <div matListItemTitle>Compatibilidad</div>
+                  <div matListItemLine>{{ console.compatibility }}</div>
+                </mat-list-item>
+              </mat-list>
+            </div>
             </div>
             <mat-divider></mat-divider>
             <br />
-            <h4>Datos particulares</h4>
             <div class="row">
-              <div class="col-4">
-                <mat-list-item>
-                  <div matListItemTitle>Número serie</div>
+              <div><h4>Datos particulares</h4></div>
+              <div class="col-sm-4">
+                <mat-list>
+                  <mat-list-item>
+                    <div matListItemTitle>Número serie</div>
                   <div matListItemLine>{{ console.serialNumber }}</div>
-                </mat-list-item>
-              </div>
-              <div class="col-4">
-                <mat-list-item>
-                  <div matListItemTitle>Notas</div>
-                  <div matListItemLine>{{ console.notes }}</div>
-                </mat-list-item>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-4">
-                <mat-list-item>
-                  <div matListItemTitle>Coste</div>
+                  </mat-list-item>
+                  <mat-list-item>
+                    <div matListItemTitle>Coste</div>
                   <div matListItemLine>{{ console.purchasePrice }}</div>
-                </mat-list-item>
+                  </mat-list-item>
+                </mat-list>
               </div>
-              <div class="col-4">
-                <mat-list-item>
-                  <div matListItemTitle>Fecha compra</div>
-                  <div matListItemLine>{{ console.purchaseDate }}</div>
-                </mat-list-item>
+              <div class="col-sm-4">
+                <mat-list>
+                  <mat-list-item>
+                    <div matListItemTitle>Notas</div>
+                    <div matListItemLine #tooltip="matTooltip"
+                    matTooltip="{{ console.notes }}"
+                    matTooltipHideDelay="5000"><span *ngIf="console.notes">{{ console.notes.slice(0, 30) }}...</span></div>
+                  </mat-list-item>
+                  <mat-list-item>
+                    <div matListItemTitle>Fecha compra</div>
+                    <div matListItemLine>{{ console.purchaseDate }}</div>
+                  </mat-list-item>
+                </mat-list>
               </div>
-              <div class="col-4">
-                <mat-list-item>
-                  <div matListItemTitle>Lugar compra</div>
-                  <div matListItemLine>{{ console.purchasePlace }}</div>
-                </mat-list-item>
+              <div class="col-sm-4">
+                <mat-list>
+                  <mat-list-item>
+                    <div matListItemTitle></div>
+                    <div matListItemLine></div>
+                  </mat-list-item>
+                  <mat-list-item>
+                    <div matListItemTitle>Lugar compra</div>
+                    <div matListItemLine>{{ console.purchasePlace }}</div>
+                  </mat-list-item>
+                </mat-list>
               </div>
-            </div>
-            <div class="row" *ngIf="console.sold">
-              <div class="col-4">
-                <mat-list-item>
-                  <div matListItemTitle>Precio</div>
-                  <div matListItemLine>{{ console.salePrice }}</div>
-                </mat-list-item>
               </div>
-              <div class="col-4">
-                <mat-list-item>
-                  <div matListItemTitle>Fecha venta</div>
-                  <div matListItemLine>{{ console.saleDate }}</div>
-                </mat-list-item>
-              </div>
-              <div class="col-4">
-                <mat-list-item>
-                  <div matListItemTitle>Lugar venta</div>
-                  <div matListItemLine>{{ console.salePlace }}</div>
-                </mat-list-item>
-              </div>
-            </div>
-          </mat-list>
+
           <h4>Accesorios de la consola</h4>
           <div class="table-responsive">
-            <table class="table table-bordered table-lg">
+            <table class="table table-bordered table-lg" *ngIf="accesorios.length > 0">
               <tbody>
                 <tr class="table-light">
                   <th class="w100 text-center">Imagen</th>
-                  <th>Colección</th>
+                  <th>Consola</th>
                   <th class="w50 text-center">Tipo</th>
                   <th class="w50 text-center">Año</th>
                   <th class="w50 text-center">Color</th>
@@ -246,6 +217,7 @@
                 </tr>
               </tbody>
             </table>
+            <div *ngIf="accesorios.length === 0">La consola no tiene accesorios asociados todavía.</div>
           </div>
         </div>
       </div>

@@ -79,13 +79,20 @@
       </div>
 
       <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-4">
           <label class="form-label">Compatible</label>
           <div class="mb-3">
             <input type="text" [(ngModel)]="this.consoleEdit.compatibility" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Compatible con los sistemas...">
           </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-3">
+          <label class="form-label">Color</label>
+          <div class="mb-3">
+            <input type="color" [(ngModel)]="this.consoleEdit.color" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Color">
+          </div>
+
+        </div>
+        <div class="col-lg-5">
           <label class="form-label">Descripción</label>
           <div class="mb-3">
             <input type="text" [(ngModel)]="this.consoleEdit.description" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Descripción accesorio">
@@ -108,7 +115,6 @@
 
         </div>
         <div class="col-lg-7">
-          <label class="form-label">Consola asociada</label>
           <div class="mb-3">
             <label class="form-label">Notas</label>
           <textarea rows="2" cols="3" [(ngModel)]="this.consoleEdit.notes" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="notas"></textarea>

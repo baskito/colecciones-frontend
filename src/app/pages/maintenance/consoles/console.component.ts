@@ -17,7 +17,7 @@ const base_url = environment.base_url;
   templateUrl: './console.component.html',
   styleUrls: ['./console.component.scss'],
 })
-export class ConsolesComponent implements OnInit {
+export class ConsoleComponent implements OnInit {
 
   public loading: boolean = true;
   public totalConsoles: number = 0;
@@ -52,6 +52,7 @@ export class ConsolesComponent implements OnInit {
   totalCostSold: number = 0;
   totalPriceSold: number = 0;
   totalCostConsoles: number = 0;
+  soldHided: boolean = false;
   public data = {
     labels: [
       'Consolas',
@@ -150,6 +151,7 @@ export class ConsolesComponent implements OnInit {
           } else {
             this.numConsolesStock++;
             this.totalEstimatedStock += cons.estimatedValue! | 0;
+            this.totalCostConsoles += cons.purchasePrice! | 0;
           }
         }
         this.data.datasets[0].data[0] = this.totalConsoles;
@@ -176,6 +178,16 @@ export class ConsolesComponent implements OnInit {
 
       }
     });
+  }
+
+  hideSold() {
+    if (this.soldHided) {
+      this.loadConsoles(0);
+    } else {
+      this.consoles.splice(this.consoles.findIndex(c => c.sold === true));
+    }
+    this.soldHided = !this.soldHided;
+
   }
 
   getConsole(consola: Console) {

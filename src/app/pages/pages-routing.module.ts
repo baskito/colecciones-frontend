@@ -6,7 +6,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { UsersComponent } from './maintenance/users/users.component';
 import { AccesoriosComponent } from './maintenance/accesorios/accesorios.component';
-import { ConsolesComponent } from './maintenance/consoles/consoles.component';
+import { ConsoleComponent } from './maintenance/consoles/console.component';
 import { CollectionsComponent } from './maintenance/collections/collections.component';
 import { EditCollectionComponent } from './maintenance/collections/edit-collection/edit-collection.component';
 import { ViewCollectionComponent } from './maintenance/collections/view-collection/view-collection.component';
@@ -38,7 +38,7 @@ const routes: Routes = [
       // Users
       { path: 'users', component: UsersComponent },
       // Consoles
-      { path: 'consoles', component: ConsolesComponent },
+      { path: 'consoles', component: ConsoleComponent },
       { path: 'consoles/new', component: EditConsoleComponent },
       { path: 'consoles/edit/:id', component: EditConsoleComponent },
       { path: 'consoles/view/:id', component: ViewConsoleComponent },
