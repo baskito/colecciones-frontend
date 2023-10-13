@@ -27,6 +27,7 @@ import { ViewConsoleComponent } from './maintenance/consoles/view-console/view-c
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 
@@ -67,7 +68,8 @@ import { MatIconModule } from '@angular/material/icon';
     PipesModule,
     MatListModule,
     MatDividerModule,
-    MatIconModule
+    MatIconModule,
+    MatChipsModule
   ]
 })
 export class PagesModule { }

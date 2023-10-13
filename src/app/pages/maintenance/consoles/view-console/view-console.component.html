@@ -161,6 +161,39 @@
               </div>
               </div>
 
+              <div class="row" *ngIf="console.sold">
+                <div>
+                  <h4>Vendido</h4>
+                  <mat-chip selected class="chip-color" *ngIf="console.purchasePrice && console.salePrice">
+                    {{ console.salePrice - console.purchasePrice }}€
+                  </mat-chip>
+                </div>
+                <div class="col-sm-4">
+                  <mat-list>
+                    <mat-list-item>
+                      <div matListItemTitle>Precio venta</div>
+                    <div matListItemLine>{{ console.salePrice }}</div>
+                    </mat-list-item>
+                  </mat-list>
+                </div>
+                <div class="col-sm-4">
+                  <mat-list>
+                    <mat-list-item>
+                      <div matListItemTitle>Fecha venta</div>
+                      <div matListItemLine>{{ console.saleDate }}</div>
+                    </mat-list-item>
+                  </mat-list>
+                </div>
+                <div class="col-sm-4">
+                  <mat-list>
+                    <mat-list-item>
+                      <div matListItemTitle>Lugar venta</div>
+                      <div matListItemLine>{{ console.salePlace }}</div>
+                    </mat-list-item>
+                  </mat-list>
+                </div>
+                </div>
+
           <h4>Accesorios de la consola</h4>
           <div class="table-responsive">
             <table class="table table-bordered table-lg" *ngIf="accesorios.length > 0">
